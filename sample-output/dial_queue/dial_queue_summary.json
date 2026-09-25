@@ -1,0 +1,14 @@
+{
+  "contacts": 2,
+  "accounts": 2,
+  "by_committee_role": {
+    "Influencer": 2
+  },
+  "by_number_type": {
+    "switchboard": 2
+  },
+  "priority_range": [
+    79.0,
+    79.0
+  ]
+}

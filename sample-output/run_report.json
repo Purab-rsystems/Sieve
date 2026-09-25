@@ -1,0 +1,36 @@
+{
+  "run_id": "final-001",
+  "rubric_version": "1.0.0",
+  "taxonomy_version": "1.0.0",
+  "rows": 633,
+  "accounts": 98,
+  "tiers": {
+    "Tier C": 387,
+    "Tier B": 168,
+    "Tier A": 78
+  },
+  "validation_status": {
+    "VERIFIED": 562,
+    "FLAGGED_REVIEW": 67,
+    "DISQUALIFIED": 4
+  },
+  "committee_roles": {
+    "Unassigned": 608,
+    "Influencer": 16,
+    "Economic Buyer": 5,
+    "Champion": 4
+  },
+  "seniority": {
+    "VP": 358,
+    "C-Suite": 212,
+    "Director": 40,
+    "Other": 23
+  },
+  "flags": {
+    "DISPOSABLE_PHONE": 10,
+    "DOMAIN_ANOMALY": 57,
+    "SENIORITY_AMBIGUITY": 6
+  },
+  "titles_resolved": 610,
+  "mean_confidence": 0.982
+}

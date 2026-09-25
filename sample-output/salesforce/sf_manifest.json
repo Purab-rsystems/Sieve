@@ -1,0 +1,25 @@
+{
+  "approved": true,
+  "operation": "upsert",
+  "account_external_id": "Sieve_Account_Id__c",
+  "contact_external_id": "Sieve_Contact_Id__c",
+  "tier_filter": [
+    "Tier A",
+    "Tier B"
+  ],
+  "accounts": 22,
+  "contacts": 238,
+  "held_back": 395,
+  "held_back_reasons": {
+    "disqualified": 4,
+    "out_of_tier": 386,
+    "dropped_in_review": 5
+  },
+  "committee_seats": {
+    "Unassigned": 214,
+    "Influencer": 16,
+    "Economic Buyer": 5,
+    "Champion": 3
+  },
+  "ready_to_send": true
+}
