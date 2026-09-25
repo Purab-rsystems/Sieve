@@ -1,0 +1,244 @@
+# Designation taxonomy for module M6.
+#
+# Seeded from real data: 552 distinct title strings observed across the
+# modernization Format-DB sheets (383) and the PhantomBuster Singapore export
+# (169), plus the committee target titles named in PRD module M7.
+#
+# Each canonical role declares:
+#   aliases      exact spellings seen in the wild, matched case-insensitively
+#   patterns     regexes for the long tail
+#   seniority    C-Suite | VP | Director | Manager | Individual Contributor
+#   authority    true when the role holds budget or signing power for
+#                enterprise software refactoring (drives sv_is_authoritative)
+#   committee    Economic Buyer | Champion | Influencer | null
+#
+# Order matters: the first role whose alias or pattern matches wins, so the
+# more specific roles are listed first.
+
+version: "1.0.0"
+
+# Titles carrying these tokens never resolve to an executive role, however
+# senior the rest of the string reads. Checked before anything else.
+disqualifying_tokens:
+  - intern
+  - trainee
+  - apprentice
+  - student
+  - retired
+  - former
+  - ex-
+
+# Rank order for comparisons and for the dial-priority seniority weight.
+seniority_levels:
+  C-Suite: 100
+  VP: 80
+  Director: 60
+  Manager: 40
+  Individual Contributor: 20
+  Other: 0
+
+# PRD module M4: SENIORITY_AMBIGUITY fires when a title carries one of these
+# and resolves to no distinct executive rank.
+ambiguous_tokens:
+  - specialist
+  - consultant
+  - generalist
+  - associate
+  - coordinator
+  - analyst
+  - executive assistant
+  - officer      # bare 'officer' without a C-suite qualifier
+
+roles:
+
+  # ------------------------------------------------------------- Economic Buyer
+  - canonical: Chief Executive Officer
+    seniority: C-Suite
+    authority: true
+    committee: Economic Buyer
+    aliases: [CEO, Chief Executive Officer, Chief Executive, Group CEO,
+              President & CEO, President and CEO, Founder & CEO, Co-Founder & CEO]
+    patterns: ['\bceo\b', 'chief executive']
+
+  - canonical: Chief Financial Officer
+    seniority: C-Suite
+    authority: true
+    committee: Economic Buyer
+    aliases: [CFO, Chief Financial Officer, Group CFO, Global CFO,
+              SVP & CFO, EVP & CFO]
+    patterns: ['\bcfo\b', 'chief financial']
+
+  - canonical: Chief Operating Officer
+    seniority: C-Suite
+    authority: true
+    committee: Economic Buyer
+    aliases: [COO, Chief Operating Officer, Group COO]
+    patterns: ['\bcoo\b', 'chief operating']
+
+  - canonical: Chief Transformation Officer
+    seniority: C-Suite
+    authority: true
+    committee: Economic Buyer
+    aliases: [Chief Transformation Officer, CTrO]
+    patterns: ['chief transformation']
+
+  # ------------------------------------------------------------- Champion
+  - canonical: Chief Technology Officer
+    seniority: C-Suite
+    authority: true
+    committee: Champion
+    aliases: [CTO, Chief Technology Officer, Chief Technical Officer,
+              Group CTO, Global CTO, Co-Founder & CTO, Founder & CTO]
+    patterns: ['\bcto\b', 'chief technolog', 'chief technical']
+
+  - canonical: Chief Information Officer
+    seniority: C-Suite
+    authority: true
+    committee: Champion
+    aliases: [CIO, Chief Information Officer, Group CIO]
+    patterns: ['\bcio\b', 'chief information officer']
+
+  - canonical: Chief Data Officer
+    seniority: C-Suite
+    authority: true
+    committee: Champion
+    aliases: [CDO, Chief Data Officer, Chief Data & Analytics Officer,
+              Chief Digital Officer]
+    patterns: ['\bcdo\b', 'chief data', 'chief digital']
+
+  - canonical: Chief Architect
+    seniority: VP
+    authority: true
+    committee: Champion
+    aliases: [Chief Architect, Chief Software Architect,
+              Chief Enterprise Architect, Chief Technology Architect]
+    patterns: ['chief .{0,12}architect']
+
+  - canonical: VP of Platform Engineering
+    seniority: VP
+    authority: true
+    committee: Champion
+    aliases: [VP Platform, VP of Platform, VP Platform Engineering,
+              VP of Platform Engineering, Vice President of Platform Engineering,
+              Head of Platform, Head of Platform Engineering]
+    patterns: ['(vp|vice president|head|director)\b.{0,20}platform']
+
+  - canonical: VP of Engineering
+    seniority: VP
+    authority: true
+    committee: Champion
+    aliases: [VP Engineering, VP of Engineering, "VP, Engineering",
+              Vice President of Engineering, Vice President Of Engineering,
+              Vice President Engineering, "VP, Software Engineering",
+              VP of Software Engineering, VP Software Engineering,
+              Vice President of Software Engineering,
+              Senior Vice President of Engineering, SVP of Engineering,
+              SVP Engineering, "SVP, Engineering", Head of Engineering,
+              "VP Tech & Architecture", VP of Technology, VP Technology]
+    patterns: ['(vp|vice president|svp|evp|head)\b.{0,25}(engineering|technology|architecture)']
+
+  # ------------------------------------------------------------- Influencer
+  - canonical: VP of Product
+    seniority: VP
+    authority: false
+    committee: Influencer
+    aliases: [VP Product, VP of Product, "VP, Product", "VP, Product Management",
+              VP of Product Management, Vice President of Product Management,
+              Vice President Product Management, SVP Product Management,
+              "SVP, Product Management", Senior Vice President Product Management,
+              Chief Product Officer, CPO, Head of Product]
+    patterns: ['\bcpo\b', 'chief product', '(vp|vice president|svp|head)\b.{0,20}product']
+
+  - canonical: VP Corporate Development
+    seniority: VP
+    authority: false
+    committee: Influencer
+    aliases: [VP Corporate Development, VP of Corporate Development,
+              VP Integration, VP of Integration, Head of Corporate Development]
+    patterns: ['(vp|vice president|head)\b.{0,25}(corporate development|integration|m&a)']
+
+  - canonical: Head of Infrastructure
+    seniority: Director
+    authority: false
+    committee: Influencer
+    aliases: [Head of Infrastructure, VP Infrastructure, VP of Infrastructure,
+              Director of Infrastructure, Head of Cloud, VP of Cloud]
+    patterns: ['(head|vp|vice president|director)\b.{0,20}(infrastructure|cloud|devops|sre)']
+
+  - canonical: Director of AdTech
+    seniority: Director
+    authority: false
+    committee: Influencer
+    aliases: [Director of AdTech, Head of Ad Technology, VP of Ad Products,
+              Head of Ad Products, VP Ad Technology, Head of Programmatic,
+              VP of Digital Transformation, Head of Digital Transformation]
+    patterns: ['(head|vp|vice president|director)\b.{0,25}(ad tech|adtech|ad product|programmatic|digital transformation)']
+
+  - canonical: General Manager
+    seniority: Director
+    authority: true
+    committee: Influencer
+    aliases: [General Manager, GM, Division GM,
+              General Manager of Digital Division, Managing Director]
+    patterns: ['general manager', 'managing director', '\bgm\b.{0,20}(digital|division)']
+
+  - canonical: VP of Operations
+    seniority: VP
+    authority: false
+    committee: Influencer
+    aliases: [VP Operations, VP of Operations, Vice President Operations,
+              Vice President of Operations, Head of Operations]
+    patterns: ['(vp|vice president|head)\b.{0,20}operations']
+
+  # ------------------------------------------------------------- Practitioners
+  # Below the committee line. Mapped so titles resolve, but never assigned a
+  # committee role.
+  - canonical: Solutions Architect
+    seniority: Individual Contributor
+    authority: false
+    committee: null
+    aliases: [Solutions Architect, Solution Architect, Senior Solutions Architect,
+              Lead Solutions Architect, Principal Solutions Architect,
+              Enterprise Architect, Cloud Solutions Architect]
+    patterns: ['solutions? architect', 'enterprise architect']
+
+  - canonical: Data Engineer
+    seniority: Individual Contributor
+    authority: false
+    committee: null
+    aliases: [Data Engineer, Senior Data Engineer, Lead Data Engineer,
+              Associate Data Engineer, Analytics Engineer,
+              Big Data Engineer, Cloud Data Engineer]
+    patterns: ['data engineer', 'analytics engineer']
+
+  - canonical: Machine Learning Engineer
+    seniority: Individual Contributor
+    authority: false
+    committee: null
+    aliases: [Machine Learning Engineer, ML Engineer, Senior Machine Learning Engineer,
+              AI Engineer, MLOps Engineer]
+    patterns: ['machine learning engineer', '\bml engineer', '\bai engineer']
+
+  - canonical: Data Analyst
+    seniority: Individual Contributor
+    authority: false
+    committee: null
+    aliases: [Data Analyst, Senior Data Analyst, Business Data Analyst,
+              Credit Risk Data Analyst, Lead Data Analyst]
+    patterns: ['data analyst']
+
+  - canonical: Software Engineer
+    seniority: Individual Contributor
+    authority: false
+    committee: null
+    aliases: [Software Engineer, Senior Software Engineer, Staff Software Engineer,
+              Principal Engineer, Software Development Engineer]
+    patterns: ['software engineer', 'principal engineer', 'staff engineer']
+
+  - canonical: Engineering Manager
+    seniority: Manager
+    authority: false
+    committee: null
+    aliases: [Engineering Manager, Software Engineering Manager,
+              Manager of Engineering, Development Manager]
+    patterns: ['engineering manager', 'manager\b.{0,15}engineering']

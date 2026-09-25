@@ -1,0 +1,206 @@
+# ICP rubric: AdTech Platform Modernization & Strangler Fig Migration
+# Lookalike model: Advantage Software / Simpli.fi
+#
+# Four pillars, each scored 0-100, each weighted 25%, summed to a 0-100 score.
+# Every number here comes from PRD section 3, module M3. Editing this file
+# changes the rubric without touching code.
+
+campaign: adtech_modernization
+version: "1.0.0"
+description: AdTech Platform Modernization & Strangler Fig Migration lookalike
+
+weights:
+  industry_fit: 0.25
+  legacy_stack: 0.25
+  platform_scale: 0.25
+  modernization_triggers: 0.25
+
+tiers:
+  - name: Tier A
+    min_score: 80
+    disposition: High-Intent Target. Deep validation, committee assembly, priority cadence.
+  - name: Tier B
+    min_score: 60
+    disposition: Medium-Intent Target. Secondary nurture campaigns.
+  - name: Tier C
+    min_score: 0
+    disposition: Disqualified. Terminated from active prospecting, logged in archive.
+
+pillars:
+
+  # ---------------------------------------------------------------- Pillar 1
+  industry_fit:
+    label: Industry & Vertical Fit
+    # Matched against Industry, Sub Industry and Category, in that order.
+    # First band whose patterns hit wins, so order them strongest first.
+    bands:
+      - points: 100
+        label: Core AdTech, agency management software, DSP/SSP, ad exchange
+        patterns:
+          - adtech
+          - ad tech
+          - advertising technology
+          - agency management
+          - programmatic
+          - demand.?side platform
+          - supply.?side platform
+          - \bdsp\b
+          - \bssp\b
+          - ad exchange
+          - ad server
+          - full.?stack programmatic
+          - retail media
+          - identity resolution
+      - points: 85
+        label: Media planning, ad verification, connected TV
+        patterns:
+          - media planning
+          - media buying
+          - ad verification
+          - brand safety
+          - connected tv
+          - \bctv\b
+          - digital out.?of.?home
+          - \bdooh\b
+          - broadcast
+          - \bott\b
+          - measurement
+          - attribution
+      - points: 50
+        label: Generic digital marketing or ad agency services
+        patterns:
+          - digital marketing
+          - marketing agency
+          - advertising agency
+          - media agency
+          - marketing services
+      - points: 0
+        label: Non-AdTech, unrelated SaaS or enterprise IT
+        patterns: [".*"]          # catch-all, must stay last
+
+  # ---------------------------------------------------------------- Pillar 2
+  legacy_stack:
+    label: Legacy Tech Stack Signals
+    # Matched against legacy stack signal text and platform description.
+    bands:
+      - points: 100
+        label: Explicit ASP.NET, .NET Framework, VB.NET or Java monolith
+        patterns:
+          - asp\.?net
+          - \.net framework
+          - vb\.?net
+          - java monolith
+          - monolith
+          - \bcobol\b
+          - \bperl\b
+          - coldfusion
+          - legacy codebase
+      - points: 85
+        label: Desktop-era client, on-prem deployment, 10+ year codebase
+        patterns:
+          - desktop.?era
+          - thick client
+          - on.?prem
+          - client.?server
+          - "1[0-9]\\+? year"
+          - two decades
+          - one of .{0,30}oldest
+          - founded (19[0-9]{2}|200[0-5])
+          - built in the (19[0-9]{2}|200[0-9])
+          - legacy
+      - points: 50
+        label: Partially migrated hybrid stack
+        patterns:
+          - hybrid
+          - partially migrated
+          - mid.?migration
+          - transitioning
+          - re.?platform
+      - points: 20
+        label: Modern cloud-native, so no modernization pain
+        # Scores low by design: a cloud-native stack has nothing to modernize.
+        patterns:
+          - cloud.?native
+          - serverless
+          - kubernetes
+          - microservice
+          - \breact\b
+          - \bnode\.?js\b
+          - \bgolang\b
+          - \bgo\b
+      - points: 30
+        label: No stack signal recorded
+        patterns: [".*"]
+
+  # ---------------------------------------------------------------- Pillar 3
+  platform_scale:
+    label: Platform Scale & Complexity
+    # Scored from headcount and revenue where present, with the scale signal
+    # text used as a fallback when neither number is available.
+    numeric_bands:
+      - points: 100
+        label: 1,000+ daily active users, high-throughput DSP or exchange
+        min_employees: 1000
+      - points: 75
+        label: 250-1,000 enterprise daily users, complex workflow
+        min_employees: 250
+      - points: 30
+        label: Under 250 users, SMB utility software
+        min_employees: 0
+    text_bands:
+      - points: 100
+        patterns:
+          - enterprise
+          - global
+          - "1,?000\\+"
+          - high.?throughput
+          - billions
+          - \bscale\b
+      - points: 75
+        patterns:
+          - mid.?market
+          - regional
+          - multi.?country
+      - points: 30
+        patterns: [".*"]
+
+  # ---------------------------------------------------------------- Pillar 4
+  modernization_triggers:
+    label: Modernization Triggers
+    bands:
+      - points: 100
+        label: Recent M&A consolidation or platform merger integration
+        patterns:
+          - acquisition
+          - acquired
+          - merger
+          - \bm&a\b
+          - consolidat
+          - post.?acquisition
+          - integration of .{0,30}platform
+          - private equity
+          - \bpe\b backed
+      - points: 85
+        label: Cookieless deprecation and privacy regulation shift
+        patterns:
+          - cookieless
+          - cookie deprecation
+          - third.?party cookie
+          - privacy.?first
+          - \bgdpr\b
+          - \bccpa\b
+          - privacy regulation
+          - identity solution
+      - points: 80
+        label: New CTO or VP Platform Engineering hire
+        patterns:
+          - new cto
+          - new chief technology
+          - incoming cto
+          - hired .{0,20}cto
+          - new vp of engineering
+          - new head of engineering
+          - leadership change
+      - points: 30
+        label: Baseline organic maintenance, no active urgency
+        patterns: [".*"]
