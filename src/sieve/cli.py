@@ -289,6 +289,53 @@ def queue_command(
         typer.echo(f"  {name:8} {path}")
 
 
+committee_app = typer.Typer(help="Buying committee: decided from the campaign file, then matched.")
+app.add_typer(committee_app, name="committee")
+
+
+@committee_app.command("decide")
+def committee_decide_command(
+    campaign: Path = typer.Option(..., "--campaign", help="Sieve campaign file (YAML)."),
+    out: Path = typer.Option(..., "--out", help="Where to write the committee (JSON)."),
+    answers: Path = typer.Option(
+        Path("config/committee/answers.json"), "--answers",
+        help="Model answers, saved and reused so a decision reproduces."),
+    state_dir: Path = typer.Option(Path(".sieve_model_state"), "--state-dir"),
+    offline: bool = typer.Option(False, "--offline", help="Use saved answers only; never load a model."),
+) -> None:
+    """Qwen2.5-7B judges, Llama-3.1-8B checks. No contact is read."""
+    from .committee.decide import decide_committee
+
+    c = decide_committee(campaign, store_path=answers, run_models=not offline, state_dir=state_dir,
+                         log=typer.echo)
+    if not c.complete:
+        typer.echo("Answers missing: run without --offline.")
+        raise typer.Exit(1)
+    out.parent.mkdir(parents=True, exist_ok=True)
+    out.write_text(json.dumps(c.to_dict(), indent=2))
+    for m in c.members:
+        typer.echo(f"  {m['role']:20} {m['title']:36} ({m['function']})" + ("  extra" if m["extra"] else ""))
+    typer.echo(f"Unfilled minimums: {c.unfilled or 'none'}")
+
+
+@committee_app.command("match")
+def committee_match_command(
+    committee: Path = typer.Option(..., "--committee", help="Output of `sieve committee decide`."),
+    inp: Path = typer.Option(..., "--in", help="Contact file."),
+    out: Path = typer.Option(..., "--out", help="Contacts with sv_committee_title / sv_committee_role."),
+    accounts_out: Path = typer.Option(..., "--accounts-out", help="Per-account seat coverage."),
+) -> None:
+    """Match contacts to a decided committee and report each account's missing seats."""
+    from .committee.match import match_contacts
+
+    frame = _read_frame(inp)
+    rows, accounts = match_contacts(frame, json.loads(committee.read_text()))
+    write_table(rows, out)
+    write_table(accounts, accounts_out)
+    typer.echo(f"{(rows['sv_committee_role'] != '').sum()} of {len(rows)} contacts hold a committee seat; "
+               f"{int(accounts['minimums_met'].sum())} of {len(accounts)} accounts meet every minimum.")
+
+
 def main() -> None:
     app()
 

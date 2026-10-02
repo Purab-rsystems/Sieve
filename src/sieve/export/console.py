@@ -92,80 +92,140 @@ _PAGE = """<!DOCTYPE html>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Sieve Review Console</title>
 <style>
+/* Styled after DocQA: warm cocoa-brown surfaces, one soft honey accent, a
+   rounded typeface (Nunito when installed; no font is fetched, the page
+   stays offline), roomy padding and soft shadows. Layout only: the data,
+   the keep/drop boxes and the approval file are unchanged. */
 :root {
-  --bg:#f6f7f9; --panel:#fff; --ink:#15181d; --muted:#616a76; --line:#dfe3e8;
-  --a:#1c7a4a; --b:#8a6d1f; --c:#7a2020; --crit:#b3261e; --high:#a6541c;
-  --med:#8a6d1f; --low:#4a5561; --accent:#1f4f8f;
+  --dq-bg:#1C1A17; --dq-side:#221F1C; --dq-card:#2A2622; --dq-you:#3B3229;
+  --dq-line:#3A352F; --dq-text:#EFE8DF; --dq-muted:#B5AA9C; --dq-honey:#E9B872;
+  --dq-honey-soft:rgba(233,184,114,0.16); --dq-shadow:0 6px 24px rgba(0,0,0,0.30);
+  --dq-font:'Nunito','Segoe UI',system-ui,-apple-system,sans-serif;
+  --ok:#9CC68B; --warn:#E9B872; --bad:#E39A86; --crit:#E39A86; --high:#E8AE7E;
+  --med:#E9B872; --low:#B5AA9C; --sky:#9DBBD8;
 }
-@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) {
-  --bg:#14171b; --panel:#1c2026; --ink:#e8eaed; --muted:#9aa4b0; --line:#2c323a;
-  --a:#5fd39a; --b:#dcc06a; --c:#e08b8b; --crit:#f2938c; --high:#e8ab7a;
-  --med:#dcc06a; --low:#9aa4b0; --accent:#7fb0f0;
-} }
 * { box-sizing:border-box; }
-body { margin:0; background:var(--bg); color:var(--ink); font:15px/1.5
-  ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,sans-serif; }
-header { position:sticky; top:0; background:var(--panel);
-  border-bottom:1px solid var(--line); padding:14px 20px; z-index:10;
-  display:flex; gap:20px; align-items:center; flex-wrap:wrap; }
-h1 { font-size:17px; margin:0; font-weight:600; }
-.totals { color:var(--muted); font-size:13px; }
-.totals b { color:var(--ink); }
-main { padding:20px; max-width:1180px; margin:0 auto; }
-.acct { background:var(--panel); border:1px solid var(--line);
-  border-radius:8px; margin-bottom:14px; overflow:hidden; }
-.acct > summary { padding:14px 16px; cursor:pointer; display:flex;
-  gap:14px; align-items:center; flex-wrap:wrap; list-style:none; }
+html, body { background:var(--dq-bg); }
+body { margin:0; color:var(--dq-text); font:15px/1.6 var(--dq-font);
+  font-variant-numeric:tabular-nums; display:flex; min-height:100vh; }
+code { background:var(--dq-you); padding:1px 6px; border-radius:6px; font-size:13px; }
+
+/* sidebar, like DocQA's documents panel */
+aside { width:300px; flex-shrink:0; background:var(--dq-side);
+  border-right:1px solid var(--dq-line); padding:22px 18px; position:sticky;
+  top:0; height:100vh; overflow-y:auto; display:flex; flex-direction:column; gap:16px; }
+.brand { display:flex; align-items:center; gap:10px; }
+.brand svg { width:36px; height:36px; }
+.brand b { font-size:20px; font-weight:800; letter-spacing:-0.01em; }
+.brand span { display:block; color:var(--dq-muted); font-size:12px; font-weight:600; }
+aside h2 { font-size:1.05rem; font-weight:800; margin:6px 0 0; }
+.tiles { display:grid; grid-template-columns:1fr 1fr; gap:10px; }
+.tile { background:var(--dq-card); border:1px solid var(--dq-line); border-radius:18px;
+  padding:12px 14px; }
+.tile .v { font-size:24px; font-weight:800; line-height:1.2; }
+.tile .k { color:var(--dq-muted); font-size:12px; font-weight:600; }
+.tile.hl .v { color:var(--dq-honey); }
+.note { color:var(--dq-muted); font-size:13px; line-height:1.6; margin:0;
+  border:1px solid var(--dq-line); border-left:3px solid var(--dq-honey);
+  border-radius:12px; background:var(--dq-honey-soft); padding:10px 12px; }
+.note b { color:var(--dq-honey); }
+.spacer { flex:1; }
+button { font:inherit; font-weight:700; padding:10px 18px; border-radius:999px;
+  cursor:pointer; border:1px solid var(--dq-line); background:var(--dq-card);
+  color:var(--dq-text); box-shadow:var(--dq-shadow); }
+button.primary { background:var(--dq-honey); border-color:var(--dq-honey);
+  color:var(--dq-bg); width:100%; font-size:15px; }
+button.primary:hover { filter:brightness(1.06); }
+button:focus-visible { outline:none; box-shadow:0 0 0 4px var(--dq-honey-soft), var(--dq-shadow); }
+button:disabled { opacity:.5; cursor:not-allowed; }
+
+/* main column */
+main { flex:1; min-width:0; padding:40px 32px 60px; }
+.inner { max-width:1100px; margin:0 auto; }
+.hello { font-size:2rem; font-weight:800; letter-spacing:-0.01em; line-height:1.25; margin:0 0 6px; }
+.promise { color:var(--dq-muted); margin:0 0 28px; font-size:1.02rem; }
+
+/* an account: a soft card, like a DocQA answer */
+.acct { background:var(--dq-card); border:1px solid var(--dq-line); border-radius:22px;
+  margin-bottom:18px; overflow:hidden; box-shadow:var(--dq-shadow); }
+.acct > summary { padding:16px 22px; cursor:pointer; display:flex; gap:12px;
+  align-items:center; flex-wrap:wrap; list-style:none; }
 .acct > summary::-webkit-details-marker { display:none; }
-.co { font-weight:600; flex:1; min-width:180px; }
-.score { font-variant-numeric:tabular-nums; font-weight:600; }
-.tier { padding:2px 9px; border-radius:999px; font-size:12px; font-weight:600;
-  border:1px solid currentColor; }
-.tA { color:var(--a); } .tB { color:var(--b); } .tC { color:var(--c); }
-.pill { font-size:12px; color:var(--muted); }
-.body { padding:0 16px 16px; border-top:1px solid var(--line); }
+.acct > summary:hover .co { color:var(--dq-honey); }
+.acct[open] > summary { border-bottom:1px solid var(--dq-line); }
+.co { font-weight:800; font-size:17px; flex:1; min-width:180px; }
+.chip { display:inline-block; padding:3px 12px; border-radius:999px; font-size:12.5px;
+  font-weight:700; background:var(--dq-side); border:1px solid var(--dq-line); white-space:nowrap; }
+.score { color:var(--dq-honey); border-color:var(--dq-honey); background:var(--dq-honey-soft); }
+.tier { border-color:currentColor; }
+.tA { color:var(--ok); } .tB { color:var(--warn); } .tC { color:var(--bad); }
+.pill { font-size:13px; color:var(--dq-muted); }
+.body { padding:14px 22px 18px; }
+.pillars { display:flex; flex-wrap:wrap; gap:8px; margin-bottom:12px; }
+.pillars span { font-size:12.5px; color:var(--dq-muted); background:var(--dq-side);
+  border:1px solid var(--dq-line); border-radius:999px; padding:3px 12px; }
+.pillars b { color:var(--dq-text); }
+.wrap { overflow-x:auto; border:1px solid var(--dq-line); border-radius:14px; background:var(--dq-side); }
 table { width:100%; border-collapse:collapse; font-size:14px; }
-th { text-align:left; padding:9px 8px; color:var(--muted); font-weight:500;
-  font-size:12px; text-transform:uppercase; letter-spacing:.03em;
-  border-bottom:1px solid var(--line); }
-td { padding:9px 8px; border-bottom:1px solid var(--line); vertical-align:top; }
+th { text-align:left; padding:10px 12px; color:var(--dq-muted); font-weight:700;
+  font-size:12px; border-bottom:1px solid var(--dq-line); white-space:nowrap; }
+td { padding:10px 12px; border-bottom:1px solid var(--dq-line); vertical-align:top; }
+tbody tr:last-child td { border-bottom:none; }
+tbody tr:hover td { background:rgba(233,184,114,0.05); }
 tr.dropped td { opacity:.4; text-decoration:line-through; }
-.seat { font-weight:600; font-size:13px; }
-.seat-eb { color:var(--a); } .seat-ch { color:var(--accent); }
-.seat-in { color:var(--b); } .seat-un { color:var(--muted); font-weight:400; }
-.flag { display:inline-block; font-size:11px; padding:1px 6px; border-radius:4px;
-  border:1px solid currentColor; margin:1px 3px 1px 0; white-space:nowrap; }
+input[type=checkbox] { accent-color:var(--dq-honey); width:16px; height:16px; cursor:pointer; }
+.seat { font-weight:700; font-size:13px; white-space:nowrap; }
+.seat-eb { color:var(--dq-honey); } .seat-ch { color:var(--ok); }
+.seat-te { color:var(--sky); } .seat-in { color:var(--high); }
+.seat-un { color:var(--dq-muted); font-weight:400; }
+.flag { display:inline-block; font-size:11px; font-weight:700; padding:2px 8px;
+  border-radius:999px; border:1px solid currentColor; margin:1px 4px 2px 0; white-space:nowrap; }
 .f-crit { color:var(--crit); } .f-high { color:var(--high); }
 .f-med { color:var(--med); } .f-low { color:var(--low); }
 .mono { font-variant-numeric:tabular-nums; }
-.wrap { overflow-x:auto; }
-button { font:inherit; padding:8px 16px; border-radius:6px; cursor:pointer;
-  border:1px solid var(--line); background:var(--panel); color:var(--ink); }
-button.primary { background:var(--accent); border-color:var(--accent);
-  color:#fff; font-weight:600; }
-button:disabled { opacity:.5; cursor:not-allowed; }
-.pillars { margin-top:10px; font-size:12px; color:var(--muted); }
-.pillars span { margin-right:14px; }
-.note { color:var(--muted); font-size:13px; margin:0 0 16px; }
+
+@media (max-width: 860px) {
+  body { display:block; }
+  aside { width:auto; height:auto; position:static; border-right:none;
+    border-bottom:1px solid var(--dq-line); }
+  .tiles { grid-template-columns:repeat(4, 1fr); }
+  main { padding:24px 16px 48px; }
+  .hello { font-size:1.55rem; }
+}
+@media (max-width: 520px) { .tiles { grid-template-columns:1fr 1fr; } }
+@media (prefers-reduced-motion: reduce) { * { transition:none !important; animation:none !important; } }
 </style></head><body>
-<header>
-  <h1>Sieve Review Console</h1>
-  <div class="totals" id="totals"></div>
-  <div style="flex:1"></div>
-  <button id="approve" class="primary">Approve Roster</button>
-</header>
-<main>
-  <p class="note">Every row below is kept by default. Untick a contact to drop
+<aside>
+  <div class="brand">
+    <svg viewBox="0 0 48 48" aria-hidden="true">
+      <path d="M6 16 H42 Q42 36 24 40 Q6 36 6 16 Z" fill="#2B2723" stroke="#EFE8DF" stroke-width="1.6" stroke-linejoin="round"/>
+      <path d="M3 16 H45" stroke="#EFE8DF" stroke-width="2" stroke-linecap="round"/>
+      <g fill="#E9B872"><circle cx="16" cy="22" r="1.6"/><circle cx="24" cy="22" r="1.6"/><circle cx="32" cy="22" r="1.6"/>
+        <circle cx="20" cy="28" r="1.6"/><circle cx="28" cy="28" r="1.6"/><circle cx="24" cy="34" r="1.6"/></g>
+      <path d="M24 41 V46" stroke="#E9B872" stroke-width="2" stroke-linecap="round"/>
+      <circle cx="24" cy="8" r="3.2" fill="#E9B872"/>
+    </svg>
+    <div><b>Sieve</b><span>Review Console</span></div>
+  </div>
+  <h2>This roster</h2>
+  <div class="tiles" id="totals"></div>
+  <p class="note">Every row is <b>kept</b> by default. Untick a contact to drop
   it from the Salesforce sync. Approving downloads an approval file; pass it to
   <code>sieve sync --approval approval.json</code> to build the payload.</p>
+  <div class="spacer"></div>
+  <button id="approve" class="primary">Approve Roster</button>
+</aside>
+<main><div class="inner">
+  <p class="hello">Review the roster</p>
+  <p class="promise">Accounts by TAL score, flagged ones open. Check each committee, keep or drop each contact, then approve.</p>
   <div id="list"></div>
-</main>
+</div></main>
 <script>
 const DATA = __DATA__;
 const SEV = {ROLE_DEPARTED:'crit', DOMAIN_ANOMALY:'crit', GENERIC_EMAIL:'high',
   TITLE_MISMATCH:'med', DISPOSABLE_PHONE:'med', SENIORITY_AMBIGUITY:'low'};
 const SEAT = {'Economic Buyer':'seat-eb', 'Champion':'seat-ch',
-  'Influencer':'seat-in', 'Unassigned':'seat-un'};
+  'Technical Evaluator':'seat-te', 'Influencer':'seat-in', 'Unassigned':'seat-un'};
 const dropped = new Set();
 
 function esc(s){ const d=document.createElement('div'); d.textContent=s??'';
@@ -173,16 +233,17 @@ function esc(s){ const d=document.createElement('div'); d.textContent=s??'';
 
 function render(){
   const t = DATA.totals;
-  document.getElementById('totals').innerHTML =
-    `<b>${t.accounts}</b> accounts &middot; <b>${t.contacts}</b> contacts &middot;
-     <b>${t.flagged}</b> flagged &middot; <b>${t.complete_committees}</b> complete committees`;
+  document.getElementById('totals').innerHTML = [
+    [t.accounts, 'accounts', ''], [t.contacts, 'contacts', ''],
+    [t.flagged, 'flagged', 'hl'], [t.complete_committees, 'complete committees', '']
+  ].map(([v, k, c]) => `<div class="tile ${c}"><div class="v">${v}</div><div class="k">${k}</div></div>`).join('');
 
   document.getElementById('list').innerHTML = DATA.accounts.map(a => `
     <details class="acct" ${a.flagged ? 'open' : ''}>
       <summary>
         <span class="co">${esc(a.company)}</span>
-        <span class="tier t${a.tier.slice(-1)}">${esc(a.tier)}</span>
-        <span class="score">ICP ${a.icp_score}</span>
+        <span class="chip tier t${a.tier.slice(-1)}">${esc(a.tier)}</span>
+        <span class="chip score">TAL ${a.icp_score}</span>
         <span class="pill">${a.members.length} contacts${a.flagged ?
           ` &middot; ${a.flagged} flagged` : ''}${a.complete ?
           ' &middot; committee complete' : ''}</span>
