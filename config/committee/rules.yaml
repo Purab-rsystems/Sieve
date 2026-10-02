@@ -1,0 +1,79 @@
+# Buying committee rules. Set by Ray, applied before any contact is looked at.
+#
+# minimums      seats every committee must try to fill. More members are fine.
+#               A minimum nothing passes stays unfilled and is reported:
+#               nothing is forced in.
+# seat_order    order seats are filled in. Economic Buyer first: Forrester's
+#               decision-maker is "often high-level executives or leaders with
+#               budget responsibilities", so it takes a function's senior title.
+# roles         what each role means, quoted word for word from its source.
+#               The models read these.
+# also_asked    Forrester roles asked as well. Forrester's Influencer covers
+#               anyone inside the organisation with a stake in the purchase, so
+#               a User or Ratifier pick that passes fills an Influencer seat.
+# one title, one role: a title holds one seat; a function can supply more
+# than one title (CIO, then VP of IT), but only one per role.
+
+minimums:
+  Champion: 1
+  Economic Buyer: 1
+  Technical Evaluator: 1
+  Influencer: 3
+
+seat_order: [Economic Buyer, Champion, Technical Evaluator, Influencer]
+
+follow_up_rounds: 4      # judge follow-ups per unfilled seat after checker rejections
+
+intro:
+  text: >-
+    At the core of the buying network is the buying group, the internal
+    players driving the buying decision.
+  source: https://forrester.com/b2b-marketing/buying-group-roles
+
+roles:
+  Champion:
+    text: >-
+      Champions act as the key advocates for a purchase. Though their position
+      in the organizational chart can vary, effective champions have the
+      credibility to persuade others in the buying organization to follow
+      their commitment to change. Champions are often an ideal entry point
+      into the target buying organization.
+    source: https://forrester.com/b2b-marketing/buying-group-roles
+  Economic Buyer:
+    text: >-
+      The decision-maker has the final say in purchase decisions. Often
+      high-level executives or leaders with budget responsibilities, they aim
+      to ensure that purchases align with organizational goals.
+    source: https://forrester.com/b2b-marketing/buying-group-roles (Forrester calls this role Decision-Maker)
+  Technical Evaluator:
+    text: >-
+      The technical evaluator judges whether your product or service fits the
+      company's systems, security standards, and workflows.
+    source: https://www.callboxinc.com/growth-hacking/b2b-buying-committee/
+  Influencer:
+    text: >-
+      Influencers include people within an organization who have a stake in a
+      purchase decision as well as, increasingly, people outside of an
+      organization who help shape the decision. Internal influencers include
+      those involved in evaluating a solution, even if they will not directly
+      use it (e.g., IT employees involved in vetting the security of a new
+      marketing automation tool).
+    source: https://forrester.com/b2b-marketing/buying-group-roles
+
+also_asked:
+  User:
+    fills: Influencer
+    text: >-
+      Users are individuals or groups whose daily activities are affected by
+      the purchase. They might participate in product or service trials, then
+      contribute feedback that informs the buying decision.
+    source: https://forrester.com/b2b-marketing/buying-group-roles
+  Ratifier:
+    fills: Influencer
+    text: >-
+      Ratifiers are typically brought into the buying process to manage the
+      settlement of terms, conditions, and pricing. They often sit in the
+      finance, purchasing, and procurement functions and, compared to other
+      buying group members, see less direct impact on their day-to-day work
+      from the purchase decision.
+    source: https://forrester.com/b2b-marketing/buying-group-roles

@@ -1,0 +1,63 @@
+# Matching patterns for the role reference sheet: which raw contact job titles
+# hold each library title. Used only to match contacts to decided seats; the
+# models never see these.
+#
+# Patterns are regexes run on a normalised title: lower case, "&" -> "and",
+# "vice president" / SVP / EVP / AVP / "senior VP" -> "vp". A title can hold
+# more than one library title ("President & CEO" holds CEO and President).
+# Titles matching `exclude` hold nothing (assistants, interns, former holders).
+
+exclude: '\b(assistant|intern|trainee|apprentice|former|retired)\b|\bex-'
+
+titles:
+  Chief Executive Officer: ['\bceo\b', 'chief executive']
+  President: ['^president\b', '\bpresident$', '\bpresident and\b', '\band president\b']
+  General Manager: ['\bgeneral manager\b', '\bgm\b', '\bmanaging director\b']
+  Chief Financial Officer: ['\bcfo\b', 'chief financial']
+  VP of Finance: ['\bvp\b.{0,40}\bfinance\b', '\bhead of finance\b']
+  Finance Director: ['\bfinance director\b', '\bdirector\b.{0,30}\bfinance\b']
+  Controller: ['(?<!credit )\b(financial )?(controller|comptroller)\b']
+  Chief Operating Officer: ['\bcoo\b', 'chief operating', 'chief operations']
+  VP of Operations: ['\bvp\b.{0,40}\boperations\b', '\bhead of (ad )?operations\b']
+  Director of Operations: ['\bdirector\b.{0,30}\boperations\b', '\boperations director\b']
+  Chief Information Officer: ['\bcio\b', 'chief information\b(?! security)']
+  VP of IT: ['\bvp\b.{0,40}\b(it|information technology|infrastructure)\b', '\bhead of (it|information technology|infrastructure)\b']
+  IT Director: ['\b(it|information technology|infrastructure) director\b', '\bdirector\b.{0,30}\b(it|information technology|infrastructure)\b']
+  Chief Technology Officer: ['\bcto\b', 'chief technology', 'chief technical']
+  VP of Engineering: ['^(?!.*platform).*\bvp\b.{0,40}\b(engineering|technology|software|development|r and d)\b', '^(?!.*platform).*\bhead of (engineering|technology|software|development|r and d)\b']
+  Director of Engineering: ['^(?!.*platform).*\bdirector\b.{0,30}\b(engineering|software|development)\b', '^(?!.*platform).*\bengineering director\b']
+  Chief Architect: ['\bchief (software |technology |solutions? |enterprise |technical )?architect\b', '\bhead of architecture\b', '\bvp\b.{0,30}\barchitecture\b']
+  Enterprise Architect: ['\b(enterprise|principal|solutions?|technical|software|cloud|lead) architect\b', '\bdirector\b.{0,30}\barchitecture\b']
+  VP of Platform Engineering: ['\bvp\b.{0,40}\bplatforms?\b']
+  Head of Platform: ['\bhead of platforms?\b', '\bdirector\b.{0,30}\bplatforms?\b', '\bplatform director\b']
+  Chief Product Officer: ['chief product', '\bcpo\b']
+  VP of Product: ['^(?!.*marketing).*\bvp\b.{0,40}\bproducts?\b', '^(?!.*marketing).*\bhead of products?\b', '\bproducts? (technology )?vp\b']
+  Director of Product: ['^(?!.*marketing).*\bdirector\b.{0,30}\bproducts?\b', '^(?!.*marketing).*\bproduct director\b']
+  Chief Data Officer: ['chief data', 'chief analytics', '\bcdao\b']
+  Chief AI Officer: ['chief (ai|artificial intelligence)\b', '\bcaio\b']
+  VP of Data: ['\bvp\b.{0,40}\b(data|analytics|ai|machine learning)\b', '\bhead of (data|analytics|ai|machine learning)\b', '\bdirector\b.{0,30}\b(data|analytics)\b']
+  Chief Information Security Officer: ['\bciso\b', 'chief (information )?security officer']
+  Director of Information Security: ['\b(director|head|vp)\b.{0,40}\b(security|cyber ?security|infosec)\b']
+  Chief Digital Officer: ['chief digital']
+  VP of Digital Transformation: ['\b(vp|head|director)\b.{0,40}\b(digital|transformation)\b']
+  Chief Marketing Officer: ['\bcmo\b', 'chief marketing']
+  VP of Marketing: ['\bvp\b.{0,40}\bmarketing\b', '\bhead of marketing\b']
+  Marketing Director: ['\bmarketing director\b', '\bdirector\b.{0,30}\bmarketing\b']
+  Chief Revenue Officer: ['\bcro\b', 'chief revenue', 'chief sales', 'chief commercial']
+  VP of Sales: ['\bvp\b.{0,40}\b(sales|revenue|business development|commercial)\b', '\bhead of (sales|revenue|business development|commercial)\b']
+  Director of Sales: ['\b(sales|commercial) director\b', '\bdirector\b.{0,30}\b(sales|business development)\b']
+  Chief Customer Officer: ['chief customer', 'chief client', 'chief experience officer']
+  VP of Customer Success: ['\b(vp|head)\b.{0,40}\b(customer|client) (success|service|services|experience|support)\b']
+  Chief Human Resources Officer: ['\bchro\b', 'chief (human resources|people|hr)\b']
+  VP of Human Resources: ['\bvp\b.{0,40}\b(hr|human resources|people|talent)\b', '\bhead of (hr|human resources|people|talent)\b']
+  HR Director: ['\b(hr|human resources|people) director\b', '\bdirector\b.{0,30}\b(hr|human resources|people)\b']
+  Chief Procurement Officer: ['chief procurement', 'chief purchasing']
+  Director of Procurement: ['\b(director|vp|head)\b.{0,40}\b(procurement|purchasing|sourcing)\b', '\b(procurement|purchasing) director\b']
+  Chief Supply Chain Officer: ['chief supply chain', '\bcsco\b']
+  VP of Supply Chain: ['\bvp\b.{0,40}\b(supply chain|logistics)\b', '\bhead of (supply chain|logistics)\b']
+  Director of Supply Chain: ['\bdirector\b.{0,30}\b(supply chain|logistics)\b', '\bsupply chain director\b']
+  General Counsel: ['general counsel', 'chief legal', '\bclo\b']
+  Chief Compliance Officer: ['chief compliance', 'chief risk']
+  Chief Strategy Officer: ['chief strategy']
+  Head of Quality Assurance: ['\b(vp|head|director)\b.{0,40}\b(quality|qa|testing|test)\b']
+  VP of Corporate Development: ['\b(vp|head|director)\b.{0,40}\b(corporate development|corp dev|m and a|mergers|integration)\b']

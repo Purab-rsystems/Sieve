@@ -1,0 +1,1315 @@
+{
+ "about": "Role reference sheet for the buying committee. Descriptions are copied word for word from the named source; O*NET rows are the closest occupation and marked approximate; rows with source 'none' have no published description.",
+ "fetched": "2026-10-10",
+ "exclude": "\\b(assistant|intern|trainee|apprentice|former|retired)\\b|\\bex-",
+ "titles": [
+  {
+   "title": "Chief Executive Officer",
+   "function": "Executive",
+   "level": "C",
+   "summary": "Chief Executive Officer, or CEO, is one of the highest positions in the company or organization’s hierarchy. They usually represent the public face of the company and answer directly to the Board of Directors or Chairman. The CEO is responsible for setting the overall direction and strategy of the business, making major corporate decisions, and managing the operations and resources of the company. They serve as the main point of communication between the board of directors and the company's operations and are accountable for maximizing the organization's value. The CEO plays a critical role in shaping company culture and CEOs monitor resources and operations, including development, logistics, and marketing. They create, plan, implement, and integrate strategic direction in the company and ensure long-term goals, growth, and profit.",
+   "duties": [
+    "Develop and execute the company’s strategic plan to achieve growth and profitability.",
+    "Oversee all operations and business activities to ensure alignment with overall strategy.",
+    "Provide leadership and vision to guide the company’s long-term development.",
+    "Make high-level decisions regarding company policies, growth initiatives, and investments.",
+    "Manage relationships with the board of directors, stakeholders, and investors.",
+    "Ensure the company meets its legal, financial, and ethical obligations.",
+    "Drive company culture, mission, and values across the organization.",
+    "Lead the development and implementation of company-wide performance measures.",
+    "Monitor company performance and implement changes to meet objectives.",
+    "Serve as the public face of the company, representing the business at conferences and events.",
+    "Foster a strong working relationship with senior leadership and management teams.",
+    "Identify and evaluate risks to the company’s success and develop mitigation strategies.",
+    "Oversee financial planning, budgeting, and capital allocation decisions.",
+    "Ensure company compliance with corporate governance and regulatory requirements."
+   ],
+   "source": "AvaHR",
+   "url": "https://avahr.com/ceo-job-description-template/",
+   "approximate": false,
+   "patterns": [
+    "\\bceo\\b",
+    "chief executive"
+   ]
+  },
+  {
+   "title": "President",
+   "function": "Executive",
+   "level": "C",
+   "summary": "In a corporate setting, the President guides the development and implementation of company policies, leads senior leadership teams, and represents the organization in external affairs. As a key decision-maker, the President balances operational efficiency with long-term vision, fostering a culture of innovation and performance. This role requires outstanding leadership skills, great communication with stakeholders, and a solid understanding of the industry in which the organization operates.",
+   "duties": [
+    "Oversee the development and execution of company policies and strategies.",
+    "Lead the senior management team in achieving organizational goals.",
+    "Represent the company in external affairs and public relations.",
+    "Foster a culture of innovation and continuous improvement.",
+    "Ensure the company's financial health and sustainable growth.",
+    "Communicate the company's vision and goals to all stakeholders.",
+    "Monitor industry trends and adapt strategies accordingly.",
+    "Make critical decisions that align with the company's long-term objectives."
+   ],
+   "source": "AvaHR",
+   "url": "https://avahr.com/president-job-description-template/",
+   "approximate": false,
+   "patterns": [
+    "^president\\b",
+    "\\bpresident$",
+    "\\bpresident and\\b",
+    "\\band president\\b"
+   ]
+  },
+  {
+   "title": "General Manager",
+   "function": "Executive",
+   "level": "C-1",
+   "summary": "General managers supervise their teams at restaurants, retail shops, offices, and other enterprises to ensure that all company activities are completed successfully. Their job is to provide a link between higher management and front-line personnel who deal directly with clients and consumers. General managers ensure that their site maintains a good level of customer service by responding to complaints, product returns, and other concerns. They implement various in-store promotions, educate their staff, plan shipments, and keep their team organized. To carry out a sales strategy, they allocate responsibilities to shop workers and other team members.",
+   "duties": [
+    "Creating major performance targets and monitoring employee performance",
+    "Developing and implementing business growth strategies",
+    "Recruiting fresh employees for a department or business unit",
+    "Assuring that departments or divisions provide clients with high-quality services",
+    "Working closely with account managers and other senior personnel.",
+    "Creating innovative solutions to address the demands of clients",
+    "Improving internal procedures in order to increase production.",
+    "Managing and evaluating large-scale project and performance reports",
+    "Managing a location's or business unit's budget and monitoring its financial health"
+   ],
+   "source": "AvaHR",
+   "url": "https://avahr.com/general-manager-job-description-template/",
+   "approximate": false,
+   "patterns": [
+    "\\bgeneral manager\\b",
+    "\\bgm\\b",
+    "\\bmanaging director\\b"
+   ]
+  },
+  {
+   "title": "Chief Financial Officer",
+   "function": "Finance",
+   "level": "C",
+   "summary": "A Chief Financial Officer (CFO) often works for companies in a range of sectors, providing financial guidance to ensure the company's long-term viability. They collaborate closely with the CEO on quarterly financial reports, investment possibilities, and company-wide budgeting efforts. Their objective is to grow income and pay off liabilities by using their skills in business development and financial planning. They may also be in charge of preparing the company's annual financial report, which is sent to shareholders and potential investors.",
+   "duties": [
+    "Develop and oversee financial strategies to ensure long-term financial stability.",
+    "Manage and direct the financial planning and analysis processes, including budgeting and forecasting.",
+    "Oversee the preparation of all financial reports, including income statements, balance sheets, and cash flow statements.",
+    "Ensure compliance with all regulatory requirements and internal financial policies.",
+    "Collaborate with the executive team to develop and implement corporate strategies.",
+    "Evaluate and manage financial risks and opportunities for the organization.",
+    "Provide leadership and direction to the finance and accounting teams.",
+    "Work with external auditors to ensure the accuracy of financial statements and compliance with accounting standards.",
+    "Monitor and manage company investments and capital expenditures.",
+    "Advice on mergers, acquisitions, and other significant financial transactions."
+   ],
+   "source": "AvaHR",
+   "url": "https://avahr.com/cfo-job-description-template/",
+   "approximate": false,
+   "patterns": [
+    "\\bcfo\\b",
+    "chief financial"
+   ]
+  },
+  {
+   "title": "VP of Finance",
+   "function": "Finance",
+   "level": "C-1",
+   "summary": "We are looking for an experienced and dedicated VP of Finance who will be responsible for developing and directing the company’s analytical, financial plans and policies. The VP of Finance will also report on metrics to optimize our growth by understanding where efficiencies exist to maximize scalability throughout the year. VP of Finance responsibilities include overseeing accounting operations, gathering and analyzing financial data and preparing financial reports. Ultimately, you will work directly with the President of our organization to ensure our operations remain on track to hit our target goals.",
+   "duties": [
+    "Prepare timely and accurate analyses, summaries and reports of financial data on the operating progress of the company",
+    "Create a reliable cash flow projection process and reporting structure that includes a minimum cash threshold to meet operational needs",
+    "Routinely review revenue cycle metrics to identify and address issues affecting overall performance proactively",
+    "Manage the company’s compliance with local and federal regulatory matters",
+    "Partner with senior leaders to ensure the company hits revenue targets"
+   ],
+   "source": "Workable",
+   "url": "https://resources.workable.com/vp-of-finance-job-description/",
+   "approximate": false,
+   "patterns": [
+    "\\bvp\\b.{0,40}\\bfinance\\b",
+    "\\bhead of finance\\b"
+   ]
+  },
+  {
+   "title": "Finance Director",
+   "function": "Finance",
+   "level": "C-2",
+   "summary": "Finance Directors serve as members of the executive team of a company to develop and implement financial policies and strategies that enhance the firm's financial position. They supervise all financial activities inside each department to verify that they are staying under budget. A Finance Director examines the company's financial performance and provides reports for the executive team to review and comment on. They also conduct studies and analyses of the company's data in order to provide forecasts and projections that aid in the development of more complete budgets. Finance Directors design plans to examine, manage, and mitigate any possible financial risks.",
+   "duties": [
+    "Managing financial strategy and planning.",
+    "Financial performance analysis and reporting.",
+    "Overseeing audit and tax functions.",
+    "Creating and enforcing accounting policies.",
+    "Creating projections and detailed budgets.",
+    "Educating accounting personnel.",
+    "Examining the finances of several departments.",
+    "Identifying, managing, and reducing risk.",
+    "Analyzing large amounts of financial data.",
+    "Taking care of internal controls."
+   ],
+   "source": "AvaHR",
+   "url": "https://avahr.com/finance-director-job-description-template/",
+   "approximate": false,
+   "patterns": [
+    "\\bfinance director\\b",
+    "\\bdirector\\b.{0,30}\\bfinance\\b"
+   ]
+  },
+  {
+   "title": "Controller",
+   "function": "Finance",
+   "level": "C-2",
+   "summary": "Controllers work for businesses to ensure that financial records are kept up to date and correct for future reference. They collaborate with higher management to identify cost-cutting opportunities and obligations that must be paid off before the end of the year. It is their responsibility to verify that their organization follows financial regulations. They also examine financial accounts to gauge the financial health of their company and take appropriate action. They may also be in charge of keeping track of payroll paperwork to guarantee that employees are paid the right amount each pay period.",
+   "duties": [
+    "Developing internal control standards, rules, and procedures for budget accounting, cash and credit management, administration, and other tasks.",
+    "Coordinating and directing budgeting, procurement, investment activities, and financial planning.",
+    "Ensuring that state and federal regulatory obligations, as well as professional standards, are met.",
+    "Working with the accounting department to establish and manage financial controls.",
+    "Preparing and presenting financial reports and risk analyses.",
+    "Completing budgeting and forecasting.",
+    "Establishing, monitoring, and enforcing policies and procedures to guide financial choices.",
+    "Supporting management, especially in terms of commercial and financial problems.",
+    "Preparing financial reports to help senior management gain insights into the company's financial performance.",
+    "Being in charge of the general ledger of the firm."
+   ],
+   "source": "AvaHR",
+   "url": "https://avahr.com/controller-job-description-template/",
+   "approximate": false,
+   "patterns": [
+    "(?<!credit )\\b(financial )?(controller|comptroller)\\b"
+   ]
+  },
+  {
+   "title": "Chief Operating Officer",
+   "function": "Operations",
+   "level": "C",
+   "summary": "The executive role of the Chief Operating Officer is to oversee all operational aspects of a company. This includes overseeing operations, human resources, and finance departments within an organization and managing budgets. The COO works closely with other executives to make sure departmental goals match corporate strategies. They set priorities for projects and growth initiatives throughout the year. The COO also reviews progress on short-term plans monthly and on long-term plans six months ahead of formal review cycles, which happen quarterly or annually, depending on the organization's needs.",
+   "duties": [
+    "Work with the CEO to develop, drive, and implement the company’s vision, strategies, and goals.",
+    "Manage the company’s capital investment to sustain its growth and profitability.",
+    "Report directly to the CEO on all matters of the company.",
+    "Perform oversight function on all the operations of the company.",
+    "Drive the employees to ensure a high level of productivity.",
+    "Ensure effective hiring, onboarding, personnel appraisal, and retention.",
+    "Design, implement, and ensure compliance with new organizational regulation.",
+    "Design and implement policies to sustain the company’s vision.",
+    "Maintain the company’s reputation and relationship with partners, clients, and stakeholders."
+   ],
+   "source": "AvaHR",
+   "url": "https://avahr.com/chief-operating-officer-job-description-template/",
+   "approximate": false,
+   "patterns": [
+    "\\bcoo\\b",
+    "chief operating",
+    "chief operations"
+   ]
+  },
+  {
+   "title": "VP of Operations",
+   "function": "Operations",
+   "level": "C-1",
+   "summary": "Vice Presidents of Operations are senior executives in various industries responsible for overseeing and managing operations tasks, activities, and projects. They develop and implement strategic direction related to the company’s operations, identify new technologies, processes, and systems to improve operations efficiency, and establish operations-related policies and standards. VPs of Operations are also in charge of monitoring operations budgets and expenses, analyzing the performance of team members, and reviewing organizational structure to suggest changes to improve productivity.",
+   "duties": [
+    "Oversee the company’s operation tasks, activities, and projects",
+    "Lead business operations to contribute to the overall profitability and success of the company",
+    "Develop and implement strategic direction related to the company’s operations",
+    "Identify and recommend new technologies, processes, and systems to improve organizational operations and distribution of resources and materials",
+    "Establish operations-related policies and standards to ensure effective and consistent execution",
+    "Establish operations budgets and monitor expenses and costs",
+    "Lead the successful execution of operations-related projects, programs, and product development",
+    "Monitor the performance of team members to identify efficiency issues and propose solutions",
+    "Communicate project progress and issues to other executives",
+    "Participate in the planning and execution of organizational activities such as meetings, conventions, etc",
+    "Analyze and review the organizational structure and suggest changes to improve productivity",
+    "Write and present performance reports and metrics to the CEO",
+    "Identify cost estimates, staffing requirements, and other details for projects",
+    "Collaborate with the HR department on interviewing and hiring new employees"
+   ],
+   "source": "AvaHR",
+   "url": "https://avahr.com/vp-of-operations-job-description-template/",
+   "approximate": false,
+   "patterns": [
+    "\\bvp\\b.{0,40}\\boperations\\b",
+    "\\bhead of (ad )?operations\\b"
+   ]
+  },
+  {
+   "title": "Director of Operations",
+   "function": "Operations",
+   "level": "C-2",
+   "summary": "Directors of Operations are often employed by organizations in a variety of sectors to oversee the day-to-day operations of their companies. They collaborate closely with department leaders and high management to explore opportunities to boost sales, staff retention, and customer happiness. Their goal is to assist higher management in promoting corporate growth by optimizing company operations and client relationships. They may also be in charge of establishing budgets or financial goals for certain divisions.",
+   "duties": [
+    "Playing a key part in the development of the company's budget and growth plan.",
+    "Putting ideas into action in order to maximize company and asset growth.",
+    "Ensuring that expertise and efficiency are maintained across all operating systems.",
+    "Developing ways to combat theft and stock losses, as well as executing cost-cutting efforts.",
+    "Making financial statements.",
+    "Taking care of money, accounting, and banking procedures.",
+    "Collaborating with leadership to create a culture of collaborative accountability and responsibility.",
+    "Ensuring that key performance targets are met in order to fulfill company and consumer expectations."
+   ],
+   "source": "AvaHR",
+   "url": "https://avahr.com/director-of-operations-job-description-template/",
+   "approximate": false,
+   "patterns": [
+    "\\bdirector\\b.{0,30}\\boperations\\b",
+    "\\boperations director\\b"
+   ]
+  },
+  {
+   "title": "Chief Information Officer",
+   "function": "IT",
+   "level": "C",
+   "summary": "We are looking for an experienced CIO (Chief Information Officer) to oversee the use of Information technology (IT) in our company. You will be the one to devise the company’s IT strategy and ensure that all systems necessary to support its operations and objectives are in place. An excellent CIO must have a solid IT background and consistently keep up-to-date with advancements of the field. Apart from their education and experience, they must have every quality of a leader and a strong strategic and business acumen. The goal is to ensure that information technology adds the maximum value to our company so as to facilitate the success of our business.",
+   "duties": [
+    "Set objectives and strategies for the IT department",
+    "Select and implement suitable technology to streamline all internal operations and help optimize their strategic benefits",
+    "Design and customize technological systems and platforms to improve customer experience",
+    "Plan the implementation of new systems and provide guidance to IT professionals and other staff within the organization",
+    "Approve purchases of technological equipment and software and establish partnerships with IT providers",
+    "Oversee the technological infrastructure (networks and computer systems) in the organization to ensure optimal performance",
+    "Direct and organize IT-related projects",
+    "Monitor changes or advancements in technology to discover ways the company can gain competitive advantage",
+    "Analyze the costs, value and risks of information technology to advise management and suggest actions"
+   ],
+   "source": "Workable",
+   "url": "https://resources.workable.com/cio-job-description",
+   "approximate": false,
+   "patterns": [
+    "\\bcio\\b",
+    "chief information\\b(?! security)"
+   ]
+  },
+  {
+   "title": "VP of IT",
+   "function": "IT",
+   "level": "C-1",
+   "summary": "Plan, direct, or coordinate activities in such fields as electronic data processing, information systems, systems analysis, and computer programming.",
+   "duties": [
+    "Direct daily operations of department, analyzing workflow, establishing priorities, developing standards and setting deadlines.",
+    "Meet with department heads, managers, supervisors, vendors, and others, to solicit cooperation and resolve problems.",
+    "Review project plans to plan and coordinate project activity.",
+    "Assign and review the work of systems analysts, programmers, and other computer-related workers.",
+    "Provide users with technical support for computer problems.",
+    "Develop computer information resources, providing for data security and control, strategic computing, and disaster recovery.",
+    "Recruit, hire, train and supervise staff, or participate in staffing decisions.",
+    "Stay abreast of advances in technology.",
+    "Consult with users, management, vendors, and technicians to assess computing needs and system requirements.",
+    "Develop and interpret organizational goals, policies, and procedures.",
+    "Evaluate the organization's technology use and needs and recommend improvements, such as hardware and software upgrades.",
+    "Review and approve all systems charts and programs prior to their implementation.",
+    "Prepare and review operational reports or project progress reports.",
+    "Evaluate data processing proposals to assess project feasibility and requirements.",
+    "Control operational budget and expenditures.",
+    "Purchase necessary equipment."
+   ],
+   "source": "O*NET 30.0 occupation 11-3021.00 Computer and Information Systems Managers (closest occupation, approximate)",
+   "url": "https://www.onetonline.org/link/summary/11-3021.00",
+   "approximate": true,
+   "patterns": [
+    "\\bvp\\b.{0,40}\\b(it|information technology|infrastructure)\\b",
+    "\\bhead of (it|information technology|infrastructure)\\b"
+   ]
+  },
+  {
+   "title": "IT Director",
+   "function": "IT",
+   "level": "C-2",
+   "summary": "We are looking for an experienced IT Director to oversee all IT (Information Technology) functions in our company. You will be in charge of a team of IT managers and manage the company’s technology operations and the implementation of new IT systems and policies. An excellent IT director is very knowledgeable in IT and computer systems. They have a solid technical background while able to manage and motivate people. The ideal candidate will be experienced in creating and implementing IT policies and systems that will meet objectives. The goal is to ensure IT systems and people are effective and functioning within the limits of budget, time and specifications of the company.",
+   "duties": [
+    "Oversee all technology operations (e.g. network security) and evaluate them according to established goals",
+    "Devise and establish IT policies and systems to support the implementation of strategies set by upper management",
+    "Analyze the business requirements of all departments to determine their technology needs",
+    "Purchase efficient and cost effective technological equipment and software",
+    "Inspect the use of technological equipment and software to ensure functionality and efficiency",
+    "Identify the need for upgrades, configurations or new systems and report to upper management",
+    "Coordinate IT managers and supervise computer scientists, technicians and other professionals to provide guidance",
+    "Control budget and report on expenditure",
+    "Assist in building relationships with vendors and creating cost-efficient contracts"
+   ],
+   "source": "Workable",
+   "url": "https://resources.workable.com/it-director-job-description",
+   "approximate": false,
+   "patterns": [
+    "\\b(it|information technology|infrastructure) director\\b",
+    "\\bdirector\\b.{0,30}\\b(it|information technology|infrastructure)\\b"
+   ]
+  },
+  {
+   "title": "Chief Technology Officer",
+   "function": "Technology",
+   "level": "C",
+   "summary": "The Chief Technology Officer, also known as the CTO, is responsible for developing and managing technology systems and ensuring that the technological infrastructure within the company works efficiently and flawlessly. Chief Technology Officers outline the company’s technological vision, implement strategies, and develop technical aspects of the company. They implement technology solutions and ensure that they meet current and future company needs. CTOs also manage technology budgets and schedules, set goals for research and development, and help other departments use technology properly. Chief Technology Officers are usually leaders within the IT sector of the company, and they are responsible for guiding and assisting team members. They also help with recruiting and training new IT managers.",
+   "duties": [
+    "Set the company’s technological vision.",
+    "Develop and manage technical aspects of the company.",
+    "Research, develop, and implement technology strategies.",
+    "Implement technology solutions to meet current and future company’s needs.",
+    "Manage technology budgets and schedules.",
+    "Create timelines for developing technological services.",
+    "Provide leadership, assistance, and motivation to team members.",
+    "Help other departments use technology properly.",
+    "Build and maintain quality assurance and data protection processes.",
+    "Collect feedback and perform necessary adjustments and improvements.",
+    "Track and analyze technology performance metrics.",
+    "Help with recruiting and training new employees."
+   ],
+   "source": "AvaHR",
+   "url": "https://avahr.com/cto-job-description-template/",
+   "approximate": false,
+   "patterns": [
+    "\\bcto\\b",
+    "chief technology",
+    "chief technical"
+   ]
+  },
+  {
+   "title": "VP of Engineering",
+   "function": "Technology",
+   "level": "C-1",
+   "summary": "Vice Presidents of Engineering are senior executive leaders responsible for managing the company’s engineering and development operations. They lead and supervise directors of engineering, engineering managers, and other members of the engineering team and monitor the company’s engineering operations and product development processes. VPs of Engineering develop and plan engineering projects, implement the strategic direction for the company’s development initiatives, and develop engineering policies, practices, standards, and security measures. Their job is to ensure their team members reach objectives, goals, and project completion within the budget and time frames. They also hire and onboard new team members, provide support and guidance, and build cross-department relationships.",
+   "duties": [
+    "Lead and supervise directors of engineering, engineering managers, developers, and other members of the engineering team",
+    "Monitor the company’s engineering operations and product development processes",
+    "Ensure development and engineering operations meet current and future company needs",
+    "Develop, plan, and execute engineering projects",
+    "Implement the strategic direction of the company’s engineering and development initiatives",
+    "Identify and implement new technologies to drive and improve the company’s organizational processes",
+    "Develop engineering policies, practices, standards, and security measures",
+    "Participate in strategic planning efforts with product management and other departments",
+    "Participate in the development of technical engineering designs and resource management",
+    "Ensure that the engineering team reaches objectives, goals, and project completion within budgets and timelines",
+    "Collaborate with the CTO to develop the overall technical vision",
+    "Manage the interview, recruitment, and onboarding processes",
+    "Manage and monitor the engineering department’s budgets, including equipment costs, training, development, etc",
+    "Provide support, assistance, and guidance to team members and build cross-department relationships"
+   ],
+   "source": "AvaHR",
+   "url": "https://avahr.com/vp-of-engineering-job-description-template/",
+   "approximate": false,
+   "patterns": [
+    "^(?!.*platform).*\\bvp\\b.{0,40}\\b(engineering|technology|software|development|r and d)\\b",
+    "^(?!.*platform).*\\bhead of (engineering|technology|software|development|r and d)\\b"
+   ]
+  },
+  {
+   "title": "Director of Engineering",
+   "function": "Technology",
+   "level": "C-2",
+   "summary": "Directors of Engineering play a crucial strategic and technical role in a company. They are responsible for managing and overseeing all operations and aspects of the engineering department, hiring and training new team members, and coordinating and leading engineering projects. Directors of Engineering also manage the department’s budgeting and financing, evaluate the performance of team members, implement new technologies that can improve business performance, and implement engineering best practices, processes, and goals. Their job is to ensure engineering projects are executed successfully and timely and that all operations and activities within the engineering departments run smoothly.",
+   "duties": [
+    "Manage and oversee all operations and aspects of the engineering department",
+    "Organize and supervise the hiring, training, and scheduling of team members",
+    "Establish and implement engineering practices, processes, and goals",
+    "Build and foster business relationships with internal and external stakeholders",
+    "Develop and coordinate engineering projects and strategies",
+    "Manage and oversee the department’s financing, expenses, and budgeting",
+    "Lead engineering projects by setting objectives, requirements, and timeframes",
+    "Research and implement innovative technologies to improve the department’s success",
+    "Evaluate the performance of engineering team members",
+    "Collaborate with the upper management about important matters and any issues that may arise",
+    "Coordinate and monitor engineering projects to ensure they are completed on time and within budgets",
+    "Oversee the development of engineering products and processes",
+    "Provide technical guidance and assistance to engineering team members"
+   ],
+   "source": "AvaHR",
+   "url": "https://avahr.com/director-of-engineering-job-description-template/",
+   "approximate": false,
+   "patterns": [
+    "^(?!.*platform).*\\bdirector\\b.{0,30}\\b(engineering|software|development)\\b",
+    "^(?!.*platform).*\\bengineering director\\b"
+   ]
+  },
+  {
+   "title": "Chief Architect",
+   "function": "Architecture",
+   "level": "C-1",
+   "summary": "Design and develop solutions to complex applications problems, system administration issues, or network concerns. Perform systems management and integration functions.",
+   "duties": [
+    "Communicate with staff or clients to understand specific system requirements.",
+    "Investigate system component suitability for specified purposes, and make recommendations regarding component use.",
+    "Provide customers or installation teams guidelines for implementing secure systems.",
+    "Direct the analysis, development, and operation of complete computer systems.",
+    "Direct the installation of operating systems, network or application software, or computer or network hardware.",
+    "Monitor system operation to detect potential problems.",
+    "Identify system data, hardware, or software components required to meet user needs.",
+    "Perform ongoing hardware and software maintenance operations, including installing or upgrading hardware or software.",
+    "Verify stability, interoperability, portability, security, or scalability of system architecture.",
+    "Research, test, or verify proper functioning of software patches and fixes.",
+    "Configure servers to meet functional specifications.",
+    "Collaborate with engineers or software developers to select appropriate design solutions or ensure the compatibility of system components.",
+    "Design and conduct hardware or software tests.",
+    "Evaluate existing systems to determine effectiveness, and suggest changes to meet organizational requirements.",
+    "Document design specifications, installation instructions, and other system-related information.",
+    "Perform security analyses of developed or packaged software components.",
+    "Provide technical guidance or support for the development or troubleshooting of systems.",
+    "Define and analyze objectives, scope, issues, or organizational impact of information systems.",
+    "Establish functional or system standards to address operational requirements, quality requirements, and design constraints.",
+    "Develop system engineering, software engineering, system integration, or distributed system architectures.",
+    "Provide advice on project costs, design concepts, or design changes.",
+    "Evaluate current or emerging technologies to consider factors such as cost, portability, compatibility, or usability.",
+    "Develop or approve project plans, schedules, or budgets.",
+    "Communicate project information through presentations, technical reports, or white papers.",
+    "Train system users in system operation or maintenance.",
+    "Complete models and simulations, using manual or automated tools, to analyze or predict system performance under different operating conditions.",
+    "Develop efficient and effective system controllers."
+   ],
+   "source": "O*NET 30.0 occupation 15-1299.08 Computer Systems Engineers/Architects (closest occupation, approximate)",
+   "url": "https://www.onetonline.org/link/summary/15-1299.08",
+   "approximate": true,
+   "patterns": [
+    "\\bchief (software |technology |solutions? |enterprise |technical )?architect\\b",
+    "\\bhead of architecture\\b",
+    "\\bvp\\b.{0,30}\\barchitecture\\b"
+   ]
+  },
+  {
+   "title": "Enterprise Architect",
+   "function": "Architecture",
+   "level": "C-2",
+   "summary": "We are looking for an Enterprise Architect to join our team to improve our current IT infrastructure and set the direction for integrating information technology and programs across our organization. Enterprise Architect responsibilities include improving current IT infrastructure, optimizing business operations for efficiency with an emphasis on knowledge sharing among partners. Ultimately, you will work with a team of IT professionals to oversee our IT infrastructure and help direct our enterprise architecture models.",
+   "duties": [
+    "Suggesting ideas to reduce costs in IT and business leadership",
+    "Organizing training to improve employees’ knowledge and skills for future organizational growth",
+    "Conducting research in talent management to improve the organization’s business operations",
+    "Providing business architecture and systems processing guidance",
+    "Ensuring the efficiency, security, and support of the organization’s goals",
+    "Creating methods for compliance architecture, such as data storage, metadata management and change control"
+   ],
+   "source": "Workable",
+   "url": "https://resources.workable.com/enterprise-architect-job-description/",
+   "approximate": false,
+   "patterns": [
+    "\\b(enterprise|principal|solutions?|technical|software|cloud|lead) architect\\b",
+    "\\bdirector\\b.{0,30}\\barchitecture\\b"
+   ]
+  },
+  {
+   "title": "VP of Platform Engineering",
+   "function": "Platform",
+   "level": "C-1",
+   "summary": "Plan, direct, or coordinate activities in such fields as electronic data processing, information systems, systems analysis, and computer programming.",
+   "duties": [
+    "Direct daily operations of department, analyzing workflow, establishing priorities, developing standards and setting deadlines.",
+    "Meet with department heads, managers, supervisors, vendors, and others, to solicit cooperation and resolve problems.",
+    "Review project plans to plan and coordinate project activity.",
+    "Assign and review the work of systems analysts, programmers, and other computer-related workers.",
+    "Provide users with technical support for computer problems.",
+    "Develop computer information resources, providing for data security and control, strategic computing, and disaster recovery.",
+    "Recruit, hire, train and supervise staff, or participate in staffing decisions.",
+    "Stay abreast of advances in technology.",
+    "Consult with users, management, vendors, and technicians to assess computing needs and system requirements.",
+    "Develop and interpret organizational goals, policies, and procedures.",
+    "Evaluate the organization's technology use and needs and recommend improvements, such as hardware and software upgrades.",
+    "Review and approve all systems charts and programs prior to their implementation.",
+    "Prepare and review operational reports or project progress reports.",
+    "Evaluate data processing proposals to assess project feasibility and requirements.",
+    "Control operational budget and expenditures.",
+    "Purchase necessary equipment."
+   ],
+   "source": "O*NET 30.0 occupation 11-3021.00 Computer and Information Systems Managers (closest occupation, approximate)",
+   "url": "https://www.onetonline.org/link/summary/11-3021.00",
+   "approximate": true,
+   "patterns": [
+    "\\bvp\\b.{0,40}\\bplatforms?\\b"
+   ]
+  },
+  {
+   "title": "Head of Platform",
+   "function": "Platform",
+   "level": "C-2",
+   "summary": "Plan, direct, or coordinate activities in such fields as electronic data processing, information systems, systems analysis, and computer programming.",
+   "duties": [
+    "Direct daily operations of department, analyzing workflow, establishing priorities, developing standards and setting deadlines.",
+    "Meet with department heads, managers, supervisors, vendors, and others, to solicit cooperation and resolve problems.",
+    "Review project plans to plan and coordinate project activity.",
+    "Assign and review the work of systems analysts, programmers, and other computer-related workers.",
+    "Provide users with technical support for computer problems.",
+    "Develop computer information resources, providing for data security and control, strategic computing, and disaster recovery.",
+    "Recruit, hire, train and supervise staff, or participate in staffing decisions.",
+    "Stay abreast of advances in technology.",
+    "Consult with users, management, vendors, and technicians to assess computing needs and system requirements.",
+    "Develop and interpret organizational goals, policies, and procedures.",
+    "Evaluate the organization's technology use and needs and recommend improvements, such as hardware and software upgrades.",
+    "Review and approve all systems charts and programs prior to their implementation.",
+    "Prepare and review operational reports or project progress reports.",
+    "Evaluate data processing proposals to assess project feasibility and requirements.",
+    "Control operational budget and expenditures.",
+    "Purchase necessary equipment."
+   ],
+   "source": "O*NET 30.0 occupation 11-3021.00 Computer and Information Systems Managers (closest occupation, approximate)",
+   "url": "https://www.onetonline.org/link/summary/11-3021.00",
+   "approximate": true,
+   "patterns": [
+    "\\bhead of platforms?\\b",
+    "\\bdirector\\b.{0,30}\\bplatforms?\\b",
+    "\\bplatform director\\b"
+   ]
+  },
+  {
+   "title": "Chief Product Officer",
+   "function": "Product",
+   "level": "C",
+   "summary": "A Chief Product Officer (CPO) is a senior executive who takes charge of the entire product lifecycle, from the initial idea to the final launch and beyond. They set the product strategy, define its vision, and make sure it aligns with the company's business goals. A CPO works closely with various teams like marketing, engineering, sales, and customer support to ensure the product meets market demands and remains competitive. Their role is vital for fostering innovation, enhancing product performance, and keeping customers happy. Essentially, a CPO plays a key role in leading the company's product development efforts toward success and sustainability.",
+   "duties": [
+    "Formulate and implement a product strategy that aligns with the company's objectives.",
+    "Oversee the entire product lifecycle from concept to release.",
+    "Partner with cross-functional teams to foster product innovation.",
+    "Conduct market research to identify trends and customer needs.",
+    "Ensure product quality and performance meet industry standards.",
+    "Manage the product roadmap and prioritize development initiatives.",
+    "Communicate product vision and updates to stakeholders and teams.",
+    "Monitor competitors and adjust strategies to maintain a competitive edge."
+   ],
+   "source": "AvaHR",
+   "url": "https://avahr.com/chief-product-officer-job-description-template/",
+   "approximate": false,
+   "patterns": [
+    "chief product",
+    "\\bcpo\\b"
+   ]
+  },
+  {
+   "title": "VP of Product",
+   "function": "Product",
+   "level": "C-1",
+   "summary": "",
+   "duties": [],
+   "source": "none: no published description found for this exact title",
+   "url": "",
+   "approximate": false,
+   "patterns": [
+    "^(?!.*marketing).*\\bvp\\b.{0,40}\\bproducts?\\b",
+    "^(?!.*marketing).*\\bhead of products?\\b",
+    "\\bproducts? (technology )?vp\\b"
+   ]
+  },
+  {
+   "title": "Director of Product",
+   "function": "Product",
+   "level": "C-2",
+   "summary": "",
+   "duties": [],
+   "source": "none: no published description found for this exact title",
+   "url": "",
+   "approximate": false,
+   "patterns": [
+    "^(?!.*marketing).*\\bdirector\\b.{0,30}\\bproducts?\\b",
+    "^(?!.*marketing).*\\bproduct director\\b"
+   ]
+  },
+  {
+   "title": "Chief Data Officer",
+   "function": "Data",
+   "level": "C",
+   "summary": "Chief Data Officers are members of the C-suite in various companies and organizations, meaning they hold an important executive role. They are responsible for overseeing the processes companies use to collect, manage, and store data. They design and implement the company’s data storage solutions, establish strategies for data analytics projects, and collaborate with other executives to understand and achieve the company’s goals. Chief Data Officers also follow innovations and emerging trends in technology and lead and support data scientists, analysts, and engineers.",
+   "duties": [
+    "Supervise the collection, management, and storage of data across the company",
+    "Design and implement the company’s data storage solutions, such as data warehouses and cloud-based platforms",
+    "Establish and implement strategies and roadmaps for data analytics projects",
+    "Collaborate with business stakeholders to understand the company’s needs and objectives",
+    "Ensure the data usability, availability, and efficiency",
+    "Oversee the effectiveness of data-related projects and determine their impact on the company’s goals",
+    "Develop an information architecture by designing data models and dictionaries",
+    "Offer strategic advice to senior management on emerging trends in technology",
+    "Ensure the integrity and confidentiality of the company’s data by implementing data privacy policies",
+    "Recruit, lead, and support data scientists, analysts, and engineers"
+   ],
+   "source": "AvaHR",
+   "url": "https://avahr.com/chief-data-officer-job-description-template/",
+   "approximate": false,
+   "patterns": [
+    "chief data",
+    "chief analytics",
+    "\\bcdao\\b"
+   ]
+  },
+  {
+   "title": "Chief AI Officer",
+   "function": "Data",
+   "level": "C",
+   "summary": "",
+   "duties": [],
+   "source": "none: no published description found for this exact title",
+   "url": "",
+   "approximate": false,
+   "patterns": [
+    "chief (ai|artificial intelligence)\\b",
+    "\\bcaio\\b"
+   ]
+  },
+  {
+   "title": "VP of Data",
+   "function": "Data",
+   "level": "C-1",
+   "summary": "",
+   "duties": [],
+   "source": "none: no published description found for this exact title",
+   "url": "",
+   "approximate": false,
+   "patterns": [
+    "\\bvp\\b.{0,40}\\b(data|analytics|ai|machine learning)\\b",
+    "\\bhead of (data|analytics|ai|machine learning)\\b",
+    "\\bdirector\\b.{0,30}\\b(data|analytics)\\b"
+   ]
+  },
+  {
+   "title": "Chief Information Security Officer",
+   "function": "Security",
+   "level": "C",
+   "summary": "The chief information security officer ‘s job description comprises an experienced and skilled professional responsible for developing and implementing security strategies that protect the company’s data and systems from cyber threats. They ensure the company’s IT security system adheres to regulatory requirements and analyze security threats to the computer system in real time. The ideal candidate must have a strong background in information security, a deep understanding of relevant regulations and industry standards, and the ability to lead a team of security professionals.",
+   "duties": [
+    "Develop and implement an information security strategy aligning with the company’s business objectives",
+    "Identify and assess security risks within the organization in real time and implement security measures to mitigate risks",
+    "Ensure compliance with relevant laws, regulations, and industry standards related to data security and privacy",
+    "Educate staff in the organization on the best IT practices and regulatory requirements",
+    "Work closely with other high-level executives to develop all-encompassing security strategies",
+    "Mentor a team of professionals, providing them with guidance, support, and training, whenever necessary",
+    "Stay up-to-date with the latest security threats and best practices, and adapt the company’s security strategy accordingly"
+   ],
+   "source": "Workable",
+   "url": "https://resources.workable.com/chief-information-security-officer-job-description",
+   "approximate": false,
+   "patterns": [
+    "\\bciso\\b",
+    "chief (information )?security officer"
+   ]
+  },
+  {
+   "title": "Director of Information Security",
+   "function": "Security",
+   "level": "C-2",
+   "summary": "Plan, direct, or coordinate activities in such fields as electronic data processing, information systems, systems analysis, and computer programming.",
+   "duties": [
+    "Direct daily operations of department, analyzing workflow, establishing priorities, developing standards and setting deadlines.",
+    "Meet with department heads, managers, supervisors, vendors, and others, to solicit cooperation and resolve problems.",
+    "Review project plans to plan and coordinate project activity.",
+    "Assign and review the work of systems analysts, programmers, and other computer-related workers.",
+    "Provide users with technical support for computer problems.",
+    "Develop computer information resources, providing for data security and control, strategic computing, and disaster recovery.",
+    "Recruit, hire, train and supervise staff, or participate in staffing decisions.",
+    "Stay abreast of advances in technology.",
+    "Consult with users, management, vendors, and technicians to assess computing needs and system requirements.",
+    "Develop and interpret organizational goals, policies, and procedures.",
+    "Evaluate the organization's technology use and needs and recommend improvements, such as hardware and software upgrades.",
+    "Review and approve all systems charts and programs prior to their implementation.",
+    "Prepare and review operational reports or project progress reports.",
+    "Evaluate data processing proposals to assess project feasibility and requirements.",
+    "Control operational budget and expenditures.",
+    "Purchase necessary equipment."
+   ],
+   "source": "O*NET 30.0 occupation 11-3021.00 Computer and Information Systems Managers (closest occupation, approximate)",
+   "url": "https://www.onetonline.org/link/summary/11-3021.00",
+   "approximate": true,
+   "patterns": [
+    "\\b(director|head|vp)\\b.{0,40}\\b(security|cyber ?security|infosec)\\b"
+   ]
+  },
+  {
+   "title": "Chief Digital Officer",
+   "function": "Digital",
+   "level": "C",
+   "summary": "A Chief Digital Officer is a senior executive who drives digital transformation within an organization. This role involves a variety of responsibilities, such as developing digital strategies, leading digital marketing efforts, overseeing new technology implementations, and integrating digital initiatives across all business units. A Chief Digital Officer fosters innovation and leverages digital assets to create new revenue streams, enhance customer experiences, and improve operational efficiencies. By aligning the company's digital strategies with its overall business goals, the Chief Digital Officer plays a vital role in positioning the organization for sustained growth and gaining a competitive edge in our increasingly digital world.",
+   "duties": [
+    "Create and implement digital strategies that align with the company's business objectives.",
+    "Lead the digital transformation agenda across departments.",
+    "Oversee digital marketing initiatives to boost brand presence.",
+    "Manage and implement new digital technologies.",
+    "Collaborate with senior leadership to integrate digital efforts.",
+    "Monitor and analyze data for informed decision-making.",
+    "Foster a culture of innovation and digital-first thinking.",
+    "Ensure smooth integration of digital changes into existing operations."
+   ],
+   "source": "AvaHR",
+   "url": "https://avahr.com/chief-digital-officer-job-description-template/",
+   "approximate": false,
+   "patterns": [
+    "chief digital"
+   ]
+  },
+  {
+   "title": "VP of Digital Transformation",
+   "function": "Digital",
+   "level": "C-1",
+   "summary": "",
+   "duties": [],
+   "source": "none: no published description found for this exact title",
+   "url": "",
+   "approximate": false,
+   "patterns": [
+    "\\b(vp|head|director)\\b.{0,40}\\b(digital|transformation)\\b"
+   ]
+  },
+  {
+   "title": "Chief Marketing Officer",
+   "function": "Marketing",
+   "level": "C",
+   "summary": "A Chief Marketing Officer (CMO) is a senior executive responsible for overseeing an organization’s marketing strategy, brand management, and customer outreach. The CMO’s primary role is to drive business growth by creating and implementing marketing plans that align with the company’s overall goals. This involves leading market research, managing advertising and promotional activities, and guiding product development to ensure offerings meet consumer needs. Additionally, the CMO collaborates with other executives to shape the company’s public image and communicates its value proposition effectively to the target audience. CMOs play a critical role in identifying new market opportunities, optimizing marketing channels, and analyzing consumer behavior to ensure that the company maintains a competitive edge in its industry. The CMO takes care of the company's message and spreads it across social media. They also make sure that the message reaches the audience and meets sales expectations. The CMO comes up with new strategies and plans by listening to the audience and their wishes and implementing them in marketing campaigns.",
+   "duties": [
+    "Develop and execute comprehensive marketing strategies that align with overall business objectives.",
+    "Lead brand development initiatives to strengthen market presence and increase brand equity.",
+    "Oversee and manage all marketing operations, including digital marketing, advertising, and public relations.",
+    "Utilize data and analytics to measure marketing effectiveness and optimize campaign performance.",
+    "Collaborate with sales, product, and executive teams to ensure cohesive strategies and market alignment.",
+    "Identify market opportunities and consumer trends to guide product development and innovation.",
+    "Manage and mentor a team of marketing professionals to achieve high performance and growth.",
+    "Making sure that the company’s message is spread across Social Media channels and reaches the audience.",
+    "Reporting to the CEO and collaborating with other teams and departments.",
+    "Establish and manage marketing budgets, ensuring efficient allocation of resources.",
+    "Drive customer acquisition and retention strategies through targeted outreach and engagement campaigns.",
+    "Represent the company at industry events, conferences, and in public relations activities to build and maintain relationships."
+   ],
+   "source": "AvaHR",
+   "url": "https://avahr.com/chief-marketing-officer-job-description-template/",
+   "approximate": false,
+   "patterns": [
+    "\\bcmo\\b",
+    "chief marketing"
+   ]
+  },
+  {
+   "title": "VP of Marketing",
+   "function": "Marketing",
+   "level": "C-1",
+   "summary": "A Vice President (VP) of Marketing is a senior executive responsible for overseeing the marketing strategy and operations of a company. This role involves leading the marketing department, developing comprehensive marketing plans, and aligning marketing efforts with the company’s overall business goals. The VP of Marketing is typically involved in brand management, market research, advertising, public relations, digital marketing, and product promotion. The VP of Marketing often reports directly to the Chief Executive Officer (CEO) or Chief Marketing Officer (CMO) and is part of the executive leadership team, contributing to strategic decisions that drive the company’s growth and success. This role requires a good understanding of the market, strong leadership and communication skills, and the ability to adapt to changing industry trends and consumer behaviors.",
+   "duties": [
+    "Develop and execute comprehensive marketing strategies that align with company goals and drive business growth.",
+    "Lead and mentor the marketing team, fostering a culture of creativity, innovation, and high performance.",
+    "Oversee the creation and execution of marketing campaigns across multiple channels, including digital, social media, email, and traditional media.",
+    "Manage the marketing budget, allocating resources effectively to maximize ROI and meet financial targets.",
+    "Analyze market trends, customer insights, and the competitive landscape to inform marketing strategies and identify new opportunities.",
+    "Collaborate with product development, sales, and other departments to ensure cohesive messaging and positioning across all marketing initiatives.",
+    "Drive brand strategy and ensure consistent brand messaging across all touchpoints.",
+    "Oversee public relations and communications efforts, including media relations, press releases, and crisis management.",
+    "Track and measure the effectiveness of marketing campaigns, using data-driven insights to optimize performance and report results to senior leadership.",
+    "Develop and maintain relationships with key stakeholders, including customers, partners, and industry influencers.",
+    "Lead the development of content marketing strategies, ensuring the creation of high-quality content that engages target audiences and supports lead generation efforts."
+   ],
+   "source": "AvaHR",
+   "url": "https://avahr.com/vp-of-marketing-job-description-template/",
+   "approximate": false,
+   "patterns": [
+    "\\bvp\\b.{0,40}\\bmarketing\\b",
+    "\\bhead of marketing\\b"
+   ]
+  },
+  {
+   "title": "Marketing Director",
+   "function": "Marketing",
+   "level": "C-2",
+   "summary": "A Marketing Director is a senior-level professional responsible for overseeing a company's marketing strategies and initiatives. A Marketing Director creates different strategies and campaigns to maximize their client’s brand awareness and profit. They develop, plan, and implement marketing campaigns that align with the company's goals and target audience. The Marketing Director manages a team of marketing professionals, monitors market trends, and analyzes data to optimize campaigns. They also collaborate with other departments, such as sales and product development, to ensure that marketing efforts support the company's overall business objectives. Their role is crucial in driving brand awareness, customer engagement, and revenue growth through strategic marketing efforts. Keep an eye out for candidates with successful campaigns and previous work experience. Stay away from candidates who lack interpersonal and leadership skills.",
+   "duties": [
+    "Develop and implement comprehensive marketing strategies to align with company objectives.",
+    "Lead and manage the marketing team, ensuring effective execution of campaigns and projects.",
+    "Oversee market research and analysis to identify trends, target audiences, and opportunities for growth.",
+    "Monitor and analyze the performance of marketing initiatives, adjusting strategies as needed for optimal results.",
+    "Collaborate with sales, product development, and other departments to ensure cohesive marketing efforts.",
+    "Manage the marketing budget, ensuring cost-effective allocation of resources and maximum ROI.",
+    "Drive brand awareness and ensure consistency in messaging across all marketing channels.",
+    "Oversee digital marketing efforts, including SEO, social media, and content marketing.",
+    "Maintain relationships with external partners, such as agencies, media outlets, and vendors.",
+    "Stay updated on industry trends, competitor activities, and new marketing technologies to keep strategies current and innovative."
+   ],
+   "source": "AvaHR",
+   "url": "https://avahr.com/marketing-director-job-description-template/",
+   "approximate": false,
+   "patterns": [
+    "\\bmarketing director\\b",
+    "\\bdirector\\b.{0,30}\\bmarketing\\b"
+   ]
+  },
+  {
+   "title": "Chief Revenue Officer",
+   "function": "Revenue",
+   "level": "C",
+   "summary": "A Chief Revenue Officer (CRO) is a top executive who oversees all the revenue-generating activities within a company. The CRO's main goal is to drive sustainable revenue growth by aligning and integrating various departments like sales, marketing, customer service, and product development. This role calls for a strategic thinker who can analyze market trends, spot new revenue opportunities, and implement effective sales strategies. By fostering teamwork across different teams and ensuring every part of the customer journey is optimized, the CRO plays a vital role in boosting a company's financial performance.",
+   "duties": [
+    "Develop and implement comprehensive revenue strategies.",
+    "Align sales, marketing, and customer service efforts.",
+    "Identify and capitalize on new revenue opportunities.",
+    "Analyze market trends and adjust strategies accordingly.",
+    "Monitor and optimize existing revenue streams.",
+    "Foster collaboration between cross-functional teams.",
+    "Set and achieve revenue targets and KPIs.",
+    "Report on revenue performance to executive leadership."
+   ],
+   "source": "AvaHR",
+   "url": "https://avahr.com/chief-revenue-officer-job-description-template/",
+   "approximate": false,
+   "patterns": [
+    "\\bcro\\b",
+    "chief revenue",
+    "chief sales",
+    "chief commercial"
+   ]
+  },
+  {
+   "title": "VP of Sales",
+   "function": "Revenue",
+   "level": "C-1",
+   "summary": "VP of Sales, also known as the Vice President of Sales, is the senior executive responsible for leading and managing the company’s sales team and supervising all sales activities and operations. These professionals have extensive sales experience which helps them establish and implement sales goals, targets, and strategies that aim to drive the company’s growth and development. VP of Sales review and evaluate customer activities and needs, research market trends to develop new products and services according to customers’ demands, and provide sales forecasts. They are also in charge of hiring and training new sales team members, providing mentorship and guidance, setting sales targets, and preparing detailed reports of sales operations and activities.",
+   "duties": [
+    "Lead and manage the company’s sales team and oversee all sales operations and activities",
+    "Research, establish, and implement sales plans, goals, and standards",
+    "Research new business opportunities, products, and services to meet market demands",
+    "Review and evaluate customer behavior and activities and work on improving customer satisfaction",
+    "Plan and supervise the implementation and execution of promotional campaigns",
+    "Prepare and maintain detailed reports of sales operations and activities",
+    "Set and monitor monthly and annual sales targets",
+    "Hire and guide new sales team members and evaluate their performance",
+    "Analyze market trends and conditions to predict future trends and adjust sales strategies accordingly",
+    "Monitor competition products and activities and provide sales forecasts",
+    "Ensure all sales activities are carried out within the assigned budgets and timelines",
+    "Provide strong mentorship and guidance for team members",
+    "Build and maintain business relationships with vendors and partners and negotiate sales terms",
+    "Set sales quotas, goals, and performance targets for each team member"
+   ],
+   "source": "AvaHR",
+   "url": "https://avahr.com/vp-of-sales-job-description-template/",
+   "approximate": false,
+   "patterns": [
+    "\\bvp\\b.{0,40}\\b(sales|revenue|business development|commercial)\\b",
+    "\\bhead of (sales|revenue|business development|commercial)\\b"
+   ]
+  },
+  {
+   "title": "Director of Sales",
+   "function": "Revenue",
+   "level": "C-2",
+   "summary": "Directors of sales are highly experienced individuals who manage all sales operations for a company or a business. They are responsible for the entire sales team, inner and external sales plans, sales reports, trend analysis, and much more. Therefore, if you want to hire a director of sales, you should aim to reach trustworthy and capable individuals who can get the job done adequately.",
+   "duties": [
+    "Develop and execute weekly, monthly, and annual sales strategies.",
+    "Achieve sales targets and expand the company’s customer base.",
+    "Build and maintain healthy and long-lasting relationships with our customers.",
+    "Keep track of the latest sales trends and implement them accordingly.",
+    "Work closely with sales managers to meet annual goals and establish the company’s performance.",
+    "Present and explain weekly, monthly, and quarterly sales objectives to other executives.",
+    "Evaluate costs, competition, supply, and demand, determine selling prices, and compose useful sales reports."
+   ],
+   "source": "AvaHR",
+   "url": "https://avahr.com/director-of-sales-job-description-template/",
+   "approximate": false,
+   "patterns": [
+    "\\b(sales|commercial) director\\b",
+    "\\bdirector\\b.{0,30}\\b(sales|business development)\\b"
+   ]
+  },
+  {
+   "title": "Chief Customer Officer",
+   "function": "Customer",
+   "level": "C",
+   "summary": "A Chief Customer Officer is a key member of the executive team, focused on crafting and implementing strategies to boost customer experience and satisfaction. This role often involves leading all customer-facing departments, like customer service, support, and success, to ensure a seamless approach to customer interactions. The Chief Customer Officer works to align the company's products, services, and operations with what customers need and expect, driving loyalty and long-term business growth. By championing the customer's voice within the organization, the Chief Customer Officer helps build a customer-centric culture and fosters strong relationships between the company and its clients.",
+   "duties": [
+    "Develop and implement strategies to enhance customer experience and satisfaction.",
+    "Lead customer service, support, and success teams to achieve departmental goals.",
+    "Align company offerings with customer needs and expectations.",
+    "Examine customer data to spot trends and areas needing enhancement.",
+    "Champion the customer's perspective within the organization.",
+    "Foster a customer-centric culture across all departments.",
+    "Collaborate with other executives to support overall business objectives.",
+    "Track and report key performance indicators related to customer satisfaction."
+   ],
+   "source": "AvaHR",
+   "url": "https://avahr.com/chief-customer-officer-job-description-template/",
+   "approximate": false,
+   "patterns": [
+    "chief customer",
+    "chief client",
+    "chief experience officer"
+   ]
+  },
+  {
+   "title": "VP of Customer Success",
+   "function": "Customer",
+   "level": "C-1",
+   "summary": "",
+   "duties": [],
+   "source": "none: no published description found for this exact title",
+   "url": "",
+   "approximate": false,
+   "patterns": [
+    "\\b(vp|head)\\b.{0,40}\\b(customer|client) (success|service|services|experience|support)\\b"
+   ]
+  },
+  {
+   "title": "Chief Human Resources Officer",
+   "function": "People",
+   "level": "C",
+   "summary": "We are looking for a Chief Human Resources Officer (CHRO) to lead our HR department. CHRO responsibilities include designing and evaluating career paths, overseeing all HR functions and crafting strategies that meet our business goals. If you think you’re able to help us transform our organization into a modern, productive and inclusive workspace, we’d like to meet you. Ultimately, you will secure our long-term growth by leading all training, talent acquisition and career development activities.",
+   "duties": [
+    "Craft talent acquisition strategies to build strong pipelines for future hiring needs",
+    "Formulate career development plans",
+    "Promote inclusion in the workplace and reinforce our position as an equal opportunity employer",
+    "Ensure our hiring, onboarding and management procedures are effective for diverse groups",
+    "Lead employer branding efforts (like recruitment marketing)",
+    "Supervise HR Directors",
+    "Evaluate training and development programs",
+    "Develop HR policies for all branches, countries, regions",
+    "Analyze the effectiveness of our HR procedures and tools",
+    "Ensure HR plans align with our mission and business objectives"
+   ],
+   "source": "Workable",
+   "url": "https://resources.workable.com/chro-job-description",
+   "approximate": false,
+   "patterns": [
+    "\\bchro\\b",
+    "chief (human resources|people|hr)\\b"
+   ]
+  },
+  {
+   "title": "VP of Human Resources",
+   "function": "People",
+   "level": "C-1",
+   "summary": "We are seeking a highly competent and experienced Vice President of Human Resources (VP of HR) to assume responsibility for directing and overseeing our company’s HR plans. As a key position reporting directly to the CEO, we are looking for candidates who possess strong leadership qualities, strategic thinking abilities, and effective people management skills. This role requires individuals with a solid HR background who can demonstrate their problem-solving capabilities. ur objective is to enhance the significance of strategic HR within our organization and ensure the long-term success of both our HR function and the company as a whole. If you meet these criteria and are interested in joining our team, we encourage you to reach out to us.",
+   "duties": [
+    "Collaborate with management team to craft the company’s vision and mission",
+    "Develop strategic HR plans and policies (recruitment, training, compensation etc.)",
+    "Hire, guide and evaluate the work of HR executives",
+    "Decide and act on initiatives for equal opportunity, diversity etc.",
+    "Assume responsibility of labor and employee relations",
+    "Re-engineer processes to ensure maximum efficiency",
+    "Ensure all procedures comply with legal regulations and best practices",
+    "Analyze the effectiveness of HR operations and policies",
+    "Prepare reports for the CEO using business metrics and KPIs"
+   ],
+   "source": "Workable",
+   "url": "https://resources.workable.com/vp-of-hr-job-description",
+   "approximate": false,
+   "patterns": [
+    "\\bvp\\b.{0,40}\\b(hr|human resources|people|talent)\\b",
+    "\\bhead of (hr|human resources|people|talent)\\b"
+   ]
+  },
+  {
+   "title": "HR Director",
+   "function": "People",
+   "level": "C-2",
+   "summary": "An HR Director is a senior-level executive responsible for overseeing the human resources (HR) department within an organization. They play a key role in developing and implementing HR strategies that align with the company’s overall goals and objectives. The HR Director manages all aspects of the HR function, including talent acquisition, employee relations, performance management, compensation and benefits, training and development, and compliance with labor laws and regulations. The HR Director also works closely with other executives and department heads to ensure that the organization attracts, retains, and develops the best talent while fostering a positive and productive work environment. They are involved in strategic planning, workforce development, organizational change management, and maintaining company culture.",
+   "duties": [
+    "Develop and implement HR strategies and initiatives aligned with the overall business strategy.",
+    "Oversee the recruitment, selection, and onboarding processes to attract and retain top talent.",
+    "Manage employee relations, addressing issues and resolving conflicts to maintain a positive work environment.",
+    "Design and manage compensation and benefits programs to ensure competitive and fair employee packages.",
+    "Lead performance management processes, including evaluations, feedback, and development of plans.",
+    "Ensure compliance with labor laws, regulations, and company policies.",
+    "Develop and implement training and development programs to enhance employee skills and career growth.",
+    "Oversee organizational development and change management initiatives.",
+    "Collaborate with senior leadership to align HR policies with business goals.",
+    "Drive diversity, equity, and inclusion (DEI) initiatives within the organization.",
+    "Manage the HR department’s budget and resources effectively.",
+    "Serve as a key advisor to executives on HR-related issues and organizational development strategies."
+   ],
+   "source": "AvaHR",
+   "url": "https://avahr.com/hr-director-job-description-template/",
+   "approximate": false,
+   "patterns": [
+    "\\b(hr|human resources|people) director\\b",
+    "\\bdirector\\b.{0,30}\\b(hr|human resources|people)\\b"
+   ]
+  },
+  {
+   "title": "Chief Procurement Officer",
+   "function": "Procurement",
+   "level": "C",
+   "summary": "A Chief Procurement Officer is a key senior executive who oversees an organization's procurement processes. This role involves strategizing and managing the acquisition of goods and services, ensuring the company gets top-quality resources at the best prices. The Chief Procurement Officer is crucial in developing and implementing procurement policies, negotiating with suppliers, and building strong relationships that benefit the organization. Plus, the Chief Procurement Officer plays a vital role in risk management, cost reduction, and ensuring compliance with relevant laws and regulations. The Chief Procurement Officer greatly contributes to the organization's overall efficiency and competitive edge by leveraging market insights and procurement expertise.",
+   "duties": [
+    "Create and execute procurement strategies to enhance cost-effectiveness and efficiency.",
+    "Negotiate contracts and terms with suppliers to secure beneficial agreements.",
+    "Oversee the procurement budget and ensure cost-effective purchasing.",
+    "Manage supplier relationships and address any performance issues.",
+    "Ensure adherence to procurement regulations and company policies.",
+    "Lead the procurement team and drive departmental performance.",
+    "Evaluate market trends to uncover potential cost-saving opportunities.",
+    "Report on procurement metrics and provide insights to senior management."
+   ],
+   "source": "AvaHR",
+   "url": "https://avahr.com/chief-procurement-officer-job-description-template/",
+   "approximate": false,
+   "patterns": [
+    "chief procurement",
+    "chief purchasing"
+   ]
+  },
+  {
+   "title": "Director of Procurement",
+   "function": "Procurement",
+   "level": "C-2",
+   "summary": "Plan, direct, or coordinate the activities of buyers, purchasing officers, and related workers involved in purchasing materials, products, and services. Includes wholesale or retail trade merchandising managers and procurement managers.",
+   "duties": [
+    "Develop and implement purchasing and contract management instructions, policies, and procedures.",
+    "Locate vendors of materials, equipment or supplies, and interview them to determine product availability and terms of sales.",
+    "Prepare bid awards requiring board approval.",
+    "Direct and coordinate activities of personnel engaged in buying, selling, and distributing materials, equipment, machinery, and supplies.",
+    "Review purchase order claims and contracts for conformance to company policy.",
+    "Review, evaluate, and approve specifications for issuing and awarding bids.",
+    "Administer online purchasing systems.",
+    "Prepare and process requisitions and purchase orders for supplies and equipment.",
+    "Interview and hire staff, and oversee staff training.",
+    "Develop cost reduction strategies and savings plans.",
+    "Control purchasing department budgets.",
+    "Resolve vendor or contractor grievances and claims against suppliers.",
+    "Analyze market and delivery systems to assess present and future material availability.",
+    "Participate in the development of specifications for equipment, products, or substitute materials.",
+    "Maintain records of goods ordered and received.",
+    "Represent companies in negotiating contracts and formulating policies with suppliers.",
+    "Prepare reports regarding market conditions and merchandise costs.",
+    "Arrange for disposal of surplus materials."
+   ],
+   "source": "O*NET 30.0 occupation 11-3061.00 Purchasing Managers (closest occupation, approximate)",
+   "url": "https://www.onetonline.org/link/summary/11-3061.00",
+   "approximate": true,
+   "patterns": [
+    "\\b(director|vp|head)\\b.{0,40}\\b(procurement|purchasing|sourcing)\\b",
+    "\\b(procurement|purchasing) director\\b"
+   ]
+  },
+  {
+   "title": "Chief Supply Chain Officer",
+   "function": "Supply Chain",
+   "level": "C",
+   "summary": "Direct or coordinate production, purchasing, warehousing, distribution, or financial forecasting services or activities to limit costs and improve accuracy, customer service, or safety. Examine existing procedures or opportunities for streamlining activities to meet product distribution needs. Direct the movement, storage, or processing of inventory.",
+   "duties": [
+    "Determine appropriate equipment and staffing levels to load, unload, move, or store materials.",
+    "Manage activities related to strategic or tactical purchasing, material requirements planning, controlling inventory, warehousing, or receiving.",
+    "Select transportation routes to maximize economy by combining shipments or consolidating warehousing and distribution.",
+    "Define performance metrics for measurement, comparison, or evaluation of supply chain factors, such as product cost or quality.",
+    "Implement new or improved supply chain processes to improve efficiency or performance.",
+    "Develop procedures for coordination of supply chain management with other functional areas, such as sales, marketing, finance, production, or quality assurance.",
+    "Confer with supply chain planners to forecast demand or create supply plans that ensure availability of materials or products.",
+    "Analyze inventories to determine how to increase inventory turns, reduce waste, or optimize customer service.",
+    "Negotiate prices and terms with suppliers, vendors, or freight forwarders.",
+    "Analyze information about supplier performance or procurement program success.",
+    "Monitor suppliers' activities to assess performance in meeting quality or delivery requirements.",
+    "Design or implement supply chains that support business strategies adapted to changing market conditions, new business opportunities, or cost reduction strategies.",
+    "Meet with suppliers to discuss performance metrics, to provide performance feedback, or to discuss production forecasts or changes.",
+    "Monitor forecasts and quotas to identify changes and predict effects on supply chain activities.",
+    "Participate in the coordination of engineering changes, product line extensions, or new product launches to ensure orderly and timely transitions in material or production flow.",
+    "Identify or qualify new suppliers in collaboration with other departments, such as procurement, engineering, or quality assurance.",
+    "Design or implement plant warehousing strategies for production materials or finished products.",
+    "Design, implement, or oversee product take back or reverse logistics programs to ensure products are recycled, reused, or responsibly disposed.",
+    "Develop or implement procedures or systems to evaluate or select suppliers.",
+    "Document physical supply chain processes, such as workflows, cycle times, position responsibilities, or system flows.",
+    "Diagram supply chain models to help facilitate discussions with customers.",
+    "Evaluate and select information or other technology solutions to improve tracking and reporting of materials or products distribution, storage, or inventory.",
+    "Identify opportunities to reuse or recycle materials to minimize consumption of new materials, minimize waste, or to convert wastes to by-products.",
+    "Review or update supply chain practices in accordance with new or changing environmental policies, standards, regulations, or laws.",
+    "Design or implement supply chains that support environmental policies."
+   ],
+   "source": "O*NET 30.0 occupation 11-3071.04 Supply Chain Managers (closest occupation, approximate)",
+   "url": "https://www.onetonline.org/link/summary/11-3071.04",
+   "approximate": true,
+   "patterns": [
+    "chief supply chain",
+    "\\bcsco\\b"
+   ]
+  },
+  {
+   "title": "VP of Supply Chain",
+   "function": "Supply Chain",
+   "level": "C-1",
+   "summary": "Direct or coordinate production, purchasing, warehousing, distribution, or financial forecasting services or activities to limit costs and improve accuracy, customer service, or safety. Examine existing procedures or opportunities for streamlining activities to meet product distribution needs. Direct the movement, storage, or processing of inventory.",
+   "duties": [
+    "Determine appropriate equipment and staffing levels to load, unload, move, or store materials.",
+    "Manage activities related to strategic or tactical purchasing, material requirements planning, controlling inventory, warehousing, or receiving.",
+    "Select transportation routes to maximize economy by combining shipments or consolidating warehousing and distribution.",
+    "Define performance metrics for measurement, comparison, or evaluation of supply chain factors, such as product cost or quality.",
+    "Implement new or improved supply chain processes to improve efficiency or performance.",
+    "Develop procedures for coordination of supply chain management with other functional areas, such as sales, marketing, finance, production, or quality assurance.",
+    "Confer with supply chain planners to forecast demand or create supply plans that ensure availability of materials or products.",
+    "Analyze inventories to determine how to increase inventory turns, reduce waste, or optimize customer service.",
+    "Negotiate prices and terms with suppliers, vendors, or freight forwarders.",
+    "Analyze information about supplier performance or procurement program success.",
+    "Monitor suppliers' activities to assess performance in meeting quality or delivery requirements.",
+    "Design or implement supply chains that support business strategies adapted to changing market conditions, new business opportunities, or cost reduction strategies.",
+    "Meet with suppliers to discuss performance metrics, to provide performance feedback, or to discuss production forecasts or changes.",
+    "Monitor forecasts and quotas to identify changes and predict effects on supply chain activities.",
+    "Participate in the coordination of engineering changes, product line extensions, or new product launches to ensure orderly and timely transitions in material or production flow.",
+    "Identify or qualify new suppliers in collaboration with other departments, such as procurement, engineering, or quality assurance.",
+    "Design or implement plant warehousing strategies for production materials or finished products.",
+    "Design, implement, or oversee product take back or reverse logistics programs to ensure products are recycled, reused, or responsibly disposed.",
+    "Develop or implement procedures or systems to evaluate or select suppliers.",
+    "Document physical supply chain processes, such as workflows, cycle times, position responsibilities, or system flows.",
+    "Diagram supply chain models to help facilitate discussions with customers.",
+    "Evaluate and select information or other technology solutions to improve tracking and reporting of materials or products distribution, storage, or inventory.",
+    "Identify opportunities to reuse or recycle materials to minimize consumption of new materials, minimize waste, or to convert wastes to by-products.",
+    "Review or update supply chain practices in accordance with new or changing environmental policies, standards, regulations, or laws.",
+    "Design or implement supply chains that support environmental policies."
+   ],
+   "source": "O*NET 30.0 occupation 11-3071.04 Supply Chain Managers (closest occupation, approximate)",
+   "url": "https://www.onetonline.org/link/summary/11-3071.04",
+   "approximate": true,
+   "patterns": [
+    "\\bvp\\b.{0,40}\\b(supply chain|logistics)\\b",
+    "\\bhead of (supply chain|logistics)\\b"
+   ]
+  },
+  {
+   "title": "Director of Supply Chain",
+   "function": "Supply Chain",
+   "level": "C-2",
+   "summary": "Direct or coordinate production, purchasing, warehousing, distribution, or financial forecasting services or activities to limit costs and improve accuracy, customer service, or safety. Examine existing procedures or opportunities for streamlining activities to meet product distribution needs. Direct the movement, storage, or processing of inventory.",
+   "duties": [
+    "Determine appropriate equipment and staffing levels to load, unload, move, or store materials.",
+    "Manage activities related to strategic or tactical purchasing, material requirements planning, controlling inventory, warehousing, or receiving.",
+    "Select transportation routes to maximize economy by combining shipments or consolidating warehousing and distribution.",
+    "Define performance metrics for measurement, comparison, or evaluation of supply chain factors, such as product cost or quality.",
+    "Implement new or improved supply chain processes to improve efficiency or performance.",
+    "Develop procedures for coordination of supply chain management with other functional areas, such as sales, marketing, finance, production, or quality assurance.",
+    "Confer with supply chain planners to forecast demand or create supply plans that ensure availability of materials or products.",
+    "Analyze inventories to determine how to increase inventory turns, reduce waste, or optimize customer service.",
+    "Negotiate prices and terms with suppliers, vendors, or freight forwarders.",
+    "Analyze information about supplier performance or procurement program success.",
+    "Monitor suppliers' activities to assess performance in meeting quality or delivery requirements.",
+    "Design or implement supply chains that support business strategies adapted to changing market conditions, new business opportunities, or cost reduction strategies.",
+    "Meet with suppliers to discuss performance metrics, to provide performance feedback, or to discuss production forecasts or changes.",
+    "Monitor forecasts and quotas to identify changes and predict effects on supply chain activities.",
+    "Participate in the coordination of engineering changes, product line extensions, or new product launches to ensure orderly and timely transitions in material or production flow.",
+    "Identify or qualify new suppliers in collaboration with other departments, such as procurement, engineering, or quality assurance.",
+    "Design or implement plant warehousing strategies for production materials or finished products.",
+    "Design, implement, or oversee product take back or reverse logistics programs to ensure products are recycled, reused, or responsibly disposed.",
+    "Develop or implement procedures or systems to evaluate or select suppliers.",
+    "Document physical supply chain processes, such as workflows, cycle times, position responsibilities, or system flows.",
+    "Diagram supply chain models to help facilitate discussions with customers.",
+    "Evaluate and select information or other technology solutions to improve tracking and reporting of materials or products distribution, storage, or inventory.",
+    "Identify opportunities to reuse or recycle materials to minimize consumption of new materials, minimize waste, or to convert wastes to by-products.",
+    "Review or update supply chain practices in accordance with new or changing environmental policies, standards, regulations, or laws.",
+    "Design or implement supply chains that support environmental policies."
+   ],
+   "source": "O*NET 30.0 occupation 11-3071.04 Supply Chain Managers (closest occupation, approximate)",
+   "url": "https://www.onetonline.org/link/summary/11-3071.04",
+   "approximate": true,
+   "patterns": [
+    "\\bdirector\\b.{0,30}\\b(supply chain|logistics)\\b",
+    "\\bsupply chain director\\b"
+   ]
+  },
+  {
+   "title": "General Counsel",
+   "function": "Legal",
+   "level": "C",
+   "summary": "We are looking for an excellent General Counsel to add value to and be the “backbone” of our business. You will ensure that company operates within the law at all times, offer counsel on legal issues, create an effective guardian of the organisation and facilitate business strategies development. The successful candidate will be able to ensure legal compliance and limit risk exposure.",
+   "duties": [
+    "Provide expert and strategic legal advice to management",
+    "Set internal governance policies and manage the impact of external factors",
+    "Evaluate and weigh multiple inputs and impacts of any decision or course of action",
+    "Anticipate issues and estimate risks strategically",
+    "Identify proactive solutions that will eliminate or mitigate risks",
+    "Base your decision making process on ethics and integrity",
+    "Create associations of trust and respect with key stakeholders",
+    "Deal with external parties (regulators, external counsel, politicians, clients)",
+    "Attract, develop, direct, motivate and drive performance from team",
+    "Draft agreements that minimize risks and maximize legal rights",
+    "Meet legal objectives",
+    "Deal with complex, significant matters that cut across legal and related areas",
+    "Keep abreast of legislative changes"
+   ],
+   "source": "Workable",
+   "url": "https://resources.workable.com/general-counsel-job-description",
+   "approximate": false,
+   "patterns": [
+    "general counsel",
+    "chief legal",
+    "\\bclo\\b"
+   ]
+  },
+  {
+   "title": "Chief Compliance Officer",
+   "function": "Compliance",
+   "level": "C",
+   "summary": "A Chief Compliance Officer is a key executive who helps ensure that an organization follows regulatory requirements and internal policies. They play an important role in fostering a culture of compliance within the company, working on developing, implementing, and monitoring programs that reduce risk and encourage ethical behavior. This executive often gets involved in risk management, shaping policies, and training staff on compliance issues, making them an essential part of the organization's governance framework. By promoting transparency and integrity, the Chief Compliance Officer not only safeguards the organization from potential legal troubles but also helps build trust with stakeholders.",
+   "duties": [
+    "Develop and implement compliance programs to ensure adherence to regulations.",
+    "Monitor and assess the organization's compliance with laws and internal policies.",
+    "Offer training and support to employees on compliance issues.",
+    "Collaborate with departments to assess and manage compliance risks.",
+    "Liaise with regulatory bodies to maintain open communication on compliance issues.",
+    "Conduct regular audits and investigations to identify compliance gaps.",
+    "Prepare reports on compliance status and present findings to stakeholders.",
+    "Promote a culture of compliance and ethical behavior throughout the organization."
+   ],
+   "source": "AvaHR",
+   "url": "https://avahr.com/chief-compliance-officer-job-description-template/",
+   "approximate": false,
+   "patterns": [
+    "chief compliance",
+    "chief risk"
+   ]
+  },
+  {
+   "title": "Chief Strategy Officer",
+   "function": "Strategy",
+   "level": "C",
+   "summary": "A Chief Strategy Officer is a member of a C-Suite in various companies and industries. They work closely with CEOs on the general improvement of companies’ daily and strategic operations and activities. They develop and execute strategies that increase the company’s financial growth. Chief Strategy Officers are also involved in business development, partnerships, acquisitions, and branching into new businesses. They measure companies’ and employees’ performance and oversee the execution of business initiatives.",
+   "duties": [
+    "Develop and monitor strategy plans and processes in the company",
+    "Develop innovative and engaging plans in line with the strategy",
+    "Analyze market dynamics, business landscapes, product performance, and competition intelligence",
+    "Identify capital projects, ventures, potential targets, and other strategic opportunities",
+    "Measure performance and progress by using suitable metrics",
+    "Oversee execution of business initiatives",
+    "Identify strategic risks and reduce these risks",
+    "Research short-term and long-term corporate development opportunities",
+    "Inform and advise the leadership team or board of directors about potential risks",
+    "Craft a company’s strategic vision",
+    "Carry out initiatives involving partnerships with other companies",
+    "Present strategic initiatives to stakeholders"
+   ],
+   "source": "AvaHR",
+   "url": "https://avahr.com/chief-strategy-officer-job-description-template/",
+   "approximate": false,
+   "patterns": [
+    "chief strategy"
+   ]
+  },
+  {
+   "title": "Head of Quality Assurance",
+   "function": "Quality",
+   "level": "C-1",
+   "summary": "Plan, direct, or coordinate quality assurance programs. Formulate quality control policies and control quality of laboratory and production efforts.",
+   "duties": [
+    "Stop production if serious product defects are present.",
+    "Review and update standard operating procedures or quality assurance manuals.",
+    "Monitor performance of quality control systems to ensure effectiveness and efficiency.",
+    "Review quality documentation necessary for regulatory submissions and inspections.",
+    "Analyze quality control test results and provide feedback and interpretation to production management or staff.",
+    "Verify that raw materials, purchased parts or components, in-process samples, and finished products meet established testing and inspection standards.",
+    "Oversee workers including supervisors, inspectors, or laboratory workers engaged in testing activities.",
+    "Direct product testing activities throughout production cycles.",
+    "Instruct staff in quality control and analytical procedures.",
+    "Direct the tracking of defects, test results, or other regularly reported quality control data.",
+    "Participate in the development of product specifications.",
+    "Identify quality problems or areas for improvement and recommend solutions.",
+    "Collect and analyze production samples to evaluate quality.",
+    "Produce reports regarding nonconformance of products or processes, daily production quality, root cause analyses, or quality trends.",
+    "Communicate quality control information to all relevant organizational departments, outside vendors, or contractors.",
+    "Monitor development of new products to help identify possible problems for mass production.",
+    "Identify critical points in the manufacturing process and specify sampling procedures to be used at these points.",
+    "Create and implement inspection and testing criteria or procedures.",
+    "Document testing procedures, methodologies, or criteria.",
+    "Review statistical studies, technological advances, or regulatory standards and trends to stay abreast of issues in the field of quality control.",
+    "Coordinate the selection and implementation of quality control equipment, such as inspection gauges.",
+    "Generate and maintain quality control operating budgets.",
+    "Instruct vendors or contractors on quality guidelines, testing procedures, or ways to eliminate deficiencies.",
+    "Confer with marketing and sales departments to define client requirements and expectations.",
+    "Evaluate new testing and sampling methodologies or technologies to determine usefulness.",
+    "Review and approve quality plans submitted by contractors."
+   ],
+   "source": "O*NET 30.0 occupation 11-3051.01 Quality Control Systems Managers (closest occupation, approximate)",
+   "url": "https://www.onetonline.org/link/summary/11-3051.01",
+   "approximate": true,
+   "patterns": [
+    "\\b(vp|head|director)\\b.{0,40}\\b(quality|qa|testing|test)\\b"
+   ]
+  },
+  {
+   "title": "VP of Corporate Development",
+   "function": "Corporate Development",
+   "level": "C-1",
+   "summary": "",
+   "duties": [],
+   "source": "none: no published description found for this exact title",
+   "url": "",
+   "approximate": false,
+   "patterns": [
+    "\\b(vp|head|director)\\b.{0,40}\\b(corporate development|corp dev|m and a|mergers|integration)\\b"
+   ]
+  }
+ ]
+}
