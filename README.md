@@ -127,6 +127,33 @@ case-insensitive column lookup silently returns the same one for both.
 
 ---
 
+## Buying committee: judge + checker
+
+Decided from the campaign file before any contact is looked at. Qwen2.5-7B
+(judge) proposes which function fills each role; Llama-3.1-8B (checker) must
+pass every pick. Minimums (config/committee/rules.yaml): 1 Champion, 1 Economic
+Buyer, 1 Technical Evaluator, 3 Influencers; more members are fine. One title,
+one role. A minimum nothing passes is reported unfilled, never forced.
+
+```bash
+pip install -e .[committee]          # llama-cpp-python; model files in SIEVE_MODEL_DIR
+sieve committee decide --campaign config/icp_adtech_modernization.yaml --out committee.json
+sieve committee match  --committee committee.json --in roster.xlsx \
+                       --out matched.csv --accounts-out coverage.csv
+python benchmarks/committee/run_benchmark.py --offline     # accuracy, recorded answers
+```
+
+Role reference sheet: config/committee/role_reference.json, 51 titles in 22
+functions, descriptions copied word for word from AvaHR (26) / Workable (8),
+the closest O*NET occupation marked approximate (10), or none (7). Rebuilt with
+tools/role_reference/extract.py.
+
+Accuracy on the 10-campaign reference set (F1 against published research
+committees, by function): judge + checker 0.82 (dev 0.85, test 0.80); judge
+only 0.81; the same committee for every campaign 0.57. No unfilled minimums.
+
+---
+
 ## Layout
 
 ```
