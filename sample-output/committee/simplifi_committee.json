@@ -1,0 +1,111 @@
+{
+  "campaign": "Offering being sold: AdTech Platform Modernization & Strangler Fig Migration lookalike\nTarget companies: Core AdTech, agency management software, DSP/SSP, ad exchange; Media planning, ad verification, connected TV\nTechnology the offering works on: Explicit ASP.NET, .NET Framework, VB.NET or Java monolith; Desktop-era client, on-prem deployment, 10+ year codebase",
+  "members": [
+    {
+      "title": "Chief Financial Officer",
+      "function": "Finance",
+      "level": "C",
+      "role": "Economic Buyer",
+      "asked_as": "Economic Buyer",
+      "round": 0,
+      "extra": false,
+      "judge_p": 0.9998,
+      "checker_p": 0.6129,
+      "chance": 0.0455
+    },
+    {
+      "title": "Chief Information Officer",
+      "function": "IT",
+      "level": "C",
+      "role": "Champion",
+      "asked_as": "Champion",
+      "round": 0,
+      "extra": false,
+      "judge_p": 0.7611,
+      "checker_p": 0.0773,
+      "chance": 0.0455
+    },
+    {
+      "title": "VP of IT",
+      "function": "IT",
+      "level": "C-1",
+      "role": "Technical Evaluator",
+      "asked_as": "Technical Evaluator",
+      "round": 0,
+      "extra": false,
+      "judge_p": 0.9989,
+      "checker_p": 0.6152,
+      "chance": 0.0455
+    },
+    {
+      "title": "IT Director",
+      "function": "IT",
+      "level": "C-2",
+      "role": "Influencer",
+      "asked_as": "Influencer",
+      "round": 0,
+      "extra": false,
+      "judge_p": 0.8076,
+      "checker_p": 0.2896,
+      "chance": 0.0455
+    },
+    {
+      "title": "VP of Finance",
+      "function": "Finance",
+      "level": "C-1",
+      "role": "Influencer",
+      "asked_as": "Ratifier",
+      "round": 0,
+      "extra": false,
+      "judge_p": 0.7497,
+      "checker_p": 0.8915,
+      "chance": 0.0455
+    },
+    {
+      "title": "Chief Procurement Officer",
+      "function": "Procurement",
+      "level": "C",
+      "role": "Influencer",
+      "asked_as": "Ratifier",
+      "round": 0,
+      "extra": false,
+      "judge_p": 0.2502,
+      "checker_p": 0.0921,
+      "chance": 0.0455
+    },
+    {
+      "title": "Chief Technology Officer",
+      "function": "Technology",
+      "level": "C",
+      "role": "Champion",
+      "asked_as": "Champion",
+      "round": 0,
+      "extra": true,
+      "judge_p": 0.2331,
+      "checker_p": 0.4477,
+      "chance": 0.0455
+    },
+    {
+      "title": "Chief Architect",
+      "function": "Architecture",
+      "level": "C-1",
+      "role": "Influencer",
+      "asked_as": "User",
+      "round": 0,
+      "extra": true,
+      "judge_p": 0.1585,
+      "checker_p": 0.1834,
+      "chance": 0.0455
+    }
+  ],
+  "unfilled": {},
+  "rejected": [],
+  "judge": "qwen2.5-7b-instruct-q4_k_m",
+  "checker": "llama-3.1-8b-instruct-q4_k_m",
+  "seat_counts": {
+    "Economic Buyer": 1,
+    "Champion": 2,
+    "Technical Evaluator": 1,
+    "Influencer": 4
+  }
+}
