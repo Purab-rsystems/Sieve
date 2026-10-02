@@ -1,0 +1,87 @@
+# Reference buying committees, used ONLY to grade the committee step.
+# Nothing here is shown to the models. The committee step has no tuned
+# setting (a pick needs both models to rate it above chance), so no campaign
+# was used to choose anything; "dev" / "test" are kept from the earlier
+# benchmark for comparison only.
+#
+# Each campaign lists `slots`: the functions published research says take part
+# (a slot is met when the committee holds any title in one of its functions).
+# `also_fine_everywhere` lists functions that take part in software purchases
+# generally and so are not counted as mistakes: finance (involved in 46% of
+# software purchases, G2 2026) and procurement (a decision-maker in 53% of
+# buying cycles, Forrester 2026). A chosen title outside slots and also_fine
+# is a wrong title.
+
+also_fine_everywhere: [Finance, Procurement]
+
+campaigns:
+  - id: crm
+    split: dev
+    offering: CRM platform for sales, marketing and customer service teams
+    verticals: [Professional Services, Manufacturing]
+    slots: [[IT], [Executive], [Revenue], [Finance], [Marketing], [Customer]]
+    source: https://www.efficy.com/crm-buyers-guide/  # influence shares: IT 29%, CEO 22%, sales 15%, finance 10%, marketing 10%, customer service 9% (n=1,950, Europe)
+
+  - id: martech
+    split: dev
+    offering: Marketing automation and customer data platform
+    verticals: [Retail, Financial Services]
+    slots: [[Marketing], [IT, Data], [Procurement]]
+    source: https://www.gartner.com/en/newsroom/press-releases/2023-10-10-gartner-marketing-survey-finds-78-percent-of-organizations-have-centralized-customer-data-management-within-it-teams  # n=405
+
+  - id: cybersecurity
+    split: dev
+    offering: Identity and privileged access security software
+    verticals: [Financial Services, Healthcare]
+    slots: [[IT], [Security], [Executive]]
+    source: https://delinea.com/blog/how-it-decision-makers-make-cyber-security-tech-buying-decisions  # IT ops final say 38%, security/CISO 32%; board engagement per Foundry
+
+  - id: hr_payroll
+    split: dev
+    offering: Cloud HR and payroll software
+    verticals: [Manufacturing, Retail]
+    slots: [[People], [IT], [Finance]]
+    source: https://research-hub.g2.com/the-new-buying-logic-for-hr-and-payroll  # CHRO/VP HR, HR ops, IT (integration, security), finance (total cost)
+
+  - id: peo
+    split: test
+    offering: "PEO: outsourced HR, payroll, benefits and compliance for mid-size companies"
+    verticals: [Technology, Professional Services]
+    slots: [[Technology], [Revenue], [Operations], [Finance], [People, Product]]
+    source: "Campaign TAL Pipeline flow document, stage 5: for PEO, CTO, CRO, COO, CFO, CPO offices (CPO read as either Chief People or Chief Product Officer)"
+
+  - id: erp
+    split: test
+    offering: Cloud ERP for finance, procurement, manufacturing and supply chain
+    verticals: [Manufacturing, Distribution]
+    slots: [[Finance], [Procurement], [Supply Chain], [Operations], [IT]]
+    source: https://www.erpresearch.com/en-us/blog/erp-evaluation-selection-guide  # sponsor CFO/VP Finance; experts from finance, procurement, supply chain, manufacturing; IT for security and integration (prescriptive, weak)
+
+  - id: data_analytics
+    split: test
+    offering: Enterprise data and analytics platform
+    verticals: [Financial Services, Retail]
+    slots: [[IT], [Data]]
+    source: https://www.cio.com/article/465451/why-data-leaders-struggle-to-produce-strategic-results.html  # 53% of CDOs report to the CIO; most data budgets sit in IT
+
+  - id: supply_chain
+    split: test
+    offering: Supply chain planning and inventory optimisation software
+    verticals: [Manufacturing, Consumer Goods]
+    slots: [[IT], [Supply Chain], [Finance], [Procurement]]
+    source: https://nucleusresearch.com/research/single/cso-versus-cio-who-should-choose-supply-chain-software/  # CIO influence 85%, final say 42%; CSCO champion; CFO recommended
+
+  - id: cloud_migration
+    split: test
+    offering: Cloud migration and managed cloud infrastructure services
+    verticals: [Financial Services, Retail]
+    slots: [[IT], [Technology, Platform]]
+    source: https://1624046.fs1.hubspotusercontent-na1.net/hubfs/1624046/R-ES_Cloud_2023%20Final.pdf  # IT controls 72% of cloud spend decisions (n=893)
+
+  - id: legacy_modernization
+    split: test
+    campaign_file: config/icp_adtech_modernization.yaml     # Sieve's own Simplifi campaign file, read as is
+    slots: [[Technology], [Architecture], [Platform], [Product], [Operations], [IT]]
+    team_picks: [Chief Technology Officer, VP of Engineering, VP of Platform Engineering, Chief Architect,
+                 Chief Product Officer, VP of Product, Chief Information Officer, Chief Operating Officer]
+    source: "Simplifi workbook, Status sheet: Recommended Target Roles the team picked; functions held by at least half of the 180 accounts"
