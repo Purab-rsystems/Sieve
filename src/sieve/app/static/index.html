@@ -1,0 +1,477 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Sieve</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
+<style>
+/* DocQA's look: warm cocoa-brown surfaces, one soft honey accent, Nunito, roomy padding, soft shadows. */
+:root {
+  --bg:#1C1A17; --side:#221F1C; --card:#2A2622; --you:#3B3229; --line:#3A352F;
+  --text:#EFE8DF; --muted:#B5AA9C; --honey:#E9B872; --honey-soft:rgba(233,184,114,0.16);
+  --shadow:0 6px 24px rgba(0,0,0,0.30);
+  --font:'Nunito','Segoe UI',system-ui,-apple-system,sans-serif;
+  --ok:#9CC68B; --bad:#E39A86; --high:#E8AE7E; --sky:#9DBBD8;
+}
+* { box-sizing:border-box; }
+html, body { background:var(--bg); }
+body { margin:0; color:var(--text); font:15px/1.6 var(--font); font-variant-numeric:tabular-nums; display:flex; min-height:100vh; }
+a { color:var(--honey); }
+code { background:var(--you); padding:1px 6px; border-radius:6px; font-size:13px; }
+
+aside { width:300px; flex-shrink:0; background:var(--side); border-right:1px solid var(--line);
+  padding:22px 18px; position:sticky; top:0; height:100vh; overflow-y:auto; display:flex; flex-direction:column; gap:14px; }
+.brand { display:flex; align-items:center; gap:10px; cursor:pointer; }
+.brand svg { width:36px; height:36px; }
+.brand b { font-size:20px; font-weight:800; }
+.brand span { display:block; color:var(--muted); font-size:12px; font-weight:600; }
+aside h2 { font-size:1.05rem; font-weight:800; margin:8px 0 0; }
+.runcard { background:var(--card); border:1px solid var(--line); border-radius:18px; padding:10px 14px; cursor:pointer; }
+.runcard:hover, .runcard.on { border-color:var(--honey); }
+.runcard b { display:block; font-size:14px; line-height:1.35; }
+.runcard small { color:var(--muted); font-size:12px; }
+.health { font-size:12.5px; color:var(--muted); border:1px solid var(--line); border-radius:12px; padding:8px 10px; }
+.health.bad { border-left:3px solid var(--bad); }
+.health.ok { border-left:3px solid var(--ok); }
+
+button, .btn { font:inherit; font-weight:700; padding:9px 18px; border-radius:999px; cursor:pointer;
+  border:1px solid var(--line); background:var(--card); color:var(--text); box-shadow:var(--shadow); text-decoration:none; display:inline-block; }
+button:hover, .btn:hover { border-color:var(--honey); }
+button.primary { background:var(--honey); border-color:var(--honey); color:var(--bg); }
+button.primary:hover { filter:brightness(1.06); }
+button:disabled { opacity:.5; cursor:not-allowed; }
+button:focus-visible { outline:none; box-shadow:0 0 0 4px var(--honey-soft), var(--shadow); }
+
+main { flex:1; min-width:0; padding:36px 32px 60px; }
+.inner { max-width:1120px; margin:0 auto; }
+.hello { font-size:2rem; font-weight:800; letter-spacing:-0.01em; line-height:1.25; margin:0 0 6px; }
+.promise { color:var(--muted); margin:0 0 24px; font-size:1.02rem; }
+.card { background:var(--card); border:1px solid var(--line); border-radius:22px; padding:20px 22px; box-shadow:var(--shadow); margin-bottom:18px; }
+.card h3 { margin:0 0 10px; font-size:1.05rem; font-weight:800; }
+.muted { color:var(--muted); }
+.small { font-size:13px; }
+.note { border:1px solid var(--line); border-left:3px solid var(--honey); border-radius:12px; background:var(--honey-soft); padding:10px 14px; font-size:14px; }
+.note.bad { border-left-color:var(--bad); background:rgba(227,154,134,0.12); }
+.chip { display:inline-block; padding:2px 11px; border-radius:999px; font-size:12.5px; font-weight:700; background:var(--side); border:1px solid var(--line); white-space:nowrap; }
+.chip.honey { color:var(--honey); border-color:var(--honey); background:var(--honey-soft); }
+.chip.ok { color:var(--ok); border-color:var(--ok); } .chip.bad { color:var(--bad); border-color:var(--bad); }
+.tA { color:var(--ok); border-color:var(--ok); } .tB { color:var(--honey); border-color:var(--honey); } .tC { color:var(--bad); border-color:var(--bad); }
+
+/* upload */
+.drop { border:1.5px dashed var(--line); border-radius:18px; background:var(--side); padding:18px; margin:6px 0 16px; }
+.drop.over { border-color:var(--honey); }
+.drop label { font-weight:800; display:block; margin-bottom:4px; }
+.drop input[type=file] { color:var(--muted); font:inherit; margin-top:6px; }
+input[type=text] { font:inherit; background:var(--side); color:var(--text); border:1px solid var(--line); border-radius:12px; padding:8px 12px; width:100%; }
+
+/* run header + tabs */
+.runhead { display:flex; flex-wrap:wrap; gap:12px; align-items:baseline; justify-content:space-between; }
+.tabs { display:flex; gap:8px; flex-wrap:wrap; margin:18px 0 22px; }
+.tabs a { padding:7px 16px; border-radius:999px; border:1px solid var(--line); background:var(--card); color:var(--text); text-decoration:none; font-weight:700; font-size:14px; }
+.tabs a.on { background:var(--honey); color:var(--bg); border-color:var(--honey); }
+.stats { display:flex; gap:10px; flex-wrap:wrap; }
+.stat { background:var(--card); border:1px solid var(--line); border-radius:16px; padding:8px 14px; }
+.stat b { font-size:20px; font-weight:800; display:block; line-height:1.2; }
+.stat span { color:var(--muted); font-size:12px; font-weight:600; }
+
+/* committee */
+.role-h { font-size:13px; font-weight:800; color:var(--muted); text-transform:none; margin:18px 0 8px; }
+.member { background:var(--card); border:1px solid var(--line); border-radius:20px; padding:16px 20px; margin-bottom:12px; box-shadow:var(--shadow); }
+.member .top { display:flex; gap:10px; flex-wrap:wrap; align-items:center; margin-bottom:10px; }
+.member .top b { font-size:17px; font-weight:800; }
+.why { display:grid; grid-template-columns:1fr 1fr; gap:12px; }
+.voice { background:var(--side); border:1px solid var(--line); border-radius:14px; padding:10px 14px; }
+.voice .who { font-weight:800; font-size:13px; margin-bottom:4px; display:flex; gap:8px; align-items:center; flex-wrap:wrap; }
+.voice p { margin:0; font-size:14px; line-height:1.6; border-left:3px solid var(--honey); padding-left:10px; }
+.voice.check p { border-left-color:var(--ok); } .voice.reject p { border-left-color:var(--bad); }
+.progress { height:8px; border-radius:999px; background:var(--side); overflow:hidden; margin:10px 0; }
+.progress > div { height:100%; background:var(--honey); width:30%; animation:slide 1.6s ease-in-out infinite; border-radius:999px; }
+@keyframes slide { 0%{margin-left:-30%} 100%{margin-left:100%} }
+details.rej { background:var(--card); border:1px solid var(--line); border-radius:16px; margin-bottom:10px; }
+details.rej summary { padding:10px 16px; cursor:pointer; font-weight:700; font-size:14px; }
+details.rej .body { padding:0 16px 14px; }
+
+/* tables */
+.wrap { overflow-x:auto; border:1px solid var(--line); border-radius:14px; background:var(--side); }
+table { width:100%; border-collapse:collapse; font-size:14px; }
+th { text-align:left; padding:10px 12px; color:var(--muted); font-weight:700; font-size:12px; border-bottom:1px solid var(--line); white-space:nowrap; }
+td { padding:9px 12px; border-bottom:1px solid var(--line); vertical-align:top; }
+tbody tr:last-child td { border-bottom:none; }
+tr.click { cursor:pointer; } tr.click:hover td { background:rgba(233,184,114,0.06); }
+tr.dropped td { opacity:.4; text-decoration:line-through; }
+td.num { text-align:right; }
+.checks td { background:var(--bg); }
+.ev { color:var(--muted); font-size:13px; }
+.ev q { color:var(--text); }
+input[type=checkbox] { accent-color:var(--honey); width:16px; height:16px; cursor:pointer; }
+.seat-eb { color:var(--honey); font-weight:700; } .seat-ch { color:var(--ok); font-weight:700; }
+.seat-te { color:var(--sky); font-weight:700; } .seat-in { color:var(--high); font-weight:700; }
+.flag { display:inline-block; font-size:11px; font-weight:700; padding:1px 8px; border-radius:999px; border:1px solid currentColor; margin:1px 4px 2px 0; white-space:nowrap; color:var(--high); }
+.acct { background:var(--card); border:1px solid var(--line); border-radius:20px; margin-bottom:14px; overflow:hidden; box-shadow:var(--shadow); }
+.acct > summary { padding:14px 20px; cursor:pointer; display:flex; gap:10px; align-items:center; flex-wrap:wrap; list-style:none; }
+.acct > summary::-webkit-details-marker { display:none; }
+.acct > summary .co { font-weight:800; font-size:16px; flex:1; min-width:160px; }
+.acct .body { padding:0 20px 16px; }
+.files a { display:block; padding:6px 0; }
+.err { color:var(--bad); }
+
+@media (max-width: 900px) {
+  body { display:block; }
+  aside { width:auto; height:auto; position:static; border-right:none; border-bottom:1px solid var(--line); }
+  main { padding:24px 16px 48px; }
+  .why { grid-template-columns:1fr; }
+  .hello { font-size:1.55rem; }
+}
+@media (prefers-reduced-motion: reduce) { * { animation:none !important; transition:none !important; } }
+</style></head><body>
+<aside>
+  <div class="brand" onclick="location.hash='#/'">
+    <svg viewBox="0 0 48 48" aria-hidden="true">
+      <path d="M6 16 H42 Q42 36 24 40 Q6 36 6 16 Z" fill="#2B2723" stroke="#EFE8DF" stroke-width="1.6" stroke-linejoin="round"/>
+      <path d="M3 16 H45" stroke="#EFE8DF" stroke-width="2" stroke-linecap="round"/>
+      <g fill="#E9B872"><circle cx="16" cy="22" r="1.6"/><circle cx="24" cy="22" r="1.6"/><circle cx="32" cy="22" r="1.6"/>
+        <circle cx="20" cy="28" r="1.6"/><circle cx="28" cy="28" r="1.6"/><circle cx="24" cy="34" r="1.6"/></g>
+      <path d="M24 41 V46" stroke="#E9B872" stroke-width="2" stroke-linecap="round"/>
+      <circle cx="24" cy="8" r="3.2" fill="#E9B872"/>
+    </svg>
+    <div><b>Sieve</b><span>TAL scoring and buying committee</span></div>
+  </div>
+  <button class="primary" onclick="location.hash='#/'">+ New run</button>
+  <div id="health" class="health">Checking the models…</div>
+  <h2>Runs</h2>
+  <div id="runs" style="display:flex;flex-direction:column;gap:10px"></div>
+</aside>
+<main><div class="inner" id="view"></div></main>
+<script>
+const $ = s => document.querySelector(s);
+const esc = s => { const d = document.createElement('div'); d.textContent = s ?? ''; return d.innerHTML; };
+const pct = p => p == null ? '–' : (p * 100).toFixed(p < 0.01 && p > 0 ? 2 : 0) + '%';
+const SEATCLS = {'Economic Buyer':'seat-eb','Champion':'seat-ch','Technical Evaluator':'seat-te','Influencer':'seat-in'};
+const tierCls = t => 't' + String(t || '').slice(-1);
+async function api(path, opts) {
+  const r = await fetch(path, opts);
+  const j = await r.json().catch(() => ({}));
+  if (!r.ok) throw new Error(j.error || r.statusText);
+  return j;
+}
+let poll = null;
+function stopPoll() { if (poll) { clearTimeout(poll); poll = null; } }
+
+async function loadSide() {
+  try {
+    const h = await api('/api/health');
+    $('#health').className = 'health ' + (h.problems.length ? 'bad' : 'ok');
+    $('#health').innerHTML = h.problems.length
+      ? '<b>Models not ready</b><br>' + h.problems.map(esc).join('<br>')
+      : '<b>Models ready</b><br>Qwen2.5-7B (judge) and Llama-3.1-8B (checker) in Ollama';
+  } catch (e) { $('#health').textContent = 'Could not check the models.'; }
+  const runs = await api('/api/runs');
+  const cur = (location.hash.match(/#\/run\/([^/]+)/) || [])[1];
+  $('#runs').innerHTML = runs.length ? runs.map(r => `
+    <div class="runcard ${r.id === cur ? 'on' : ''}" onclick="location.hash='#/run/${r.id}/committee'">
+      <b>${esc(r.campaign_name)}</b>
+      <small>${esc((r.created || '').replace('T', ' ').slice(0, 16))} · ${r.contacts} contacts ·
+      committee ${esc(r.committee_status)}${r.approved ? ' · approved' : ''}</small>
+    </div>`).join('') : '<span class="muted small">No runs yet.</span>';
+}
+
+// ------------------------------------------------------------------ upload
+function viewNew() {
+  $('#view').innerHTML = `
+    <p class="hello">Start a run</p>
+    <p class="promise">Upload the campaign file and the contact files. Sieve scores every account against the
+    campaign's TAL checks, decides the buying committee from the campaign, and builds the roster for review.</p>
+    <form class="card" id="up">
+      <div class="drop"><label>Campaign file</label>
+        <span class="muted small">Sieve's campaign YAML: the TAL checks and their weights, and optionally an
+        <code>offering</code> block (what is sold, to whom). The committee is decided from this file alone.</span><br>
+        <input type="file" name="campaign" accept=".yaml,.yml" required></div>
+      <div class="drop"><label>Contact files</label>
+        <span class="muted small">One or more CSV or Excel files: LeadDrip's Format-DB, a campaign workbook
+        (contact sheets plus a research sheet such as Status), or ZoomInfo / Apollo exports.</span><br>
+        <input type="file" name="contacts" accept=".csv,.xlsx,.xlsm,.xls" multiple required></div>
+      <div class="drop"><label>Committee list (optional)</label>
+        <span class="muted small">CSV or Excel with the columns <code>Role</code>, <code>Count</code> and <code>Description</code>: one row per role.
+        A role with no description gets one written by Qwen. Leave this empty to use the default list
+        (1 Economic Buyer, 1 Champion, 1 Technical Evaluator, 3 Influencers). <a href="/api/list-template.csv">Download the template</a>.</span><br>
+        <input type="file" name="committee_list" accept=".csv,.xlsx,.xlsm,.xls"></div>
+      <label class="small muted">Run name (optional)</label>
+      <input type="text" name="name" placeholder="e.g. Simplifi modernization, Oct 2026" style="margin:4px 0 16px">
+      <button class="primary" type="submit" id="go">Run Sieve</button>
+      <span id="upmsg" class="small muted" style="margin-left:12px"></span>
+    </form>`;
+  document.querySelectorAll('.drop').forEach(d => {
+    d.ondragover = e => { e.preventDefault(); d.classList.add('over'); };
+    d.ondragleave = () => d.classList.remove('over');
+    d.ondrop = e => { e.preventDefault(); d.classList.remove('over'); d.querySelector('input').files = e.dataTransfer.files; };
+  });
+  $('#up').onsubmit = async e => {
+    e.preventDefault();
+    $('#go').disabled = true; $('#upmsg').textContent = 'Reading files and scoring accounts…';
+    try {
+      const r = await api('/api/runs', {method: 'POST', body: new FormData(e.target)});
+      await loadSide();
+      location.hash = `#/run/${r.id}/committee`;
+    } catch (err) {
+      $('#upmsg').innerHTML = `<span class="err">${esc(err.message)}</span>`; $('#go').disabled = false;
+    }
+  };
+}
+
+// ------------------------------------------------------------------ run shell
+async function viewRun(id, tab) {
+  const m = await api(`/api/runs/${id}`);
+  const tabs = [['committee', 'Committee'], ['scores', 'TAL scores'], ['roster', 'Roster'], ['approve', 'Approve & export']];
+  const t = m.tiers || {};
+  $('#view').innerHTML = `
+    <div class="runhead"><p class="hello" style="margin:0">${esc(m.campaign_name)}</p>
+      <button onclick="delRun('${id}')" class="small">Delete run</button></div>
+    <p class="muted small" style="margin:4px 0 12px">Campaign file <code>${esc(m.campaign_file)}</code> ·
+      contacts from ${m.contact_files.map(f => `<code>${esc(f)}</code>`).join(' ')}</p>
+    <div class="stats">
+      <div class="stat"><b>${m.contacts}</b><span>contacts</span></div>
+      <div class="stat"><b>${m.accounts}</b><span>accounts</span></div>
+      <div class="stat"><b>${t['Tier A'] || 0}</b><span>Tier A contacts</span></div>
+      <div class="stat"><b>${t['Tier B'] || 0}</b><span>Tier B contacts</span></div>
+      <div class="stat"><b>${t['Tier C'] || 0}</b><span>Tier C contacts</span></div>
+    </div>
+    ${m.ingest.skipped.length ? `<p class="note small" style="margin-top:12px">Skipped: ${m.ingest.skipped.map(esc).join('; ')}</p>` : ''}
+    <nav class="tabs">${tabs.map(([k, l]) => `<a href="#/run/${id}/${k}" class="${k === tab ? 'on' : ''}">${l}</a>`).join('')}</nav>
+    <div id="tab"></div>`;
+  ({committee: tabCommittee, scores: tabScores, roster: tabRoster, approve: tabApprove})[tab](id, m);
+}
+async function delRun(id) {
+  if (!confirm('Delete this run and its files?')) return;
+  await api(`/api/runs/${id}`, {method: 'DELETE'}); location.hash = '#/'; loadSide();
+}
+
+// ------------------------------------------------------------------ committee
+function voice(cls, who, p, chance, verdict, text) {
+  return `<div class="voice ${cls}"><div class="who">${who}
+    <span class="chip">${pct(p)} sure</span><span class="muted small">chance ${pct(chance)}</span>${verdict || ''}</div>
+    <p>${esc(text) || '<span class="muted">No reasoning recorded.</span>'}</p></div>`;
+}
+const STAGE = {descriptions: 'Qwen is writing the missing role descriptions', list: 'Generating the list for this campaign', committee: 'Deciding the buying committee',
+  targets: 'Picking the people to target at Tier A companies'};
+async function setListDefault(id) {
+  try { await api(`/api/runs/${id}/list`, {method: 'POST', headers: {'Content-Type': 'application/json'}, body: JSON.stringify({mode: 'default', builtin: true})}); }
+  catch (e) { alert(e.message); }
+  tabCommittee(id); loadSide();
+}
+async function setList(id, mode) {
+  const body = {mode};
+  if (mode === 'custom') {
+    body.minimums = {};
+    document.querySelectorAll('.listin').forEach(i => body.minimums[i.dataset.role] = i.value);
+  }
+  try { await api(`/api/runs/${id}/list`, {method: 'POST', headers: {'Content-Type': 'application/json'}, body: JSON.stringify(body)}); }
+  catch (e) { alert(e.message); }
+  tabCommittee(id); loadSide();
+}
+const MODE = {default: 'default list', uploaded: 'uploaded list', custom: 'numbers set for this run', generated: 'list generated by the AI (Generate committee)'};
+async function uploadList(id, input) {
+  if (!input.files.length) return;
+  const fd = new FormData(); fd.append('file', input.files[0]);
+  try { await api(`/api/runs/${id}/rolelist`, {method: 'POST', body: fd}); }
+  catch (e) { alert(e.message); }
+  tabCommittee(id); loadSide();
+}
+function listCard(id, r, busy) {
+  const L = r.list || {mode: 'default'}, gl = r.generated_list;
+  const base = r.base_list || r.default_list;
+  const cur = L.minimums || (r.committee && r.committee.rules) || base;
+  let h = `<div class="card"><h3>The list the committee must meet: ${esc(MODE[L.mode])}</h3>
+    <p class="small muted" style="margin:0 0 12px">The list is mandatory: a committee qualifies only when it meets every line.
+    Default: ${Object.entries(r.default_list).map(([k, n]) => `${n} ${esc(k)}`).join(', ')}. Upload your own list (roles, counts, descriptions), change the numbers for this run, or press
+    <b>Generate committee</b> to have Qwen write the list (Llama must agree with each number); if that committee does not qualify,
+    it retries once with the failed numbers taken off. The default list itself never changes.</p>
+    ${r.roles ? `<div class="wrap" style="margin-bottom:12px"><table><thead><tr><th>Role</th><th>What the models are told it is</th><th>Where the description comes from</th></tr></thead>
+      <tbody>${Object.entries(r.roles).map(([k, v]) => `<tr><td><b>${esc(k)}</b></td><td>${esc(v.text)}</td><td class="muted small">${esc(v.source)}</td></tr>`).join('')}</tbody></table></div>` : ''}
+    <div style="display:flex;gap:12px;flex-wrap:wrap;margin-bottom:12px">${Object.keys(base).map(role => `
+      <label class="small" style="display:flex;flex-direction:column;gap:4px"><b>${esc(role)}</b>
+        <input type="number" min="0" max="10" class="listin" data-role="${esc(role)}" value="${cur[role] ?? base[role]}" ${busy ? 'disabled' : ''}
+          style="width:90px;font:inherit;background:var(--side);color:var(--text);border:1px solid var(--line);border-radius:10px;padding:6px 10px"></label>`).join('')}</div>`;
+  if (!busy) h += `<button class="primary" onclick="setList('${id}','custom')">Save list and decide again</button>
+      <button onclick="setList('${id}','generated')">Generate committee</button>
+      <button onclick="setListDefault('${id}')">Use the default list</button>
+      <label class="btn" style="cursor:pointer">Upload a committee list<input type="file" accept=".csv,.xlsx,.xlsm,.xls" hidden onchange="uploadList('${id}', this)"></label>
+      <a class="small" href="/api/list-template.csv" style="margin-left:6px">template</a>`;
+  if (L.mode === 'generated' && gl) {
+    h += `<p class="role-h">How the AI wrote the list</p>` + Object.entries(gl).map(([role, d]) => `<div class="member"><div class="top"><b>${esc(role)}: ${d.count}</b>
+        <span class="chip">${esc(d.source)}</span>${d.retry ? '<span class="chip honey">retry</span>' : ''}<span class="muted small">default ${d.default}</span></div>
+        ${d.judge_p != null ? `<div class="why">${voice('', 'Qwen (judge) said ' + d.count, d.judge_p, d.chance, '', d.judge_reasoning)}
+        ${voice('check', 'Llama (checker)', d.checker_p, d.chance, '<span class="chip ok">agreed</span>', d.checker_reasoning)}</div>` : ''}</div>`).join('');
+  }
+  return h + '</div>';
+}
+function qualCard(q, title, attempts) {
+  if (!q) return '';
+  let h = `<div class="card"><h3>${esc(title)} <span class="chip ${q.qualified ? 'ok' : 'bad'}">${q.qualified ? 'Qualified' : 'Not qualified'}</span></h3>`;
+  if (!q.qualified) h += `<p class="note bad small">Not met: ${q.failed.map(esc).join('; ')}.</p>`;
+  if (attempts && attempts.length > 1) h += `<p class="note small">First try (${Object.entries(attempts[0].list).map(([k, n]) => `${n} ${esc(k)}`).join(', ')})
+      did not qualify (${attempts[0].failed.map(esc).join('; ')}); the AI retried once.</p>`;
+  h += q.lines.map(ln => `<div class="member"><div class="top"><span class="chip ${ln.met ? 'ok' : 'bad'}">${ln.met ? 'met' : 'not met'}</span>
+      <b>${ln.need} ${esc(ln.role)}</b><span class="muted small">has ${ln.have}</span></div>
+      ${ln.proof.map(p => `<div class="voice" style="margin-top:8px"><div class="who">${esc(p.who)}<span class="muted small">${esc(p.detail || '')}</span>
+        <span class="chip">Qwen ${pct(p.judge_p)}</span><span class="chip ok">Llama ${pct(p.checker_p)}</span><span class="muted small">chance ${pct(p.chance)}</span></div>
+        <p>Qwen: “${esc(p.judge_quote)}”</p><p style="margin-top:6px;border-left-color:var(--ok)">Llama: “${esc(p.checker_quote)}”</p></div>`).join('')
+        || '<p class="muted small" style="margin:0">Nobody in this seat.</p>'}</div>`).join('');
+  return h + '</div>';
+}
+async function tabCommittee(id) {
+  stopPoll();
+  const r = await api(`/api/runs/${id}/committee`);
+  const el = $('#tab');
+  if (r.status !== 'done') {
+    const pr = r.progress || {};
+    el.innerHTML = r.status === 'error'
+      ? `<div class="card"><h3>The committee could not be decided</h3><p class="note bad">${esc(r.error)}</p>
+         <button class="primary" onclick="retry('${id}')">Try again</button></div>`
+      : `<div class="card"><h3>${esc(STAGE[r.stage] || 'Starting')}…</h3>
+         <p class="muted small">Steps: ${(r.list || {}).mode === 'generated' ? '1. the AI writes the list · 2.' : '1.'} decide the committee and check it meets the list ·
+         ${(r.list || {}).mode === 'generated' ? '3.' : '2.'} if it qualifies, pick the people to target at each Tier A company. Qwen and Llama write their reasoning before every answer.
+         The first question of a run takes several minutes while the models read the role reference sheet. The roster opens when all steps are done;
+         the TAL scores are ready now.</p>
+         <div class="progress"><div></div></div>
+         <p class="small">${pr.answered != null ? `<b>${pr.answered}</b> questions answered` : 'Starting'}${pr.now ? ` · now asking <b>${esc(pr.now)}</b>` : ''}</p>
+         <p class="small muted">What the models are told about the campaign:</p><pre class="note small" style="white-space:pre-wrap">${esc(r.campaign_text)}</pre></div>`
+         + (r.generated_list ? listCard(id, r, true) : '');
+    if (r.status !== 'error') poll = setTimeout(() => tabCommittee(id), 3000);
+    return;
+  }
+  const c = r.committee, roles = Object.keys(c.rules);
+  const unfilled = Object.entries(c.unfilled || {});
+  let h = qualCard(c.qualification, 'Committee against the list', c.attempts) + listCard(id, r, false) + `<div class="card"><h3>What the models were told about the campaign</h3>
+    <pre class="note small" style="white-space:pre-wrap;margin:0">${esc(r.campaign_text)}</pre>
+    <p class="small muted" style="margin:10px 0 0">List used: ${roles.map(k => `${c.rules[k]} ${esc(k)}`).join(', ')} (${esc(c.list_source || 'default')}). More members are fine.
+    Each title holds one role. A pick joins only when Qwen proposes it and Llama passes it (both above chance).</p></div>`;
+  if (unfilled.length) h += `<p class="note bad">Unfilled: ${unfilled.map(([k, n]) => `${n} ${esc(k)}`).join(', ')}. Nothing passed both models, so nothing was forced in.</p>`;
+  for (const role of roles) {
+    const ms = c.members.filter(m => m.role === role);
+    h += `<p class="role-h">${esc(role)} · ${ms.length} of at least ${c.rules[role]}</p>`;
+    h += ms.map(m => `<div class="member"><div class="top"><b>${esc(m.title)}</b>
+        <span class="chip">${esc(m.function)}</span><span class="chip">${esc(m.level)}</span>
+        ${m.asked_as !== role ? `<span class="chip">asked as ${esc(m.asked_as)}</span>` : ''}
+        ${m.round ? `<span class="chip honey">follow-up ${m.round}</span>` : ''}${m.extra ? '<span class="chip">extra member</span>' : ''}</div>
+      <div class="why">
+        ${voice('', 'Qwen (judge) proposed ' + esc(m.function), m.judge_p, m.chance, '', m.judge_reasoning)}
+        ${voice('check', 'Llama (checker)', m.checker_p, m.chance, '<span class="chip ok">passed</span>', m.checker_reasoning)}
+      </div></div>`).join('') || '<p class="muted small">Nobody passed for this role.</p>';
+  }
+  if (c.rejected.length) {
+    h += `<p class="role-h">Turned down by the checker · ${c.rejected.length}</p>`;
+    h += c.rejected.map(x => `<details class="rej"><summary>${esc(x.function)} as ${esc(x.role)}${x.extra ? ' (extra member)' : ''}
+        <span class="muted small">· Qwen ${pct(x.judge_p)}, Llama ${pct(x.checker_p)}, chance ${pct(x.chance)}</span></summary>
+      <div class="body why">${voice('', 'Qwen (judge) proposed ' + esc(x.function), x.judge_p, x.chance, '', x.judge_reasoning)}
+        ${voice('reject', 'Llama (checker)', x.checker_p, x.chance, '<span class="chip bad">rejected</span>', x.checker_reasoning)}</div></details>`).join('');
+  }
+  h += c.qualification && c.qualification.qualified
+    ? `<p class="note small" style="margin-top:16px">Next: the <a href="#/run/${id}/roster">Roster</a> shows the people picked at each Tier A company.</p>`
+    : `<p class="note bad small" style="margin-top:16px">The roster stays closed until a committee qualifies: change the list above or generate the committee.</p>`;
+  el.innerHTML = h;
+}
+async function retry(id) { await api(`/api/runs/${id}/committee/retry`, {method: 'POST'}); tabCommittee(id); }
+
+// ------------------------------------------------------------------ TAL scores
+async function tabScores(id) {
+  stopPoll();
+  const r = await api(`/api/runs/${id}/scores`);
+  const tiers = Object.entries(r.tiers).map(([k, v]) => `<span class="chip ${tierCls(k)}">${esc(k)} ≥ ${v.min}</span>`).join(' ');
+  $('#tab').innerHTML = `<div class="card"><h3>TAL scores</h3>
+    <p class="small muted" style="margin:0 0 10px">Rule-based: each check scores 0–100 from the campaign file's bands, weighted, and
+    summed. Click an account to see which band fired in each check and the exact text that triggered it. ${tiers}</p>
+    <div class="wrap"><table><thead><tr><th>Account</th><th>Website</th><th class="num">TAL score</th><th>Tier</th><th class="num">Contacts</th></tr></thead>
+    <tbody>${r.accounts.map((a, i) => `
+      <tr class="click" onclick="document.getElementById('ck${i}').hidden ^= 1">
+        <td><b>${esc(a.company)}</b></td><td class="muted">${esc(a.website)}</td>
+        <td class="num"><span class="chip honey">${a.score}</span></td><td><span class="chip ${tierCls(a.tier)}">${esc(a.tier)}</span></td>
+        <td class="num">${a.contacts}</td></tr>
+      <tr id="ck${i}" class="checks" hidden><td colspan="5"><div class="wrap"><table>
+        <thead><tr><th>Check</th><th>Band that fired</th><th class="num">Points</th><th class="num">Weight</th><th class="num">Adds</th><th>Evidence</th></tr></thead>
+        <tbody>${a.breakdown.map(b => `<tr><td><b>${esc(b.label)}</b></td><td>${esc(b.band)}</td>
+          <td class="num">${b.points}</td><td class="num">${(b.weight * 100).toFixed(0)}%</td><td class="num">${b.contribution}</td>
+          <td class="ev">${b.evidence ? `<q>${esc(b.evidence)}</q>` : 'no matching text: the default band applied'}</td></tr>`).join('')}</tbody>
+      </table></div></td></tr>`).join('')}</tbody></table></div></div>`;
+}
+
+// ------------------------------------------------------------------ roster
+async function tabRoster(id) {
+  stopPoll();
+  let r;
+  try { r = await api(`/api/runs/${id}/roster`); }
+  catch (e) {
+    $('#tab').innerHTML = `<div class="card"><h3>Not ready yet</h3><p class="note">${esc(e.message)}</p>
+      <a class="btn" href="#/run/${id}/committee">Go to the Committee page</a></div>`;
+    return;
+  }
+  $('#tab').innerHTML = `<div class="card"><h3>Roster: the people to target at Tier A companies</h3>
+      <p class="small muted" style="margin:0">For every seat of the committee (list: ${esc(r.list_source)}), Qwen picked the contact at each company who would
+      play that part, or said nobody fits, with its reasoning; Llama checked every pick. Untick a person to drop them before approving.
+      ${r.targets} people picked · ${r.dropped} dropped.</p></div>
+    ${r.accounts.map(a => `<details class="acct" open><summary><span class="co">${esc(a.company)}</span>
+        <span class="chip ${tierCls(a.tier)}">${esc(a.tier)}</span><span class="chip honey">TAL ${a.score}</span>
+        <span class="small muted">${a.picks.length} picked from ${a.contacts} contacts · ${a.empty.length} seats nobody fits</span>
+        ${a.qualification ? `<span class="chip ${a.qualification.qualified ? 'ok' : 'bad'}">${a.qualification.qualified ? 'committee qualified' : 'committee not qualified'}</span>` : ''}</summary>
+      <div class="body">
+        ${a.qualification && !a.qualification.qualified ? `<p class="note bad small">This company's picks do not meet the list: ${a.qualification.failed.map(esc).join('; ')}. It stays ${esc(a.tier)}.</p>` : ''}
+        <details class="rej"><summary>Proof against the list</summary><div class="body">${qualCard(a.qualification, a.company + ' against the list')}</div></details>
+        ${a.picks.map(p => `<div class="member" style="${p.keep ? '' : 'opacity:.45'}"><div class="top">
+            <input type="checkbox" ${p.keep ? 'checked' : ''} onchange="keep('${id}','${p.contact_id}',this)" title="Keep this person">
+            <b>${esc(p.name)}</b><span class="muted">${esc(p.title)}</span>
+            <span class="chip ${SEATCLS[p.role] ? '' : ''}"><span class="${SEATCLS[p.role] || ''}">${esc(p.role)}</span> · ${esc(p.seat_title)}</span>
+            ${p.round ? `<span class="chip honey">follow-up ${p.round}</span>` : ''}
+            ${p.flags.map(f => `<span class="flag">${esc(f)}</span>`).join('')}<span class="muted small">${esc(p.email || '')}</span></div>
+          <div class="why">${voice('', 'Qwen (judge) picked ' + esc(p.name), p.judge_p, p.chance, '', p.judge_reasoning)}
+            ${voice('check', 'Llama (checker)', p.checker_p, p.chance, '<span class="chip ok">passed</span>', p.checker_reasoning)}</div></div>`).join('')}
+        ${a.empty.map(e => `<details class="rej"><summary>${esc(e.role)} · ${esc(e.seat_title)}: nobody here fits</summary>
+          <div class="body">${voice('', 'Qwen (judge)', e.judge_p, e.chance, '', e.judge_reasoning)}</div></details>`).join('')}
+        ${a.rejected.map(x => `<details class="rej"><summary>${esc(x.name)} for ${esc(x.role)} · ${esc(x.seat_title)}: turned down by the checker
+            <span class="muted small">· Qwen ${pct(x.judge_p)}, Llama ${pct(x.checker_p)}</span></summary>
+          <div class="body why">${voice('', 'Qwen (judge) picked ' + esc(x.name), x.judge_p, x.chance, '', x.judge_reasoning)}
+          ${voice('reject', 'Llama (checker)', x.checker_p, x.chance, '<span class="chip bad">rejected</span>', x.checker_reasoning)}</div></details>`).join('')}
+      </div></details>`).join('')}`;
+}
+async function keep(id, cid, box) {
+  const row = box.closest('tr') || box.closest('.member');
+  if (row.tagName === 'TR') row.classList.toggle('dropped', !box.checked); else row.style.opacity = box.checked ? '' : '.45';
+  await api(`/api/runs/${id}/keep`, {method: 'POST', headers: {'Content-Type': 'application/json'},
+    body: JSON.stringify({contact_id: cid, keep: box.checked})});
+}
+
+// ------------------------------------------------------------------ approve
+async function tabApprove(id, m) {
+  stopPoll();
+  const ex = await api(`/api/runs/${id}/exports`);
+  const files = list => `<div class="files">${list.map(f => `<a href="/api/runs/${id}/files/${encodeURI(f.path)}" download>${esc(f.path)}</a>`).join('')}</div>`;
+  $('#tab').innerHTML = `<div class="card"><h3>Approve and export</h3>
+    <p class="small muted">Approving signs off the people picked at the Tier A companies (minus anyone you dropped), writes the approval file,
+    and builds the Salesforce upsert files, the dial queue and the target list with both models' reasoning
+    (<code>tier_a_targets.csv</code>), the same way <code>sieve sync</code> and <code>sieve queue</code> do.</p>
+    ${m.approved ? `<p class="note small">Approved ${esc(m.approved.replace('T', ' ').slice(0, 16))} UTC:
+      ${m.approval_totals.approved} contacts approved, ${m.approval_totals.dropped} dropped. Approving again replaces these files.</p>` : ''}
+    <button class="primary" id="ap">${m.approved ? 'Approve again' : 'Approve roster'}</button>
+    <span id="apmsg" class="small muted" style="margin-left:12px"></span>
+    <div id="apfiles" style="margin-top:14px">${ex.files.length ? files(ex.files) : ''}</div></div>`;
+  $('#ap').onclick = async () => {
+    $('#ap').disabled = true; $('#apmsg').textContent = 'Building the exports…';
+    try {
+      const r = await api(`/api/runs/${id}/approve`, {method: 'POST'});
+      $('#apmsg').textContent = `${r.approval.approved} approved, ${r.approval.dropped} dropped. ` +
+        `Salesforce: ${r.manifest.accounts} accounts, ${r.manifest.contacts} contacts, ${r.manifest.held_back} held back.`;
+      $('#apfiles').innerHTML = files(r.files); loadSide();
+    } catch (e) { $('#apmsg').innerHTML = `<span class="err">${esc(e.message)}</span>`; }
+    $('#ap').disabled = false;
+  };
+}
+
+// ------------------------------------------------------------------ router
+async function route() {
+  stopPoll();
+  const mm = location.hash.match(/^#\/run\/([^/]+)\/(committee|scores|roster|approve)/);
+  try { mm ? await viewRun(mm[1], mm[2]) : viewNew(); }
+  catch (e) { $('#view').innerHTML = `<p class="note bad">${esc(e.message)}</p>`; }
+  loadSide();
+}
+window.onhashchange = route;
+route();
+</script></body></html>
