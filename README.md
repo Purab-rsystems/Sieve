@@ -127,16 +127,49 @@ case-insensitive column lookup silently returns the same one for both.
 
 ---
 
+## Run it (Windows, Python 3.14)
+
+1. Install Ollama from https://ollama.com/download, then pull the two models:
+   `ollama pull qwen2.5:7b` and `ollama pull llama3.1:8b`.
+2. In the sieve folder:
+
+```powershell
+python -m venv .venv
+.venv\Scripts\activate
+pip install -e ".[dev]"
+sieve ui
+```
+
+`sieve ui` opens Sieve in the browser. Upload the campaign file and the
+contact files. Then, in order:
+
+1. TAL scores (rule-based, ready at once): each check's band and the text that triggered it.
+   Optional on upload: a committee list (CSV/Excel: Role, Count, Description;
+   template at /api/list-template.csv). It replaces the default list for the
+   run; a role without a description gets one written by Qwen (marked so).
+2. Committee: decided from the campaign by Qwen (judge) and Llama (checker),
+   with both models' reasoning on every pick and every rejection. It uses the
+   default list (1 Economic Buyer, 1 Champion, 1 Technical Evaluator,
+   3 Influencers); "Generate list for this campaign" has the models decide how
+   many people each role needs instead (the default list stays as it is).
+3. Roster: for every Tier A company and every committee seat, Qwen picks the
+   contact to target, or says nobody fits, with its reasoning; Llama checks
+   every pick. Locked until steps 2 and 3 are done.
+4. Approve & export: the kept targets go to the approval file, the Salesforce
+   upsert files, the dial queue and tier_a_targets.csv (with the reasoning).
+
 ## Buying committee: judge + checker
 
 Decided from the campaign file before any contact is looked at. Qwen2.5-7B
 (judge) proposes which function fills each role; Llama-3.1-8B (checker) must
-pass every pick. Minimums (config/committee/rules.yaml): 1 Champion, 1 Economic
-Buyer, 1 Technical Evaluator, 3 Influencers; more members are fine. One title,
-one role. A minimum nothing passes is reported unfilled, never forced.
+pass every pick. Both run in Ollama. Each model writes its reasoning first and
+its answer is read right after that reasoning, so the reasoning shown on every
+pick and every rejection is what the answer came from. Minimums
+(config/committee/rules.yaml): 1 Champion, 1 Economic Buyer, 1 Technical
+Evaluator, 3 Influencers; more members are fine. One title, one role. A
+minimum nothing passes is reported unfilled, never forced.
 
 ```bash
-pip install -e .[committee]          # llama-cpp-python; model files in SIEVE_MODEL_DIR
 sieve committee decide --campaign config/icp_adtech_modernization.yaml --out committee.json
 sieve committee match  --committee committee.json --in roster.xlsx \
                        --out matched.csv --accounts-out coverage.csv
@@ -148,9 +181,9 @@ functions, descriptions copied word for word from AvaHR (26) / Workable (8),
 the closest O*NET occupation marked approximate (10), or none (7). Rebuilt with
 tools/role_reference/extract.py.
 
-Accuracy on the 10-campaign reference set (F1 against published research
-committees, by function): judge + checker 0.82 (dev 0.85, test 0.80); judge
-only 0.81; the same committee for every campaign 0.57. No unfilled minimums.
+Accuracy on the 10-campaign reference set: see benchmarks/committee/results.json.
+The earlier method (no written reasoning, llama.cpp) scored 0.82 F1
+(results_v1_llamacpp.json).
 
 ---
 
