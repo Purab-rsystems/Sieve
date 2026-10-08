@@ -1,0 +1,2345 @@
+{
+ "campaigns": {
+  "crm": {
+   "split": "dev",
+   "campaign_text": "Offering being sold: CRM platform for sales, marketing and customer service teams\nTarget companies: Professional Services, Manufacturing",
+   "judge_and_checker": {
+    "precision": 1.0,
+    "recall": 0.833,
+    "f1": 0.909,
+    "size": 7,
+    "unfilled": {},
+    "members": [
+     "Economic Buyer: Chief Financial Officer",
+     "Champion: Chief Executive Officer",
+     "Technical Evaluator: Chief Information Officer",
+     "Influencer: VP of IT",
+     "Influencer: VP of Finance",
+     "Influencer: Chief Customer Officer",
+     "Influencer: Chief Marketing Officer (extra)"
+    ],
+    "wrong": [],
+    "missed_slots": [
+     [
+      "Revenue"
+     ]
+    ]
+   },
+   "judge_only": {
+    "precision": 1.0,
+    "recall": 0.833,
+    "f1": 0.909,
+    "size": 8,
+    "unfilled": {},
+    "members": [
+     "Economic Buyer: Chief Financial Officer",
+     "Champion: Chief Executive Officer",
+     "Technical Evaluator: Chief Information Officer",
+     "Influencer: VP of IT",
+     "Influencer: VP of Finance",
+     "Influencer: Chief Customer Officer",
+     "Influencer: Chief Procurement Officer (extra)",
+     "Influencer: Chief Marketing Officer (extra)"
+    ],
+    "wrong": [],
+    "missed_slots": [
+     [
+      "Revenue"
+     ]
+    ]
+   },
+   "generic": {
+    "precision": 0.778,
+    "recall": 0.667,
+    "f1": 0.718,
+    "size": 9,
+    "unfilled": {},
+    "members": [
+     "Economic Buyer: Chief Financial Officer",
+     "Champion: Chief Information Officer",
+     "Technical Evaluator: VP of IT",
+     "Influencer: Chief Customer Officer",
+     "Influencer: VP of Finance",
+     "Influencer: IT Director",
+     "Influencer: Chief Architect (extra)",
+     "Champion: Chief Executive Officer (extra)",
+     "Champion: Chief Technology Officer (extra)"
+    ],
+    "wrong": [
+     "Chief Architect",
+     "Chief Technology Officer"
+    ],
+    "missed_slots": [
+     [
+      "Revenue"
+     ],
+     [
+      "Marketing"
+     ]
+    ]
+   },
+   "committee": {
+    "campaign": "Offering being sold: CRM platform for sales, marketing and customer service teams\nTarget companies: Professional Services, Manufacturing",
+    "members": [
+     {
+      "title": "Chief Financial Officer",
+      "function": "Finance",
+      "level": "C",
+      "role": "Economic Buyer",
+      "asked_as": "Economic Buyer",
+      "round": 0,
+      "extra": false,
+      "judge_p": 0.992,
+      "checker_p": 0.8361,
+      "chance": 0.0455
+     },
+     {
+      "title": "Chief Executive Officer",
+      "function": "Executive",
+      "level": "C",
+      "role": "Champion",
+      "asked_as": "Champion",
+      "round": 0,
+      "extra": false,
+      "judge_p": 0.5016,
+      "checker_p": 0.0466,
+      "chance": 0.0455
+     },
+     {
+      "title": "Chief Information Officer",
+      "function": "IT",
+      "level": "C",
+      "role": "Technical Evaluator",
+      "asked_as": "Technical Evaluator",
+      "round": 0,
+      "extra": false,
+      "judge_p": 0.9992,
+      "checker_p": 0.7989,
+      "chance": 0.0455
+     },
+     {
+      "title": "VP of IT",
+      "function": "IT",
+      "level": "C-1",
+      "role": "Influencer",
+      "asked_as": "Influencer",
+      "round": 0,
+      "extra": false,
+      "judge_p": 0.7244,
+      "checker_p": 0.0592,
+      "chance": 0.0455
+     },
+     {
+      "title": "VP of Finance",
+      "function": "Finance",
+      "level": "C-1",
+      "role": "Influencer",
+      "asked_as": "Ratifier",
+      "round": 0,
+      "extra": false,
+      "judge_p": 0.5968,
+      "checker_p": 0.9791,
+      "chance": 0.0455
+     },
+     {
+      "title": "Chief Customer Officer",
+      "function": "Customer",
+      "level": "C",
+      "role": "Influencer",
+      "asked_as": "User",
+      "round": 0,
+      "extra": false,
+      "judge_p": 0.5465,
+      "checker_p": 0.6818,
+      "chance": 0.0455
+     },
+     {
+      "title": "Chief Marketing Officer",
+      "function": "Marketing",
+      "level": "C",
+      "role": "Influencer",
+      "asked_as": "User",
+      "round": 0,
+      "extra": true,
+      "judge_p": 0.278,
+      "checker_p": 0.1635,
+      "chance": 0.0455
+     }
+    ],
+    "unfilled": {},
+    "rejected": [
+     {
+      "role": "Influencer",
+      "asked_as": "Ratifier",
+      "function": "Procurement",
+      "round": 0,
+      "extra": true,
+      "judge_p": 0.4032,
+      "checker_p": 0.0162,
+      "chance": 0.0455
+     }
+    ],
+    "judge": "qwen2.5-7b-instruct-q4_k_m",
+    "checker": "llama-3.1-8b-instruct-q4_k_m",
+    "seat_counts": {
+     "Economic Buyer": 1,
+     "Champion": 1,
+     "Technical Evaluator": 1,
+     "Influencer": 4
+    }
+   }
+  },
+  "martech": {
+   "split": "dev",
+   "campaign_text": "Offering being sold: Marketing automation and customer data platform\nTarget companies: Retail, Financial Services",
+   "judge_and_checker": {
+    "precision": 0.833,
+    "recall": 0.667,
+    "f1": 0.741,
+    "size": 6,
+    "unfilled": {},
+    "members": [
+     "Economic Buyer: Chief Financial Officer",
+     "Champion: Chief Marketing Officer",
+     "Technical Evaluator: Chief Information Officer",
+     "Influencer: VP of Finance",
+     "Influencer: VP of Marketing",
+     "Influencer: Chief Customer Officer"
+    ],
+    "wrong": [
+     "Chief Customer Officer"
+    ],
+    "missed_slots": [
+     [
+      "Procurement"
+     ]
+    ]
+   },
+   "judge_only": {
+    "precision": 0.7,
+    "recall": 1.0,
+    "f1": 0.824,
+    "size": 10,
+    "unfilled": {},
+    "members": [
+     "Economic Buyer: Chief Financial Officer",
+     "Champion: Chief Marketing Officer",
+     "Technical Evaluator: Chief Information Officer",
+     "Influencer: VP of Finance",
+     "Influencer: VP of Marketing",
+     "Influencer: Chief Customer Officer",
+     "Influencer: Chief Procurement Officer (extra)",
+     "Influencer: Chief Data Officer (extra)",
+     "Champion: Chief Product Officer (extra)",
+     "Economic Buyer: Chief Revenue Officer (extra)"
+    ],
+    "wrong": [
+     "Chief Customer Officer",
+     "Chief Product Officer",
+     "Chief Revenue Officer"
+    ],
+    "missed_slots": []
+   },
+   "generic": {
+    "precision": 0.556,
+    "recall": 0.333,
+    "f1": 0.417,
+    "size": 9,
+    "unfilled": {},
+    "members": [
+     "Economic Buyer: Chief Financial Officer",
+     "Champion: Chief Information Officer",
+     "Technical Evaluator: VP of IT",
+     "Influencer: Chief Customer Officer",
+     "Influencer: VP of Finance",
+     "Influencer: IT Director",
+     "Influencer: Chief Architect (extra)",
+     "Champion: Chief Executive Officer (extra)",
+     "Champion: Chief Technology Officer (extra)"
+    ],
+    "wrong": [
+     "Chief Customer Officer",
+     "Chief Architect",
+     "Chief Executive Officer",
+     "Chief Technology Officer"
+    ],
+    "missed_slots": [
+     [
+      "Marketing"
+     ],
+     [
+      "Procurement"
+     ]
+    ]
+   },
+   "committee": {
+    "campaign": "Offering being sold: Marketing automation and customer data platform\nTarget companies: Retail, Financial Services",
+    "members": [
+     {
+      "title": "Chief Financial Officer",
+      "function": "Finance",
+      "level": "C",
+      "role": "Economic Buyer",
+      "asked_as": "Economic Buyer",
+      "round": 0,
+      "extra": false,
+      "judge_p": 0.9388,
+      "checker_p": 0.6641,
+      "chance": 0.0455
+     },
+     {
+      "title": "Chief Marketing Officer",
+      "function": "Marketing",
+      "level": "C",
+      "role": "Champion",
+      "asked_as": "Champion",
+      "round": 0,
+      "extra": false,
+      "judge_p": 0.6726,
+      "checker_p": 0.7916,
+      "chance": 0.0455
+     },
+     {
+      "title": "Chief Information Officer",
+      "function": "IT",
+      "level": "C",
+      "role": "Technical Evaluator",
+      "asked_as": "Technical Evaluator",
+      "round": 0,
+      "extra": false,
+      "judge_p": 0.995,
+      "checker_p": 0.5618,
+      "chance": 0.0455
+     },
+     {
+      "title": "VP of Finance",
+      "function": "Finance",
+      "level": "C-1",
+      "role": "Influencer",
+      "asked_as": "Ratifier",
+      "round": 0,
+      "extra": false,
+      "judge_p": 0.5468,
+      "checker_p": 0.9722,
+      "chance": 0.0455
+     },
+     {
+      "title": "VP of Marketing",
+      "function": "Marketing",
+      "level": "C-1",
+      "role": "Influencer",
+      "asked_as": "User",
+      "round": 0,
+      "extra": false,
+      "judge_p": 0.5197,
+      "checker_p": 0.7126,
+      "chance": 0.0455
+     },
+     {
+      "title": "Chief Customer Officer",
+      "function": "Customer",
+      "level": "C",
+      "role": "Influencer",
+      "asked_as": "User",
+      "round": 0,
+      "extra": false,
+      "judge_p": 0.4796,
+      "checker_p": 0.2584,
+      "chance": 0.0455
+     }
+    ],
+    "unfilled": {},
+    "rejected": [
+     {
+      "role": "Influencer",
+      "asked_as": "Ratifier",
+      "function": "Procurement",
+      "round": 0,
+      "extra": true,
+      "judge_p": 0.4532,
+      "checker_p": 0.0229,
+      "chance": 0.0455
+     },
+     {
+      "role": "Influencer",
+      "asked_as": "Influencer",
+      "function": "Data",
+      "round": 0,
+      "extra": true,
+      "judge_p": 0.2317,
+      "checker_p": 0.0027,
+      "chance": 0.0455
+     },
+     {
+      "role": "Champion",
+      "asked_as": "Champion",
+      "function": "Product",
+      "round": 0,
+      "extra": true,
+      "judge_p": 0.2253,
+      "checker_p": 0.0001,
+      "chance": 0.0455
+     },
+     {
+      "role": "Economic Buyer",
+      "asked_as": "Economic Buyer",
+      "function": "Revenue",
+      "round": 0,
+      "extra": true,
+      "judge_p": 0.0602,
+      "checker_p": 0.0027,
+      "chance": 0.0455
+     }
+    ],
+    "judge": "qwen2.5-7b-instruct-q4_k_m",
+    "checker": "llama-3.1-8b-instruct-q4_k_m",
+    "seat_counts": {
+     "Economic Buyer": 1,
+     "Champion": 1,
+     "Technical Evaluator": 1,
+     "Influencer": 3
+    }
+   }
+  },
+  "cybersecurity": {
+   "split": "dev",
+   "campaign_text": "Offering being sold: Identity and privileged access security software\nTarget companies: Financial Services, Healthcare",
+   "judge_and_checker": {
+    "precision": 0.857,
+    "recall": 0.667,
+    "f1": 0.75,
+    "size": 7,
+    "unfilled": {},
+    "members": [
+     "Economic Buyer: Chief Financial Officer",
+     "Champion: Chief Information Officer",
+     "Technical Evaluator: VP of IT",
+     "Influencer: IT Director",
+     "Influencer: VP of Finance",
+     "Influencer: Chief Information Security Officer",
+     "Influencer: Chief Compliance Officer (extra)"
+    ],
+    "wrong": [
+     "Chief Compliance Officer"
+    ],
+    "missed_slots": [
+     [
+      "Executive"
+     ]
+    ]
+   },
+   "judge_only": {
+    "precision": 0.875,
+    "recall": 0.667,
+    "f1": 0.757,
+    "size": 8,
+    "unfilled": {},
+    "members": [
+     "Economic Buyer: Chief Financial Officer",
+     "Champion: Chief Information Officer",
+     "Technical Evaluator: VP of IT",
+     "Influencer: IT Director",
+     "Influencer: VP of Finance",
+     "Influencer: Chief Information Security Officer",
+     "Influencer: Chief Procurement Officer (extra)",
+     "Influencer: Chief Compliance Officer (extra)"
+    ],
+    "wrong": [
+     "Chief Compliance Officer"
+    ],
+    "missed_slots": [
+     [
+      "Executive"
+     ]
+    ]
+   },
+   "generic": {
+    "precision": 0.667,
+    "recall": 0.667,
+    "f1": 0.667,
+    "size": 9,
+    "unfilled": {},
+    "members": [
+     "Economic Buyer: Chief Financial Officer",
+     "Champion: Chief Information Officer",
+     "Technical Evaluator: VP of IT",
+     "Influencer: Chief Customer Officer",
+     "Influencer: VP of Finance",
+     "Influencer: IT Director",
+     "Influencer: Chief Architect (extra)",
+     "Champion: Chief Executive Officer (extra)",
+     "Champion: Chief Technology Officer (extra)"
+    ],
+    "wrong": [
+     "Chief Customer Officer",
+     "Chief Architect",
+     "Chief Technology Officer"
+    ],
+    "missed_slots": [
+     [
+      "Security"
+     ]
+    ]
+   },
+   "committee": {
+    "campaign": "Offering being sold: Identity and privileged access security software\nTarget companies: Financial Services, Healthcare",
+    "members": [
+     {
+      "title": "Chief Financial Officer",
+      "function": "Finance",
+      "level": "C",
+      "role": "Economic Buyer",
+      "asked_as": "Economic Buyer",
+      "round": 0,
+      "extra": false,
+      "judge_p": 0.7996,
+      "checker_p": 0.7727,
+      "chance": 0.0455
+     },
+     {
+      "title": "Chief Information Officer",
+      "function": "IT",
+      "level": "C",
+      "role": "Champion",
+      "asked_as": "Champion",
+      "round": 0,
+      "extra": false,
+      "judge_p": 0.5175,
+      "checker_p": 0.1465,
+      "chance": 0.0455
+     },
+     {
+      "title": "VP of IT",
+      "function": "IT",
+      "level": "C-1",
+      "role": "Technical Evaluator",
+      "asked_as": "Technical Evaluator",
+      "round": 0,
+      "extra": false,
+      "judge_p": 0.999,
+      "checker_p": 0.8355,
+      "chance": 0.0455
+     },
+     {
+      "title": "IT Director",
+      "function": "IT",
+      "level": "C-2",
+      "role": "Influencer",
+      "asked_as": "User",
+      "round": 0,
+      "extra": false,
+      "judge_p": 0.9064,
+      "checker_p": 0.3879,
+      "chance": 0.0455
+     },
+     {
+      "title": "VP of Finance",
+      "function": "Finance",
+      "level": "C-1",
+      "role": "Influencer",
+      "asked_as": "Ratifier",
+      "round": 0,
+      "extra": false,
+      "judge_p": 0.7045,
+      "checker_p": 0.9592,
+      "chance": 0.0455
+     },
+     {
+      "title": "Chief Information Security Officer",
+      "function": "Security",
+      "level": "C",
+      "role": "Influencer",
+      "asked_as": "Influencer",
+      "round": 0,
+      "extra": false,
+      "judge_p": 0.5045,
+      "checker_p": 0.3117,
+      "chance": 0.0455
+     },
+     {
+      "title": "Chief Compliance Officer",
+      "function": "Compliance",
+      "level": "C",
+      "role": "Influencer",
+      "asked_as": "Influencer",
+      "round": 0,
+      "extra": true,
+      "judge_p": 0.2383,
+      "checker_p": 0.2656,
+      "chance": 0.0455
+     }
+    ],
+    "unfilled": {},
+    "rejected": [
+     {
+      "role": "Influencer",
+      "asked_as": "Ratifier",
+      "function": "Procurement",
+      "round": 0,
+      "extra": true,
+      "judge_p": 0.2918,
+      "checker_p": 0.0305,
+      "chance": 0.0455
+     },
+     {
+      "role": "Economic Buyer",
+      "asked_as": "Economic Buyer",
+      "function": "Procurement",
+      "round": 0,
+      "extra": true,
+      "judge_p": 0.2004,
+      "checker_p": 0.005,
+      "chance": 0.0455
+     }
+    ],
+    "judge": "qwen2.5-7b-instruct-q4_k_m",
+    "checker": "llama-3.1-8b-instruct-q4_k_m",
+    "seat_counts": {
+     "Economic Buyer": 1,
+     "Champion": 1,
+     "Technical Evaluator": 1,
+     "Influencer": 4
+    }
+   }
+  },
+  "hr_payroll": {
+   "split": "dev",
+   "campaign_text": "Offering being sold: Cloud HR and payroll software\nTarget companies: Manufacturing, Retail",
+   "judge_and_checker": {
+    "precision": 1.0,
+    "recall": 1.0,
+    "f1": 1.0,
+    "size": 6,
+    "unfilled": {},
+    "members": [
+     "Economic Buyer: Chief Financial Officer",
+     "Champion: Chief Human Resources Officer",
+     "Technical Evaluator: Chief Information Officer",
+     "Influencer: VP of Finance",
+     "Influencer: VP of Human Resources",
+     "Influencer: VP of IT"
+    ],
+    "wrong": [],
+    "missed_slots": []
+   },
+   "judge_only": {
+    "precision": 0.7,
+    "recall": 1.0,
+    "f1": 0.824,
+    "size": 10,
+    "unfilled": {},
+    "members": [
+     "Economic Buyer: Chief Financial Officer",
+     "Champion: Chief Human Resources Officer",
+     "Technical Evaluator: Chief Information Officer",
+     "Influencer: VP of Finance",
+     "Influencer: VP of Human Resources",
+     "Influencer: VP of IT",
+     "Influencer: Chief Procurement Officer (extra)",
+     "Champion: Chief Executive Officer (extra)",
+     "Influencer: Chief Compliance Officer (extra)",
+     "Influencer: Chief Customer Officer (extra)"
+    ],
+    "wrong": [
+     "Chief Executive Officer",
+     "Chief Compliance Officer",
+     "Chief Customer Officer"
+    ],
+    "missed_slots": []
+   },
+   "generic": {
+    "precision": 0.556,
+    "recall": 0.667,
+    "f1": 0.606,
+    "size": 9,
+    "unfilled": {},
+    "members": [
+     "Economic Buyer: Chief Financial Officer",
+     "Champion: Chief Information Officer",
+     "Technical Evaluator: VP of IT",
+     "Influencer: Chief Customer Officer",
+     "Influencer: VP of Finance",
+     "Influencer: IT Director",
+     "Influencer: Chief Architect (extra)",
+     "Champion: Chief Executive Officer (extra)",
+     "Champion: Chief Technology Officer (extra)"
+    ],
+    "wrong": [
+     "Chief Customer Officer",
+     "Chief Architect",
+     "Chief Executive Officer",
+     "Chief Technology Officer"
+    ],
+    "missed_slots": [
+     [
+      "People"
+     ]
+    ]
+   },
+   "committee": {
+    "campaign": "Offering being sold: Cloud HR and payroll software\nTarget companies: Manufacturing, Retail",
+    "members": [
+     {
+      "title": "Chief Financial Officer",
+      "function": "Finance",
+      "level": "C",
+      "role": "Economic Buyer",
+      "asked_as": "Economic Buyer",
+      "round": 0,
+      "extra": false,
+      "judge_p": 0.9764,
+      "checker_p": 0.9151,
+      "chance": 0.0455
+     },
+     {
+      "title": "Chief Human Resources Officer",
+      "function": "People",
+      "level": "C",
+      "role": "Champion",
+      "asked_as": "Champion",
+      "round": 0,
+      "extra": false,
+      "judge_p": 0.3915,
+      "checker_p": 0.9605,
+      "chance": 0.0455
+     },
+     {
+      "title": "Chief Information Officer",
+      "function": "IT",
+      "level": "C",
+      "role": "Technical Evaluator",
+      "asked_as": "Technical Evaluator",
+      "round": 0,
+      "extra": false,
+      "judge_p": 0.9992,
+      "checker_p": 0.8703,
+      "chance": 0.0455
+     },
+     {
+      "title": "VP of Finance",
+      "function": "Finance",
+      "level": "C-1",
+      "role": "Influencer",
+      "asked_as": "Ratifier",
+      "round": 0,
+      "extra": false,
+      "judge_p": 0.7515,
+      "checker_p": 0.966,
+      "chance": 0.0455
+     },
+     {
+      "title": "VP of Human Resources",
+      "function": "People",
+      "level": "C-1",
+      "role": "Influencer",
+      "asked_as": "User",
+      "round": 0,
+      "extra": false,
+      "judge_p": 0.7273,
+      "checker_p": 0.9486,
+      "chance": 0.0455
+     },
+     {
+      "title": "VP of IT",
+      "function": "IT",
+      "level": "C-1",
+      "role": "Influencer",
+      "asked_as": "Influencer",
+      "round": 0,
+      "extra": false,
+      "judge_p": 0.4959,
+      "checker_p": 0.0563,
+      "chance": 0.0455
+     }
+    ],
+    "unfilled": {},
+    "rejected": [
+     {
+      "role": "Influencer",
+      "asked_as": "Ratifier",
+      "function": "Procurement",
+      "round": 0,
+      "extra": true,
+      "judge_p": 0.2485,
+      "checker_p": 0.0306,
+      "chance": 0.0455
+     },
+     {
+      "role": "Champion",
+      "asked_as": "Champion",
+      "function": "Executive",
+      "round": 0,
+      "extra": true,
+      "judge_p": 0.2399,
+      "checker_p": 0.0013,
+      "chance": 0.0455
+     },
+     {
+      "role": "Influencer",
+      "asked_as": "Influencer",
+      "function": "Compliance",
+      "round": 0,
+      "extra": true,
+      "judge_p": 0.1434,
+      "checker_p": 0.0035,
+      "chance": 0.0455
+     },
+     {
+      "role": "Champion",
+      "asked_as": "Champion",
+      "function": "Procurement",
+      "round": 0,
+      "extra": true,
+      "judge_p": 0.101,
+      "checker_p": 0.0029,
+      "chance": 0.0455
+     },
+     {
+      "role": "Influencer",
+      "asked_as": "User",
+      "function": "Customer",
+      "round": 0,
+      "extra": true,
+      "judge_p": 0.0689,
+      "checker_p": 0.0033,
+      "chance": 0.0455
+     }
+    ],
+    "judge": "qwen2.5-7b-instruct-q4_k_m",
+    "checker": "llama-3.1-8b-instruct-q4_k_m",
+    "seat_counts": {
+     "Economic Buyer": 1,
+     "Champion": 1,
+     "Technical Evaluator": 1,
+     "Influencer": 3
+    }
+   }
+  },
+  "peo": {
+   "split": "test",
+   "campaign_text": "Offering being sold: PEO: outsourced HR, payroll, benefits and compliance for mid-size companies\nTarget companies: Technology, Professional Services",
+   "judge_and_checker": {
+    "precision": 0.667,
+    "recall": 0.4,
+    "f1": 0.5,
+    "size": 6,
+    "unfilled": {},
+    "members": [
+     "Economic Buyer: Chief Financial Officer",
+     "Champion: VP of Finance",
+     "Technical Evaluator: Chief Information Officer",
+     "Influencer: Finance Director",
+     "Influencer: Chief Human Resources Officer",
+     "Influencer: Chief Compliance Officer"
+    ],
+    "wrong": [
+     "Chief Information Officer",
+     "Chief Compliance Officer"
+    ],
+    "missed_slots": [
+     [
+      "Technology"
+     ],
+     [
+      "Revenue"
+     ],
+     [
+      "Operations"
+     ]
+    ]
+   },
+   "judge_only": {
+    "precision": 0.556,
+    "recall": 0.4,
+    "f1": 0.465,
+    "size": 9,
+    "unfilled": {},
+    "members": [
+     "Economic Buyer: Chief Financial Officer",
+     "Champion: VP of Finance",
+     "Technical Evaluator: Chief Information Officer",
+     "Influencer: Finance Director",
+     "Influencer: Chief Human Resources Officer",
+     "Influencer: Chief Compliance Officer",
+     "Champion: Chief Procurement Officer (extra)",
+     "Influencer: Chief Customer Officer (extra)",
+     "Champion: Chief Executive Officer (extra)"
+    ],
+    "wrong": [
+     "Chief Information Officer",
+     "Chief Compliance Officer",
+     "Chief Customer Officer",
+     "Chief Executive Officer"
+    ],
+    "missed_slots": [
+     [
+      "Technology"
+     ],
+     [
+      "Revenue"
+     ],
+     [
+      "Operations"
+     ]
+    ]
+   },
+   "generic": {
+    "precision": 0.333,
+    "recall": 0.4,
+    "f1": 0.364,
+    "size": 9,
+    "unfilled": {},
+    "members": [
+     "Economic Buyer: Chief Financial Officer",
+     "Champion: Chief Information Officer",
+     "Technical Evaluator: VP of IT",
+     "Influencer: Chief Customer Officer",
+     "Influencer: VP of Finance",
+     "Influencer: IT Director",
+     "Influencer: Chief Architect (extra)",
+     "Champion: Chief Executive Officer (extra)",
+     "Champion: Chief Technology Officer (extra)"
+    ],
+    "wrong": [
+     "Chief Information Officer",
+     "VP of IT",
+     "Chief Customer Officer",
+     "IT Director",
+     "Chief Architect",
+     "Chief Executive Officer"
+    ],
+    "missed_slots": [
+     [
+      "Revenue"
+     ],
+     [
+      "Operations"
+     ],
+     [
+      "People",
+      "Product"
+     ]
+    ]
+   },
+   "committee": {
+    "campaign": "Offering being sold: PEO: outsourced HR, payroll, benefits and compliance for mid-size companies\nTarget companies: Technology, Professional Services",
+    "members": [
+     {
+      "title": "Chief Financial Officer",
+      "function": "Finance",
+      "level": "C",
+      "role": "Economic Buyer",
+      "asked_as": "Economic Buyer",
+      "round": 0,
+      "extra": false,
+      "judge_p": 0.897,
+      "checker_p": 0.9503,
+      "chance": 0.0455
+     },
+     {
+      "title": "VP of Finance",
+      "function": "Finance",
+      "level": "C-1",
+      "role": "Champion",
+      "asked_as": "Champion",
+      "round": 0,
+      "extra": false,
+      "judge_p": 0.3621,
+      "checker_p": 0.0834,
+      "chance": 0.0455
+     },
+     {
+      "title": "Chief Information Officer",
+      "function": "IT",
+      "level": "C",
+      "role": "Technical Evaluator",
+      "asked_as": "Technical Evaluator",
+      "round": 0,
+      "extra": false,
+      "judge_p": 0.9463,
+      "checker_p": 0.6806,
+      "chance": 0.0455
+     },
+     {
+      "title": "Finance Director",
+      "function": "Finance",
+      "level": "C-2",
+      "role": "Influencer",
+      "asked_as": "Ratifier",
+      "round": 0,
+      "extra": false,
+      "judge_p": 0.8511,
+      "checker_p": 0.9742,
+      "chance": 0.0455
+     },
+     {
+      "title": "Chief Human Resources Officer",
+      "function": "People",
+      "level": "C",
+      "role": "Influencer",
+      "asked_as": "User",
+      "round": 0,
+      "extra": false,
+      "judge_p": 0.7429,
+      "checker_p": 0.6156,
+      "chance": 0.0455
+     },
+     {
+      "title": "Chief Compliance Officer",
+      "function": "Compliance",
+      "level": "C",
+      "role": "Influencer",
+      "asked_as": "Influencer",
+      "round": 0,
+      "extra": false,
+      "judge_p": 0.4049,
+      "checker_p": 0.1451,
+      "chance": 0.0455
+     }
+    ],
+    "unfilled": {},
+    "rejected": [
+     {
+      "role": "Champion",
+      "asked_as": "Champion",
+      "function": "Procurement",
+      "round": 0,
+      "extra": true,
+      "judge_p": 0.2499,
+      "checker_p": 0.0183,
+      "chance": 0.0455
+     },
+     {
+      "role": "Influencer",
+      "asked_as": "User",
+      "function": "Customer",
+      "round": 0,
+      "extra": true,
+      "judge_p": 0.2416,
+      "checker_p": 0.0287,
+      "chance": 0.0455
+     },
+     {
+      "role": "Influencer",
+      "asked_as": "Ratifier",
+      "function": "Procurement",
+      "round": 0,
+      "extra": true,
+      "judge_p": 0.1489,
+      "checker_p": 0.0194,
+      "chance": 0.0455
+     },
+     {
+      "role": "Champion",
+      "asked_as": "Champion",
+      "function": "Executive",
+      "round": 0,
+      "extra": true,
+      "judge_p": 0.1362,
+      "checker_p": 0.0268,
+      "chance": 0.0455
+     },
+     {
+      "role": "Economic Buyer",
+      "asked_as": "Economic Buyer",
+      "function": "Procurement",
+      "round": 0,
+      "extra": true,
+      "judge_p": 0.103,
+      "checker_p": 0.0045,
+      "chance": 0.0455
+     },
+     {
+      "role": "Technical Evaluator",
+      "asked_as": "Technical Evaluator",
+      "function": "Procurement",
+      "round": 0,
+      "extra": true,
+      "judge_p": 0.0537,
+      "checker_p": 0.0034,
+      "chance": 0.0455
+     }
+    ],
+    "judge": "qwen2.5-7b-instruct-q4_k_m",
+    "checker": "llama-3.1-8b-instruct-q4_k_m",
+    "seat_counts": {
+     "Economic Buyer": 1,
+     "Champion": 1,
+     "Technical Evaluator": 1,
+     "Influencer": 3
+    }
+   }
+  },
+  "erp": {
+   "split": "test",
+   "campaign_text": "Offering being sold: Cloud ERP for finance, procurement, manufacturing and supply chain\nTarget companies: Manufacturing, Distribution",
+   "judge_and_checker": {
+    "precision": 1.0,
+    "recall": 1.0,
+    "f1": 1.0,
+    "size": 8,
+    "unfilled": {},
+    "members": [
+     "Economic Buyer: Chief Financial Officer",
+     "Champion: VP of Finance",
+     "Technical Evaluator: Chief Information Officer",
+     "Influencer: Finance Director",
+     "Influencer: VP of IT",
+     "Influencer: Chief Operating Officer",
+     "Champion: Chief Procurement Officer (extra)",
+     "Influencer: Chief Supply Chain Officer (extra)"
+    ],
+    "wrong": [],
+    "missed_slots": []
+   },
+   "judge_only": {
+    "precision": 0.889,
+    "recall": 1.0,
+    "f1": 0.941,
+    "size": 9,
+    "unfilled": {},
+    "members": [
+     "Economic Buyer: Chief Financial Officer",
+     "Champion: VP of Finance",
+     "Technical Evaluator: Chief Information Officer",
+     "Influencer: Finance Director",
+     "Influencer: VP of IT",
+     "Influencer: Chief Operating Officer",
+     "Champion: Chief Procurement Officer (extra)",
+     "Influencer: Chief Compliance Officer (extra)",
+     "Influencer: Chief Supply Chain Officer (extra)"
+    ],
+    "wrong": [
+     "Chief Compliance Officer"
+    ],
+    "missed_slots": []
+   },
+   "generic": {
+    "precision": 0.556,
+    "recall": 0.4,
+    "f1": 0.465,
+    "size": 9,
+    "unfilled": {},
+    "members": [
+     "Economic Buyer: Chief Financial Officer",
+     "Champion: Chief Information Officer",
+     "Technical Evaluator: VP of IT",
+     "Influencer: Chief Customer Officer",
+     "Influencer: VP of Finance",
+     "Influencer: IT Director",
+     "Influencer: Chief Architect (extra)",
+     "Champion: Chief Executive Officer (extra)",
+     "Champion: Chief Technology Officer (extra)"
+    ],
+    "wrong": [
+     "Chief Customer Officer",
+     "Chief Architect",
+     "Chief Executive Officer",
+     "Chief Technology Officer"
+    ],
+    "missed_slots": [
+     [
+      "Procurement"
+     ],
+     [
+      "Supply Chain"
+     ],
+     [
+      "Operations"
+     ]
+    ]
+   },
+   "committee": {
+    "campaign": "Offering being sold: Cloud ERP for finance, procurement, manufacturing and supply chain\nTarget companies: Manufacturing, Distribution",
+    "members": [
+     {
+      "title": "Chief Financial Officer",
+      "function": "Finance",
+      "level": "C",
+      "role": "Economic Buyer",
+      "asked_as": "Economic Buyer",
+      "round": 0,
+      "extra": false,
+      "judge_p": 0.7731,
+      "checker_p": 0.9518,
+      "chance": 0.0455
+     },
+     {
+      "title": "VP of Finance",
+      "function": "Finance",
+      "level": "C-1",
+      "role": "Champion",
+      "asked_as": "Champion",
+      "round": 0,
+      "extra": false,
+      "judge_p": 0.6129,
+      "checker_p": 0.1641,
+      "chance": 0.0455
+     },
+     {
+      "title": "Chief Information Officer",
+      "function": "IT",
+      "level": "C",
+      "role": "Technical Evaluator",
+      "asked_as": "Technical Evaluator",
+      "round": 0,
+      "extra": false,
+      "judge_p": 1.0,
+      "checker_p": 0.8139,
+      "chance": 0.0455
+     },
+     {
+      "title": "Finance Director",
+      "function": "Finance",
+      "level": "C-2",
+      "role": "Influencer",
+      "asked_as": "Ratifier",
+      "round": 0,
+      "extra": false,
+      "judge_p": 0.7664,
+      "checker_p": 0.9431,
+      "chance": 0.0455
+     },
+     {
+      "title": "VP of IT",
+      "function": "IT",
+      "level": "C-1",
+      "role": "Influencer",
+      "asked_as": "Influencer",
+      "round": 0,
+      "extra": false,
+      "judge_p": 0.5152,
+      "checker_p": 0.0922,
+      "chance": 0.0455
+     },
+     {
+      "title": "Chief Operating Officer",
+      "function": "Operations",
+      "level": "C",
+      "role": "Influencer",
+      "asked_as": "User",
+      "round": 0,
+      "extra": false,
+      "judge_p": 0.4208,
+      "checker_p": 0.4446,
+      "chance": 0.0455
+     },
+     {
+      "title": "Chief Procurement Officer",
+      "function": "Procurement",
+      "level": "C",
+      "role": "Champion",
+      "asked_as": "Champion",
+      "round": 0,
+      "extra": true,
+      "judge_p": 0.2533,
+      "checker_p": 0.1441,
+      "chance": 0.0455
+     },
+     {
+      "title": "Chief Supply Chain Officer",
+      "function": "Supply Chain",
+      "level": "C",
+      "role": "Influencer",
+      "asked_as": "Influencer",
+      "round": 0,
+      "extra": true,
+      "judge_p": 0.0582,
+      "checker_p": 0.1325,
+      "chance": 0.0455
+     }
+    ],
+    "unfilled": {},
+    "rejected": [
+     {
+      "role": "Influencer",
+      "asked_as": "Influencer",
+      "function": "Compliance",
+      "round": 0,
+      "extra": true,
+      "judge_p": 0.1179,
+      "checker_p": 0.0045,
+      "chance": 0.0455
+     }
+    ],
+    "judge": "qwen2.5-7b-instruct-q4_k_m",
+    "checker": "llama-3.1-8b-instruct-q4_k_m",
+    "seat_counts": {
+     "Economic Buyer": 1,
+     "Champion": 2,
+     "Technical Evaluator": 1,
+     "Influencer": 4
+    }
+   }
+  },
+  "data_analytics": {
+   "split": "test",
+   "campaign_text": "Offering being sold: Enterprise data and analytics platform\nTarget companies: Financial Services, Retail",
+   "judge_and_checker": {
+    "precision": 0.833,
+    "recall": 1.0,
+    "f1": 0.909,
+    "size": 6,
+    "unfilled": {},
+    "members": [
+     "Economic Buyer: Chief Financial Officer",
+     "Champion: Chief Technology Officer",
+     "Technical Evaluator: Chief Information Officer",
+     "Influencer: VP of Finance",
+     "Influencer: VP of IT",
+     "Influencer: Chief Data Officer"
+    ],
+    "wrong": [
+     "Chief Technology Officer"
+    ],
+    "missed_slots": []
+   },
+   "judge_only": {
+    "precision": 0.7,
+    "recall": 1.0,
+    "f1": 0.824,
+    "size": 10,
+    "unfilled": {},
+    "members": [
+     "Economic Buyer: Chief Financial Officer",
+     "Champion: Chief Information Officer",
+     "Technical Evaluator: VP of IT",
+     "Influencer: VP of Finance",
+     "Influencer: IT Director",
+     "Influencer: Chief Data Officer",
+     "Champion: Chief Technology Officer (extra)",
+     "Influencer: Chief Procurement Officer (extra)",
+     "Influencer: Chief Product Officer (extra)",
+     "Influencer: Chief Architect (extra)"
+    ],
+    "wrong": [
+     "Chief Technology Officer",
+     "Chief Product Officer",
+     "Chief Architect"
+    ],
+    "missed_slots": []
+   },
+   "generic": {
+    "precision": 0.556,
+    "recall": 0.5,
+    "f1": 0.526,
+    "size": 9,
+    "unfilled": {},
+    "members": [
+     "Economic Buyer: Chief Financial Officer",
+     "Champion: Chief Information Officer",
+     "Technical Evaluator: VP of IT",
+     "Influencer: Chief Customer Officer",
+     "Influencer: VP of Finance",
+     "Influencer: IT Director",
+     "Influencer: Chief Architect (extra)",
+     "Champion: Chief Executive Officer (extra)",
+     "Champion: Chief Technology Officer (extra)"
+    ],
+    "wrong": [
+     "Chief Customer Officer",
+     "Chief Architect",
+     "Chief Executive Officer",
+     "Chief Technology Officer"
+    ],
+    "missed_slots": [
+     [
+      "Data"
+     ]
+    ]
+   },
+   "committee": {
+    "campaign": "Offering being sold: Enterprise data and analytics platform\nTarget companies: Financial Services, Retail",
+    "members": [
+     {
+      "title": "Chief Financial Officer",
+      "function": "Finance",
+      "level": "C",
+      "role": "Economic Buyer",
+      "asked_as": "Economic Buyer",
+      "round": 0,
+      "extra": false,
+      "judge_p": 0.991,
+      "checker_p": 0.96,
+      "chance": 0.0455
+     },
+     {
+      "title": "Chief Technology Officer",
+      "function": "Technology",
+      "level": "C",
+      "role": "Champion",
+      "asked_as": "Champion",
+      "round": 0,
+      "extra": false,
+      "judge_p": 0.3573,
+      "checker_p": 0.0946,
+      "chance": 0.0455
+     },
+     {
+      "title": "Chief Information Officer",
+      "function": "IT",
+      "level": "C",
+      "role": "Technical Evaluator",
+      "asked_as": "Technical Evaluator",
+      "round": 0,
+      "extra": false,
+      "judge_p": 0.9964,
+      "checker_p": 0.3934,
+      "chance": 0.0455
+     },
+     {
+      "title": "VP of Finance",
+      "function": "Finance",
+      "level": "C-1",
+      "role": "Influencer",
+      "asked_as": "Ratifier",
+      "round": 0,
+      "extra": false,
+      "judge_p": 0.696,
+      "checker_p": 0.975,
+      "chance": 0.0455
+     },
+     {
+      "title": "VP of IT",
+      "function": "IT",
+      "level": "C-1",
+      "role": "Influencer",
+      "asked_as": "Influencer",
+      "round": 0,
+      "extra": false,
+      "judge_p": 0.5304,
+      "checker_p": 0.0908,
+      "chance": 0.0455
+     },
+     {
+      "title": "Chief Data Officer",
+      "function": "Data",
+      "level": "C",
+      "role": "Influencer",
+      "asked_as": "User",
+      "round": 0,
+      "extra": false,
+      "judge_p": 0.5284,
+      "checker_p": 0.6982,
+      "chance": 0.0455
+     }
+    ],
+    "unfilled": {},
+    "rejected": [
+     {
+      "role": "Champion",
+      "asked_as": "Champion",
+      "function": "IT",
+      "round": 0,
+      "judge_p": 0.581,
+      "checker_p": 0.0449,
+      "chance": 0.0455
+     },
+     {
+      "role": "Influencer",
+      "asked_as": "Ratifier",
+      "function": "Procurement",
+      "round": 0,
+      "extra": true,
+      "judge_p": 0.304,
+      "checker_p": 0.0203,
+      "chance": 0.0455
+     },
+     {
+      "role": "Influencer",
+      "asked_as": "User",
+      "function": "Product",
+      "round": 0,
+      "extra": true,
+      "judge_p": 0.2052,
+      "checker_p": 0.0014,
+      "chance": 0.0455
+     },
+     {
+      "role": "Influencer",
+      "asked_as": "User",
+      "function": "Architecture",
+      "round": 0,
+      "extra": true,
+      "judge_p": 0.0833,
+      "checker_p": 0.0103,
+      "chance": 0.0455
+     },
+     {
+      "role": "Champion",
+      "asked_as": "Champion",
+      "function": "Product",
+      "round": 0,
+      "extra": true,
+      "judge_p": 0.0573,
+      "checker_p": 0.0027,
+      "chance": 0.0455
+     }
+    ],
+    "judge": "qwen2.5-7b-instruct-q4_k_m",
+    "checker": "llama-3.1-8b-instruct-q4_k_m",
+    "seat_counts": {
+     "Economic Buyer": 1,
+     "Champion": 1,
+     "Technical Evaluator": 1,
+     "Influencer": 3
+    }
+   }
+  },
+  "supply_chain": {
+   "split": "test",
+   "campaign_text": "Offering being sold: Supply chain planning and inventory optimisation software\nTarget companies: Manufacturing, Consumer Goods",
+   "judge_and_checker": {
+    "precision": 0.857,
+    "recall": 0.75,
+    "f1": 0.8,
+    "size": 7,
+    "unfilled": {},
+    "members": [
+     "Economic Buyer: Chief Financial Officer",
+     "Champion: Chief Supply Chain Officer",
+     "Technical Evaluator: VP of Supply Chain",
+     "Influencer: Director of Supply Chain",
+     "Influencer: VP of Finance",
+     "Influencer: Chief Procurement Officer",
+     "Influencer: Chief Operating Officer (extra)"
+    ],
+    "wrong": [
+     "Chief Operating Officer"
+    ],
+    "missed_slots": [
+     [
+      "IT"
+     ]
+    ]
+   },
+   "judge_only": {
+    "precision": 0.875,
+    "recall": 1.0,
+    "f1": 0.933,
+    "size": 8,
+    "unfilled": {},
+    "members": [
+     "Economic Buyer: Chief Financial Officer",
+     "Champion: Chief Information Officer",
+     "Technical Evaluator: VP of IT",
+     "Influencer: Chief Supply Chain Officer",
+     "Influencer: VP of Finance",
+     "Influencer: IT Director",
+     "Economic Buyer: Chief Procurement Officer (extra)",
+     "Influencer: Chief Operating Officer (extra)"
+    ],
+    "wrong": [
+     "Chief Operating Officer"
+    ],
+    "missed_slots": []
+   },
+   "generic": {
+    "precision": 0.556,
+    "recall": 0.5,
+    "f1": 0.526,
+    "size": 9,
+    "unfilled": {},
+    "members": [
+     "Economic Buyer: Chief Financial Officer",
+     "Champion: Chief Information Officer",
+     "Technical Evaluator: VP of IT",
+     "Influencer: Chief Customer Officer",
+     "Influencer: VP of Finance",
+     "Influencer: IT Director",
+     "Influencer: Chief Architect (extra)",
+     "Champion: Chief Executive Officer (extra)",
+     "Champion: Chief Technology Officer (extra)"
+    ],
+    "wrong": [
+     "Chief Customer Officer",
+     "Chief Architect",
+     "Chief Executive Officer",
+     "Chief Technology Officer"
+    ],
+    "missed_slots": [
+     [
+      "Supply Chain"
+     ],
+     [
+      "Procurement"
+     ]
+    ]
+   },
+   "committee": {
+    "campaign": "Offering being sold: Supply chain planning and inventory optimisation software\nTarget companies: Manufacturing, Consumer Goods",
+    "members": [
+     {
+      "title": "Chief Financial Officer",
+      "function": "Finance",
+      "level": "C",
+      "role": "Economic Buyer",
+      "asked_as": "Economic Buyer",
+      "round": 0,
+      "extra": false,
+      "judge_p": 0.5336,
+      "checker_p": 0.1609,
+      "chance": 0.0455
+     },
+     {
+      "title": "Chief Supply Chain Officer",
+      "function": "Supply Chain",
+      "level": "C",
+      "role": "Champion",
+      "asked_as": "Champion",
+      "round": 0,
+      "extra": false,
+      "judge_p": 0.3232,
+      "checker_p": 0.9136,
+      "chance": 0.0455
+     },
+     {
+      "title": "VP of Supply Chain",
+      "function": "Supply Chain",
+      "level": "C-1",
+      "role": "Technical Evaluator",
+      "asked_as": "Technical Evaluator",
+      "round": 0,
+      "extra": false,
+      "judge_p": 0.2574,
+      "checker_p": 0.9117,
+      "chance": 0.0455
+     },
+     {
+      "title": "Director of Supply Chain",
+      "function": "Supply Chain",
+      "level": "C-2",
+      "role": "Influencer",
+      "asked_as": "User",
+      "round": 0,
+      "extra": false,
+      "judge_p": 0.9458,
+      "checker_p": 0.7135,
+      "chance": 0.0455
+     },
+     {
+      "title": "VP of Finance",
+      "function": "Finance",
+      "level": "C-1",
+      "role": "Influencer",
+      "asked_as": "Ratifier",
+      "round": 0,
+      "extra": false,
+      "judge_p": 0.7144,
+      "checker_p": 0.7039,
+      "chance": 0.0455
+     },
+     {
+      "title": "Chief Procurement Officer",
+      "function": "Procurement",
+      "level": "C",
+      "role": "Influencer",
+      "asked_as": "Ratifier",
+      "round": 0,
+      "extra": false,
+      "judge_p": 0.2855,
+      "checker_p": 0.2926,
+      "chance": 0.0455
+     },
+     {
+      "title": "Chief Operating Officer",
+      "function": "Operations",
+      "level": "C",
+      "role": "Influencer",
+      "asked_as": "User",
+      "round": 0,
+      "extra": true,
+      "judge_p": 0.0541,
+      "checker_p": 0.2532,
+      "chance": 0.0455
+     }
+    ],
+    "unfilled": {},
+    "rejected": [
+     {
+      "role": "Champion",
+      "asked_as": "Champion",
+      "function": "IT",
+      "round": 0,
+      "judge_p": 0.4094,
+      "checker_p": 0.0002,
+      "chance": 0.0455
+     },
+     {
+      "role": "Technical Evaluator",
+      "asked_as": "Technical Evaluator",
+      "function": "IT",
+      "round": 0,
+      "judge_p": 0.7425,
+      "checker_p": 0.0437,
+      "chance": 0.0455
+     },
+     {
+      "role": "Influencer",
+      "asked_as": "Influencer",
+      "function": "IT",
+      "round": 0,
+      "judge_p": 0.4922,
+      "checker_p": 0.0026,
+      "chance": 0.0455
+     }
+    ],
+    "judge": "qwen2.5-7b-instruct-q4_k_m",
+    "checker": "llama-3.1-8b-instruct-q4_k_m",
+    "seat_counts": {
+     "Economic Buyer": 1,
+     "Champion": 1,
+     "Technical Evaluator": 1,
+     "Influencer": 4
+    }
+   }
+  },
+  "cloud_migration": {
+   "split": "test",
+   "campaign_text": "Offering being sold: Cloud migration and managed cloud infrastructure services\nTarget companies: Financial Services, Retail",
+   "judge_and_checker": {
+    "precision": 0.857,
+    "recall": 1.0,
+    "f1": 0.923,
+    "size": 7,
+    "unfilled": {},
+    "members": [
+     "Economic Buyer: Chief Financial Officer",
+     "Champion: Chief Information Officer",
+     "Technical Evaluator: VP of IT",
+     "Influencer: IT Director",
+     "Influencer: VP of Finance",
+     "Influencer: Chief Architect",
+     "Champion: Chief Technology Officer (extra)"
+    ],
+    "wrong": [
+     "Chief Architect"
+    ],
+    "missed_slots": []
+   },
+   "judge_only": {
+    "precision": 0.875,
+    "recall": 1.0,
+    "f1": 0.933,
+    "size": 8,
+    "unfilled": {},
+    "members": [
+     "Economic Buyer: Chief Financial Officer",
+     "Champion: Chief Information Officer",
+     "Technical Evaluator: VP of IT",
+     "Influencer: IT Director",
+     "Influencer: VP of Finance",
+     "Influencer: Chief Procurement Officer",
+     "Champion: Chief Technology Officer (extra)",
+     "Influencer: Chief Architect (extra)"
+    ],
+    "wrong": [
+     "Chief Architect"
+    ],
+    "missed_slots": []
+   },
+   "generic": {
+    "precision": 0.667,
+    "recall": 1.0,
+    "f1": 0.8,
+    "size": 9,
+    "unfilled": {},
+    "members": [
+     "Economic Buyer: Chief Financial Officer",
+     "Champion: Chief Information Officer",
+     "Technical Evaluator: VP of IT",
+     "Influencer: Chief Customer Officer",
+     "Influencer: VP of Finance",
+     "Influencer: IT Director",
+     "Influencer: Chief Architect (extra)",
+     "Champion: Chief Executive Officer (extra)",
+     "Champion: Chief Technology Officer (extra)"
+    ],
+    "wrong": [
+     "Chief Customer Officer",
+     "Chief Architect",
+     "Chief Executive Officer"
+    ],
+    "missed_slots": []
+   },
+   "committee": {
+    "campaign": "Offering being sold: Cloud migration and managed cloud infrastructure services\nTarget companies: Financial Services, Retail",
+    "members": [
+     {
+      "title": "Chief Financial Officer",
+      "function": "Finance",
+      "level": "C",
+      "role": "Economic Buyer",
+      "asked_as": "Economic Buyer",
+      "round": 0,
+      "extra": false,
+      "judge_p": 0.9467,
+      "checker_p": 0.8301,
+      "chance": 0.0455
+     },
+     {
+      "title": "Chief Information Officer",
+      "function": "IT",
+      "level": "C",
+      "role": "Champion",
+      "asked_as": "Champion",
+      "round": 0,
+      "extra": false,
+      "judge_p": 0.6038,
+      "checker_p": 0.2385,
+      "chance": 0.0455
+     },
+     {
+      "title": "VP of IT",
+      "function": "IT",
+      "level": "C-1",
+      "role": "Technical Evaluator",
+      "asked_as": "Technical Evaluator",
+      "round": 0,
+      "extra": false,
+      "judge_p": 0.999,
+      "checker_p": 0.7001,
+      "chance": 0.0455
+     },
+     {
+      "title": "IT Director",
+      "function": "IT",
+      "level": "C-2",
+      "role": "Influencer",
+      "asked_as": "Influencer",
+      "round": 0,
+      "extra": false,
+      "judge_p": 0.8269,
+      "checker_p": 0.3355,
+      "chance": 0.0455
+     },
+     {
+      "title": "VP of Finance",
+      "function": "Finance",
+      "level": "C-1",
+      "role": "Influencer",
+      "asked_as": "Ratifier",
+      "round": 0,
+      "extra": false,
+      "judge_p": 0.7438,
+      "checker_p": 0.9674,
+      "chance": 0.0455
+     },
+     {
+      "title": "Chief Architect",
+      "function": "Architecture",
+      "level": "C-1",
+      "role": "Influencer",
+      "asked_as": "User",
+      "round": 0,
+      "extra": false,
+      "judge_p": 0.164,
+      "checker_p": 0.056,
+      "chance": 0.0455
+     },
+     {
+      "title": "Chief Technology Officer",
+      "function": "Technology",
+      "level": "C",
+      "role": "Champion",
+      "asked_as": "Champion",
+      "round": 0,
+      "extra": true,
+      "judge_p": 0.3923,
+      "checker_p": 0.3335,
+      "chance": 0.0455
+     }
+    ],
+    "unfilled": {},
+    "rejected": [
+     {
+      "role": "Influencer",
+      "asked_as": "Ratifier",
+      "function": "Procurement",
+      "round": 0,
+      "judge_p": 0.2562,
+      "checker_p": 0.0218,
+      "chance": 0.0455
+     },
+     {
+      "role": "Economic Buyer",
+      "asked_as": "Economic Buyer",
+      "function": "Procurement",
+      "round": 0,
+      "extra": true,
+      "judge_p": 0.0533,
+      "checker_p": 0.0012,
+      "chance": 0.0455
+     }
+    ],
+    "judge": "qwen2.5-7b-instruct-q4_k_m",
+    "checker": "llama-3.1-8b-instruct-q4_k_m",
+    "seat_counts": {
+     "Economic Buyer": 1,
+     "Champion": 2,
+     "Technical Evaluator": 1,
+     "Influencer": 3
+    }
+   }
+  },
+  "legacy_modernization": {
+   "split": "test",
+   "campaign_text": "Offering being sold: AdTech Platform Modernization & Strangler Fig Migration lookalike\nTarget companies: Core AdTech, agency management software, DSP/SSP, ad exchange; Media planning, ad verification, connected TV\nTechnology the offering works on: Explicit ASP.NET, .NET Framework, VB.NET or Java monolith; Desktop-era client, on-prem deployment, 10+ year codebase",
+   "judge_and_checker": {
+    "precision": 1.0,
+    "recall": 0.5,
+    "f1": 0.667,
+    "size": 8,
+    "unfilled": {},
+    "members": [
+     "Economic Buyer: Chief Financial Officer",
+     "Champion: Chief Information Officer",
+     "Technical Evaluator: VP of IT",
+     "Influencer: IT Director",
+     "Influencer: VP of Finance",
+     "Influencer: Chief Procurement Officer",
+     "Champion: Chief Technology Officer (extra)",
+     "Influencer: Chief Architect (extra)"
+    ],
+    "wrong": [],
+    "missed_slots": [
+     [
+      "Platform"
+     ],
+     [
+      "Product"
+     ],
+     [
+      "Operations"
+     ]
+    ],
+    "team_picks_held": "3 of 8",
+    "team_picks_list": [
+     "Chief Technology Officer",
+     "Chief Architect",
+     "Chief Information Officer"
+    ]
+   },
+   "judge_only": {
+    "precision": 1.0,
+    "recall": 0.5,
+    "f1": 0.667,
+    "size": 8,
+    "unfilled": {},
+    "members": [
+     "Economic Buyer: Chief Financial Officer",
+     "Champion: Chief Information Officer",
+     "Technical Evaluator: VP of IT",
+     "Influencer: IT Director",
+     "Influencer: VP of Finance",
+     "Influencer: Chief Procurement Officer",
+     "Champion: Chief Technology Officer (extra)",
+     "Influencer: Chief Architect (extra)"
+    ],
+    "wrong": [],
+    "missed_slots": [
+     [
+      "Platform"
+     ],
+     [
+      "Product"
+     ],
+     [
+      "Operations"
+     ]
+    ],
+    "team_picks_held": "3 of 8",
+    "team_picks_list": [
+     "Chief Technology Officer",
+     "Chief Architect",
+     "Chief Information Officer"
+    ]
+   },
+   "generic": {
+    "precision": 0.778,
+    "recall": 0.5,
+    "f1": 0.609,
+    "size": 9,
+    "unfilled": {},
+    "members": [
+     "Economic Buyer: Chief Financial Officer",
+     "Champion: Chief Information Officer",
+     "Technical Evaluator: VP of IT",
+     "Influencer: Chief Customer Officer",
+     "Influencer: VP of Finance",
+     "Influencer: IT Director",
+     "Influencer: Chief Architect (extra)",
+     "Champion: Chief Executive Officer (extra)",
+     "Champion: Chief Technology Officer (extra)"
+    ],
+    "wrong": [
+     "Chief Customer Officer",
+     "Chief Executive Officer"
+    ],
+    "missed_slots": [
+     [
+      "Platform"
+     ],
+     [
+      "Product"
+     ],
+     [
+      "Operations"
+     ]
+    ],
+    "team_picks_held": "3 of 8",
+    "team_picks_list": [
+     "Chief Technology Officer",
+     "Chief Architect",
+     "Chief Information Officer"
+    ]
+   },
+   "committee": {
+    "campaign": "Offering being sold: AdTech Platform Modernization & Strangler Fig Migration lookalike\nTarget companies: Core AdTech, agency management software, DSP/SSP, ad exchange; Media planning, ad verification, connected TV\nTechnology the offering works on: Explicit ASP.NET, .NET Framework, VB.NET or Java monolith; Desktop-era client, on-prem deployment, 10+ year codebase",
+    "members": [
+     {
+      "title": "Chief Financial Officer",
+      "function": "Finance",
+      "level": "C",
+      "role": "Economic Buyer",
+      "asked_as": "Economic Buyer",
+      "round": 0,
+      "extra": false,
+      "judge_p": 0.9998,
+      "checker_p": 0.6129,
+      "chance": 0.0455
+     },
+     {
+      "title": "Chief Information Officer",
+      "function": "IT",
+      "level": "C",
+      "role": "Champion",
+      "asked_as": "Champion",
+      "round": 0,
+      "extra": false,
+      "judge_p": 0.7611,
+      "checker_p": 0.0773,
+      "chance": 0.0455
+     },
+     {
+      "title": "VP of IT",
+      "function": "IT",
+      "level": "C-1",
+      "role": "Technical Evaluator",
+      "asked_as": "Technical Evaluator",
+      "round": 0,
+      "extra": false,
+      "judge_p": 0.9989,
+      "checker_p": 0.6152,
+      "chance": 0.0455
+     },
+     {
+      "title": "IT Director",
+      "function": "IT",
+      "level": "C-2",
+      "role": "Influencer",
+      "asked_as": "Influencer",
+      "round": 0,
+      "extra": false,
+      "judge_p": 0.8076,
+      "checker_p": 0.2896,
+      "chance": 0.0455
+     },
+     {
+      "title": "VP of Finance",
+      "function": "Finance",
+      "level": "C-1",
+      "role": "Influencer",
+      "asked_as": "Ratifier",
+      "round": 0,
+      "extra": false,
+      "judge_p": 0.7497,
+      "checker_p": 0.8915,
+      "chance": 0.0455
+     },
+     {
+      "title": "Chief Procurement Officer",
+      "function": "Procurement",
+      "level": "C",
+      "role": "Influencer",
+      "asked_as": "Ratifier",
+      "round": 0,
+      "extra": false,
+      "judge_p": 0.2502,
+      "checker_p": 0.0921,
+      "chance": 0.0455
+     },
+     {
+      "title": "Chief Technology Officer",
+      "function": "Technology",
+      "level": "C",
+      "role": "Champion",
+      "asked_as": "Champion",
+      "round": 0,
+      "extra": true,
+      "judge_p": 0.2331,
+      "checker_p": 0.4477,
+      "chance": 0.0455
+     },
+     {
+      "title": "Chief Architect",
+      "function": "Architecture",
+      "level": "C-1",
+      "role": "Influencer",
+      "asked_as": "User",
+      "round": 0,
+      "extra": true,
+      "judge_p": 0.1585,
+      "checker_p": 0.1834,
+      "chance": 0.0455
+     }
+    ],
+    "unfilled": {},
+    "rejected": [],
+    "judge": "qwen2.5-7b-instruct-q4_k_m",
+    "checker": "llama-3.1-8b-instruct-q4_k_m",
+    "seat_counts": {
+     "Economic Buyer": 1,
+     "Champion": 2,
+     "Technical Evaluator": 1,
+     "Influencer": 4
+    }
+   }
+  }
+ },
+ "generic_committee": {
+  "campaign": "Offering being sold: N/A",
+  "members": [
+   {
+    "title": "Chief Financial Officer",
+    "function": "Finance",
+    "level": "C",
+    "role": "Economic Buyer",
+    "asked_as": "Economic Buyer",
+    "round": 0,
+    "extra": false,
+    "judge_p": 0.6805,
+    "checker_p": 0.8321,
+    "chance": 0.0455
+   },
+   {
+    "title": "Chief Information Officer",
+    "function": "IT",
+    "level": "C",
+    "role": "Champion",
+    "asked_as": "Champion",
+    "round": 0,
+    "extra": false,
+    "judge_p": 0.2682,
+    "checker_p": 0.0586,
+    "chance": 0.0455
+   },
+   {
+    "title": "VP of IT",
+    "function": "IT",
+    "level": "C-1",
+    "role": "Technical Evaluator",
+    "asked_as": "Technical Evaluator",
+    "round": 0,
+    "extra": false,
+    "judge_p": 1.0,
+    "checker_p": 0.7233,
+    "chance": 0.0455
+   },
+   {
+    "title": "Chief Customer Officer",
+    "function": "Customer",
+    "level": "C",
+    "role": "Influencer",
+    "asked_as": "User",
+    "round": 0,
+    "extra": false,
+    "judge_p": 0.564,
+    "checker_p": 0.4571,
+    "chance": 0.0455
+   },
+   {
+    "title": "VP of Finance",
+    "function": "Finance",
+    "level": "C-1",
+    "role": "Influencer",
+    "asked_as": "Ratifier",
+    "round": 0,
+    "extra": false,
+    "judge_p": 0.501,
+    "checker_p": 0.95,
+    "chance": 0.0455
+   },
+   {
+    "title": "IT Director",
+    "function": "IT",
+    "level": "C-2",
+    "role": "Influencer",
+    "asked_as": "Influencer",
+    "round": 0,
+    "extra": false,
+    "judge_p": 0.4076,
+    "checker_p": 0.1559,
+    "chance": 0.0455
+   },
+   {
+    "title": "Chief Architect",
+    "function": "Architecture",
+    "level": "C-1",
+    "role": "Influencer",
+    "asked_as": "User",
+    "round": 0,
+    "extra": true,
+    "judge_p": 0.3071,
+    "checker_p": 0.0522,
+    "chance": 0.0455
+   },
+   {
+    "title": "Chief Executive Officer",
+    "function": "Executive",
+    "level": "C",
+    "role": "Champion",
+    "asked_as": "Champion",
+    "round": 0,
+    "extra": true,
+    "judge_p": 0.2531,
+    "checker_p": 0.0944,
+    "chance": 0.0455
+   },
+   {
+    "title": "Chief Technology Officer",
+    "function": "Technology",
+    "level": "C",
+    "role": "Champion",
+    "asked_as": "Champion",
+    "round": 0,
+    "extra": true,
+    "judge_p": 0.1813,
+    "checker_p": 0.1813,
+    "chance": 0.0455
+   }
+  ],
+  "unfilled": {},
+  "rejected": [
+   {
+    "role": "Influencer",
+    "asked_as": "Ratifier",
+    "function": "Procurement",
+    "round": 0,
+    "judge_p": 0.499,
+    "checker_p": 0.0444,
+    "chance": 0.0455
+   },
+   {
+    "role": "Influencer",
+    "asked_as": "Influencer",
+    "function": "Compliance",
+    "round": 0,
+    "extra": true,
+    "judge_p": 0.4073,
+    "checker_p": 0.0081,
+    "chance": 0.0455
+   },
+   {
+    "role": "Economic Buyer",
+    "asked_as": "Economic Buyer",
+    "function": "Procurement",
+    "round": 0,
+    "extra": true,
+    "judge_p": 0.3195,
+    "checker_p": 0.0071,
+    "chance": 0.0455
+   },
+   {
+    "role": "Champion",
+    "asked_as": "Champion",
+    "function": "Product",
+    "round": 0,
+    "extra": true,
+    "judge_p": 0.2107,
+    "checker_p": 0.0035,
+    "chance": 0.0455
+   },
+   {
+    "role": "Influencer",
+    "asked_as": "User",
+    "function": "Product",
+    "round": 0,
+    "extra": true,
+    "judge_p": 0.0522,
+    "checker_p": 0.0203,
+    "chance": 0.0455
+   },
+   {
+    "role": "Champion",
+    "asked_as": "Champion",
+    "function": "Procurement",
+    "round": 0,
+    "extra": true,
+    "judge_p": 0.0504,
+    "checker_p": 0.0007,
+    "chance": 0.0455
+   }
+  ],
+  "judge": "qwen2.5-7b-instruct-q4_k_m",
+  "checker": "llama-3.1-8b-instruct-q4_k_m",
+  "seat_counts": {
+   "Economic Buyer": 1,
+   "Champion": 3,
+   "Technical Evaluator": 1,
+   "Influencer": 4
+  }
+ },
+ "dev_mean": {
+  "judge_and_checker": {
+   "precision": 0.922,
+   "recall": 0.792,
+   "f1": 0.85
+  },
+  "judge_only": {
+   "precision": 0.819,
+   "recall": 0.875,
+   "f1": 0.829
+  },
+  "generic": {
+   "precision": 0.639,
+   "recall": 0.584,
+   "f1": 0.602
+  }
+ },
+ "test_mean": {
+  "judge_and_checker": {
+   "precision": 0.869,
+   "recall": 0.775,
+   "f1": 0.8
+  },
+  "judge_only": {
+   "precision": 0.816,
+   "recall": 0.817,
+   "f1": 0.794
+  },
+  "generic": {
+   "precision": 0.574,
+   "recall": 0.55,
+   "f1": 0.548
+  }
+ },
+ "all_mean": {
+  "judge_and_checker": {
+   "precision": 0.89,
+   "recall": 0.782,
+   "f1": 0.82
+  },
+  "judge_only": {
+   "precision": 0.817,
+   "recall": 0.84,
+   "f1": 0.808
+  },
+  "generic": {
+   "precision": 0.6,
+   "recall": 0.563,
+   "f1": 0.57
+  }
+ },
+ "campaigns_with_unfilled_minimum": []
+}

@@ -5,69 +5,81 @@
    "campaign_text": "Offering being sold: CRM platform for sales, marketing and customer service teams\nTarget companies: Professional Services, Manufacturing",
    "judge_and_checker": {
     "precision": 1.0,
-    "recall": 0.833,
-    "f1": 0.909,
-    "size": 7,
+    "recall": 0.5,
+    "f1": 0.667,
+    "size": 6,
     "unfilled": {},
+    "qualified": true,
     "members": [
      "Economic Buyer: Chief Financial Officer",
-     "Champion: Chief Executive Officer",
+     "Champion: Chief Customer Officer",
      "Technical Evaluator: Chief Information Officer",
-     "Influencer: VP of IT",
      "Influencer: VP of Finance",
-     "Influencer: Chief Customer Officer",
-     "Influencer: Chief Marketing Officer (extra)"
+     "Influencer: Chief Procurement Officer",
+     "Influencer: VP of Customer Success"
     ],
     "wrong": [],
     "missed_slots": [
      [
+      "Executive"
+     ],
+     [
       "Revenue"
+     ],
+     [
+      "Marketing"
      ]
     ]
    },
    "judge_only": {
-    "precision": 1.0,
-    "recall": 0.833,
-    "f1": 0.909,
-    "size": 8,
+    "precision": 0.857,
+    "recall": 0.5,
+    "f1": 0.632,
+    "size": 7,
     "unfilled": {},
+    "qualified": true,
+    "members": [
+     "Economic Buyer: Chief Financial Officer",
+     "Champion: Chief Information Officer",
+     "Technical Evaluator: VP of IT",
+     "Influencer: IT Director",
+     "Influencer: VP of Finance",
+     "Influencer: Chief Marketing Officer",
+     "Influencer: Chief Human Resources Officer (extra)"
+    ],
+    "wrong": [
+     "Chief Human Resources Officer"
+    ],
+    "missed_slots": [
+     [
+      "Executive"
+     ],
+     [
+      "Revenue"
+     ],
+     [
+      "Customer"
+     ]
+    ]
+   },
+   "generic": {
+    "precision": 0.857,
+    "recall": 0.667,
+    "f1": 0.75,
+    "size": 7,
+    "unfilled": {},
+    "qualified": true,
     "members": [
      "Economic Buyer: Chief Financial Officer",
      "Champion: Chief Executive Officer",
      "Technical Evaluator: Chief Information Officer",
      "Influencer: VP of IT",
      "Influencer: VP of Finance",
-     "Influencer: Chief Customer Officer",
-     "Influencer: Chief Procurement Officer (extra)",
-     "Influencer: Chief Marketing Officer (extra)"
-    ],
-    "wrong": [],
-    "missed_slots": [
-     [
-      "Revenue"
-     ]
-    ]
-   },
-   "generic": {
-    "precision": 0.778,
-    "recall": 0.667,
-    "f1": 0.718,
-    "size": 9,
-    "unfilled": {},
-    "members": [
-     "Economic Buyer: Chief Financial Officer",
-     "Champion: Chief Information Officer",
-     "Technical Evaluator: VP of IT",
-     "Influencer: Chief Customer Officer",
-     "Influencer: VP of Finance",
-     "Influencer: IT Director",
-     "Influencer: Chief Architect (extra)",
-     "Champion: Chief Executive Officer (extra)",
-     "Champion: Chief Technology Officer (extra)"
+     "Influencer: Chief Operating Officer",
+     "Influencer: Chief Customer Officer (extra)"
     ],
     "wrong": [
-     "Chief Architect",
-     "Chief Technology Officer"
+     "Chief Operating Officer"
     ],
     "missed_slots": [
      [
@@ -89,21 +101,25 @@
       "asked_as": "Economic Buyer",
       "round": 0,
       "extra": false,
-      "judge_p": 0.992,
-      "checker_p": 0.8361,
-      "chance": 0.0455
+      "judge_p": 1.0,
+      "checker_p": 0.879,
+      "chance": 0.0455,
+      "judge_reasoning": "The Economic Buyer is typically the decision-maker with budget responsibilities and the final say in purchase decisions. In a B2B context, this role is most likely to be held by a leader who has direct oversight of the budget and financial planning, ensuring that the purchase aligns with the company's financial goals and objectives.",
+      "checker_reasoning": "The Economic Buyer is typically a high-level executive or leader with budget responsibilities, responsible for ensuring that purchases align with organizational goals. In a company with a large budget for a CRM platform, the Economic Buyer would likely be someone who oversees the company's overall financial strategy and budget. Given the target companies are Professional Services and Manufacturing, which often have complex sales and customer service processes, the Economic Buyer would likely be someone who understands the financial implications of implementing a CRM platform."
      },
      {
-      "title": "Chief Executive Officer",
-      "function": "Executive",
+      "title": "Chief Customer Officer",
+      "function": "Customer",
       "level": "C",
       "role": "Champion",
       "asked_as": "Champion",
-      "round": 0,
+      "round": 3,
       "extra": false,
-      "judge_p": 0.5016,
-      "checker_p": 0.0466,
-      "chance": 0.0455
+      "judge_p": 0.852,
+      "checker_p": 0.9763,
+      "chance": 0.0556,
+      "judge_reasoning": "The Champion is typically an individual who acts as a key advocate for the purchase and has the credibility to persuade others in the buying organization. In the context of a CRM platform, which is crucial for sales, marketing, and customer service, the leader who would most likely champion this purchase is someone who understands the impact on these departments and can articulate the benefits to the organization.",
+      "checker_reasoning": "The Champion in the buying group is typically the leader who has the credibility to persuade others in the buying organization to follow their commitment to change. In the context of a CRM platform for sales, marketing, and customer service teams, the Champion would likely be someone who is familiar with the current pain points and challenges of the sales and marketing teams, and is looking to improve their efficiency and effectiveness. This person would be able to advocate for the new CRM platform and influence others to support its adoption."
      },
      {
       "title": "Chief Information Officer",
@@ -113,21 +129,11 @@
       "asked_as": "Technical Evaluator",
       "round": 0,
       "extra": false,
-      "judge_p": 0.9992,
-      "checker_p": 0.7989,
-      "chance": 0.0455
-     },
-     {
-      "title": "VP of IT",
-      "function": "IT",
-      "level": "C-1",
-      "role": "Influencer",
-      "asked_as": "Influencer",
-      "round": 0,
-      "extra": false,
-      "judge_p": 0.7244,
-      "checker_p": 0.0592,
-      "chance": 0.0455
+      "judge_p": 1.0,
+      "checker_p": 0.9915,
+      "chance": 0.0455,
+      "judge_reasoning": "The Technical Evaluator's role is to judge whether the product or service fits the company's systems, security standards, and workflows. Given this, the leader of the function most closely related to technology and IT infrastructure would be the most likely candidate.",
+      "checker_reasoning": "To determine the Technical Evaluator in the buying group, we need to consider the role of the Technical Evaluator, which is to judge whether the product or service fits the company's systems, security standards, and workflows. Given that the CRM platform being sold is a technical solution, the leader who would be responsible for evaluating its technical feasibility and compatibility with the company's existing systems would likely be from the IT function. This is because the IT function is responsible for managing and maintaining the company's technology infrastructure, including systems, security, and workflows."
      },
      {
       "title": "VP of Finance",
@@ -137,55 +143,139 @@
       "asked_as": "Ratifier",
       "round": 0,
       "extra": false,
-      "judge_p": 0.5968,
-      "checker_p": 0.9791,
-      "chance": 0.0455
+      "judge_p": 0.9931,
+      "checker_p": 0.9896,
+      "chance": 0.0455,
+      "judge_reasoning": "The Ratifier role is typically filled by individuals in finance, purchasing, or procurement functions who manage the settlement of terms, conditions, and pricing. These individuals ensure that the financial aspects of the purchase align with the company's budget and financial policies.",
+      "checker_reasoning": "The Ratifier is typically the person responsible for managing the settlement of terms, conditions, and pricing, often sitting in the finance, purchasing, and procurement functions. In the context of a CRM platform purchase, the Ratifier would likely be involved in reviewing and approving the contract, ensuring that the terms and conditions align with the company's financial and procurement policies. Given the nature of the purchase, the Ratifier would likely be a finance or procurement leader."
      },
      {
-      "title": "Chief Customer Officer",
-      "function": "Customer",
+      "title": "Chief Procurement Officer",
+      "function": "Procurement",
       "level": "C",
       "role": "Influencer",
-      "asked_as": "User",
-      "round": 0,
+      "asked_as": "Ratifier",
+      "round": 1,
       "extra": false,
-      "judge_p": 0.5465,
-      "checker_p": 0.6818,
-      "chance": 0.0455
+      "judge_p": 1.0,
+      "checker_p": 0.9854,
+      "chance": 0.0556,
+      "judge_reasoning": "The Ratifier role is typically filled by individuals in finance, purchasing, or procurement functions who manage the settlement of terms, conditions, and pricing. Given the options, the most likely candidate would be someone in the Procurement function, as their role often involves finalizing agreements and ensuring cost-effectiveness.",
+      "checker_reasoning": "The Ratifier is typically the person responsible for managing the settlement of terms, conditions, and pricing, often sitting in the finance, purchasing, and procurement functions. In the context of a CRM platform purchase, the Ratifier would likely be involved in reviewing and approving the contract, ensuring that the terms and conditions align with the company's financial and procurement policies. This role would typically be held by someone in the Finance or Procurement function."
      },
      {
-      "title": "Chief Marketing Officer",
-      "function": "Marketing",
-      "level": "C",
+      "title": "VP of Customer Success",
+      "function": "Customer",
+      "level": "C-1",
       "role": "Influencer",
       "asked_as": "User",
-      "round": 0,
-      "extra": true,
-      "judge_p": 0.278,
-      "checker_p": 0.1635,
-      "chance": 0.0455
+      "round": 1,
+      "extra": false,
+      "judge_p": 0.7462,
+      "checker_p": 1.0,
+      "chance": 0.0556,
+      "judge_reasoning": "The User role in the buying group consists of individuals or groups whose daily activities are affected by the purchase. For a CRM platform, the primary users would be the sales, marketing, and customer service teams who will be directly interacting with and using the CRM system daily.",
+      "checker_reasoning": "The User in the buying group would be the individual or group whose daily activities are affected by the purchase of the CRM platform. In this case, the CRM platform is intended for sales, marketing, and customer service teams, so the User would likely be the team members who will be using the platform on a daily basis. This would typically be the sales, marketing, and customer service teams, which would fall under the Customer function."
      }
     ],
     "unfilled": {},
     "rejected": [
      {
-      "role": "Influencer",
-      "asked_as": "Ratifier",
-      "function": "Procurement",
+      "role": "Champion",
+      "asked_as": "Champion",
+      "function": "IT",
       "round": 0,
-      "extra": true,
-      "judge_p": 0.4032,
-      "checker_p": 0.0162,
-      "chance": 0.0455
+      "judge_p": 0.9976,
+      "checker_p": 0.0006,
+      "chance": 0.0455,
+      "judge_reasoning": "The Champion role is typically filled by someone who has a vested interest in the product or service and can advocate for it within the organization. In the context of a CRM platform, which is crucial for sales, marketing, and customer service, the leader of the function that directly benefits most from the CRM would be the most likely Champion. This function would be closely involved in the day-to-day operations and would see the most direct impact.",
+      "checker_reasoning": "The Champion in the buying group is typically the leader who has the credibility to persuade others in the buying organization to follow their commitment to change. In the case of a CRM platform for sales, marketing, and customer service teams, the Champion would likely be someone who is familiar with the current pain points and challenges of the sales, marketing, and customer service teams. This person would be able to articulate the benefits of the CRM platform and influence others to support the purchase."
+     },
+     {
+      "role": "Champion",
+      "asked_as": "Champion",
+      "function": "Marketing",
+      "round": 1,
+      "judge_p": 0.5911,
+      "checker_p": 0.0057,
+      "chance": 0.0476,
+      "judge_reasoning": "The Champion is typically an individual who has a vested interest in the change and can advocate for the purchase within the organization. In the context of a CRM platform, which impacts sales, marketing, and customer service, the leader who would most likely champion this change is someone who understands the benefits and can align the CRM with broader business goals. This role is often held by someone in the Executive or Marketing functions, as they are directly involved in these areas.",
+      "checker_reasoning": "The Champion in the buying group is typically the leader who has the credibility to persuade others in the buying organization to follow their commitment to change. In the context of a CRM platform for sales, marketing, and customer service teams, the Champion would likely be someone who understands the current pain points and challenges of the sales and customer service teams, and is looking to improve their efficiency and effectiveness. This person would be able to advocate for the new CRM platform and influence others to support its adoption."
+     },
+     {
+      "role": "Champion",
+      "asked_as": "Champion",
+      "function": "Executive",
+      "round": 1,
+      "judge_p": 0.4085,
+      "checker_p": 0.0056,
+      "chance": 0.0476,
+      "judge_reasoning": "The Champion is typically an individual who has a vested interest in the change and can advocate for the purchase within the organization. In the context of a CRM platform, which impacts sales, marketing, and customer service, the leader who would most likely champion this change is someone who understands the benefits and can align the CRM with broader business goals. This role is often held by someone in the Executive or Marketing functions, as they are directly involved in these areas.",
+      "checker_reasoning": "The Champion in the buying group is typically the leader who has the credibility to persuade others in the buying organization to follow their commitment to change. In the context of a CRM platform for sales, marketing, and customer service teams, the Champion would likely be someone who understands the current pain points and challenges of the sales and customer service teams, and is looking to improve their efficiency and effectiveness. This person would be able to advocate for the new CRM platform and influence others to support its adoption."
+     },
+     {
+      "role": "Champion",
+      "asked_as": "Champion",
+      "function": "Revenue",
+      "round": 2,
+      "judge_p": 0.9503,
+      "checker_p": 0.0174,
+      "chance": 0.0526,
+      "judge_reasoning": "The Champion is typically an individual who has a vested interest in the change and can advocate for the purchase within the organization. In the context of a CRM platform, which impacts sales, marketing, and customer service, the leader who would most likely champion this change is someone who understands the broader impact on the organization and can align the CRM with strategic goals. This role is often held by a leader who oversees these functions or who has a direct interest in improving these areas.",
+      "checker_reasoning": "The Champion in the buying group is typically the leader who has the credibility to persuade others in the buying organization to follow their commitment to change. In the context of a CRM platform for sales, marketing, and customer service teams, the Champion would likely be someone who understands the current pain points and challenges of the sales and customer service teams, and is looking to improve their efficiency and effectiveness. This person would be able to advocate for the new CRM platform and influence others to support its adoption."
+     },
+     {
+      "role": "Influencer",
+      "asked_as": "Influencer",
+      "function": "IT",
+      "round": 0,
+      "judge_p": 1.0,
+      "checker_p": 0.0,
+      "chance": 0.0455,
+      "judge_reasoning": "Influencers are individuals or groups within an organization who have a stake in the purchase decision, even if they will not directly use the product. In the context of a CRM platform, the function that would most likely have an influencer role is IT, as they are responsible for ensuring the new system integrates with existing technology and meets security and workflow standards.",
+      "checker_reasoning": "The Influencer in the buying group would likely be someone who has a stake in the purchase decision, but may not be directly involved in the day-to-day use of the CRM platform. In the context of a CRM platform for sales, marketing, and customer service teams, the Customer function's leader would be a key stakeholder, as they would be impacted by the implementation and use of the platform. They would likely have a vested interest in ensuring that the platform aligns with the company's customer service goals and objectives."
+     },
+     {
+      "role": "Influencer",
+      "asked_as": "User",
+      "function": "Marketing",
+      "round": 0,
+      "judge_p": 0.3714,
+      "checker_p": 0.0036,
+      "chance": 0.0455,
+      "judge_reasoning": "The User role in the buying group consists of individuals or groups whose daily activities are affected by the purchase. For a CRM platform, the primary users would be the sales, marketing, and customer service teams who will be directly interacting with and using the CRM system in their daily work.",
+      "checker_reasoning": "The User in the buying group would be the function's leader whose team would be directly impacted by the implementation of the CRM platform. Since the CRM platform is for sales, marketing, and customer service teams, the function's leader who oversees these teams would be the User. This would likely be the leader of the function that directly interacts with customers and manages customer-facing teams."
+     },
+     {
+      "role": "Influencer",
+      "asked_as": "User",
+      "function": "People",
+      "round": 0,
+      "judge_p": 0.2322,
+      "checker_p": 0.0002,
+      "chance": 0.0455,
+      "judge_reasoning": "The User role in the buying group consists of individuals or groups whose daily activities are affected by the purchase. For a CRM platform, the primary users would be the sales, marketing, and customer service teams who will be directly interacting with and using the CRM system in their daily work.",
+      "checker_reasoning": "The User in the buying group would be the function's leader whose team would be directly impacted by the implementation of the CRM platform. Since the CRM platform is for sales, marketing, and customer service teams, the function's leader who oversees these teams would be the User. This would likely be the leader of the function that directly interacts with customers and manages customer-facing teams."
+     },
+     {
+      "role": "Influencer",
+      "asked_as": "Influencer",
+      "function": "Compliance",
+      "round": 1,
+      "judge_p": 1.0,
+      "checker_p": 0.0,
+      "chance": 0.0556,
+      "judge_reasoning": "Influencers are individuals or groups within an organization who have a stake in the purchase decision, often due to their involvement in evaluating the solution, even if they will not directly use it. In the context of a CRM platform, the Compliance function's leader would be a key influencer, as they are responsible for ensuring that the company adheres to regulatory requirements and internal policies, and would need to evaluate the CRM platform's compliance features and impact on the organization.",
+      "checker_reasoning": "The Influencer in the buying group would likely be someone who has a stake in the purchase decision, but may not be directly involved in the day-to-day use of the CRM platform. In the context of a professional services or manufacturing company, the Customer function would be most likely to have a stake in the purchase decision, as they would be the ones interacting with the sales, marketing, and customer service teams that would be using the CRM platform."
      }
     ],
-    "judge": "qwen2.5-7b-instruct-q4_k_m",
-    "checker": "llama-3.1-8b-instruct-q4_k_m",
+    "judge": "qwen2.5-7b-instruct",
+    "checker": "llama-3.1-8b-instruct",
     "seat_counts": {
      "Economic Buyer": 1,
      "Champion": 1,
      "Technical Evaluator": 1,
-     "Influencer": 4
+     "Influencer": 3
     }
    }
   },
@@ -194,20 +284,41 @@
    "campaign_text": "Offering being sold: Marketing automation and customer data platform\nTarget companies: Retail, Financial Services",
    "judge_and_checker": {
     "precision": 0.833,
+    "recall": 1.0,
+    "f1": 0.909,
+    "size": 6,
+    "unfilled": {},
+    "qualified": true,
+    "members": [
+     "Economic Buyer: Chief Financial Officer",
+     "Champion: Chief Customer Officer",
+     "Technical Evaluator: Chief Information Officer",
+     "Influencer: VP of Finance",
+     "Influencer: Chief Marketing Officer",
+     "Influencer: Chief Procurement Officer"
+    ],
+    "wrong": [
+     "Chief Customer Officer"
+    ],
+    "missed_slots": []
+   },
+   "judge_only": {
+    "precision": 0.833,
     "recall": 0.667,
     "f1": 0.741,
     "size": 6,
     "unfilled": {},
+    "qualified": true,
     "members": [
      "Economic Buyer: Chief Financial Officer",
      "Champion: Chief Marketing Officer",
      "Technical Evaluator: Chief Information Officer",
      "Influencer: VP of Finance",
-     "Influencer: VP of Marketing",
-     "Influencer: Chief Customer Officer"
+     "Influencer: Chief Compliance Officer",
+     "Influencer: VP of Marketing"
     ],
     "wrong": [
-     "Chief Customer Officer"
+     "Chief Compliance Officer"
     ],
     "missed_slots": [
      [
@@ -215,53 +326,26 @@
      ]
     ]
    },
-   "judge_only": {
-    "precision": 0.7,
-    "recall": 1.0,
-    "f1": 0.824,
-    "size": 10,
-    "unfilled": {},
-    "members": [
-     "Economic Buyer: Chief Financial Officer",
-     "Champion: Chief Marketing Officer",
-     "Technical Evaluator: Chief Information Officer",
-     "Influencer: VP of Finance",
-     "Influencer: VP of Marketing",
-     "Influencer: Chief Customer Officer",
-     "Influencer: Chief Procurement Officer (extra)",
-     "Influencer: Chief Data Officer (extra)",
-     "Champion: Chief Product Officer (extra)",
-     "Economic Buyer: Chief Revenue Officer (extra)"
-    ],
-    "wrong": [
-     "Chief Customer Officer",
-     "Chief Product Officer",
-     "Chief Revenue Officer"
-    ],
-    "missed_slots": []
-   },
    "generic": {
-    "precision": 0.556,
+    "precision": 0.571,
     "recall": 0.333,
-    "f1": 0.417,
-    "size": 9,
+    "f1": 0.421,
+    "size": 7,
     "unfilled": {},
+    "qualified": true,
     "members": [
      "Economic Buyer: Chief Financial Officer",
-     "Champion: Chief Information Officer",
-     "Technical Evaluator: VP of IT",
-     "Influencer: Chief Customer Officer",
+     "Champion: Chief Executive Officer",
+     "Technical Evaluator: Chief Information Officer",
+     "Influencer: VP of IT",
      "Influencer: VP of Finance",
-     "Influencer: IT Director",
-     "Influencer: Chief Architect (extra)",
-     "Champion: Chief Executive Officer (extra)",
-     "Champion: Chief Technology Officer (extra)"
+     "Influencer: Chief Operating Officer",
+     "Influencer: Chief Customer Officer (extra)"
     ],
     "wrong": [
-     "Chief Customer Officer",
-     "Chief Architect",
      "Chief Executive Officer",
-     "Chief Technology Officer"
+     "Chief Operating Officer",
+     "Chief Customer Officer"
     ],
     "missed_slots": [
      [
@@ -283,21 +367,25 @@
       "asked_as": "Economic Buyer",
       "round": 0,
       "extra": false,
-      "judge_p": 0.9388,
-      "checker_p": 0.6641,
-      "chance": 0.0455
+      "judge_p": 1.0,
+      "checker_p": 0.7625,
+      "chance": 0.0455,
+      "judge_reasoning": "The Economic Buyer is typically the decision-maker with budget responsibilities and the final say in purchase decisions. In the context of a B2B enterprise buying group, this role is most likely to be held by a leader who has a direct impact on the company's financial health and can allocate budget for technology investments. This often includes roles such as Chief Financial Officer, Vice President of Finance, or Chief Financial Officer.",
+      "checker_reasoning": "The Economic Buyer is typically a high-level executive or leader with budget responsibilities, responsible for ensuring that purchases align with organizational goals. In the context of a marketing automation and customer data platform, the Economic Buyer would likely be someone who oversees the company's overall budget and strategy, such as the Chief Financial Officer (CFO) or the Chief Operating Officer (COO). However, since the target company is in the retail or financial services industry, the Economic Buyer might be more likely to be a department head or executive who oversees the company's marketing or customer-facing operations."
      },
      {
-      "title": "Chief Marketing Officer",
-      "function": "Marketing",
+      "title": "Chief Customer Officer",
+      "function": "Customer",
       "level": "C",
       "role": "Champion",
       "asked_as": "Champion",
-      "round": 0,
+      "round": 1,
       "extra": false,
-      "judge_p": 0.6726,
-      "checker_p": 0.7916,
-      "chance": 0.0455
+      "judge_p": 0.9991,
+      "checker_p": 0.9773,
+      "chance": 0.0476,
+      "judge_reasoning": "The Champion role is typically filled by someone who has a direct stake in the purchase and can advocate for it within the organization. In the context of a marketing automation and customer data platform, the individuals who would most directly benefit from and be interested in such a tool are those involved in marketing and customer engagement. Therefore, the most likely Champion would come from the Marketing or related functions.",
+      "checker_reasoning": "The Champion in the buying group is typically the leader who has the credibility to persuade others in the buying organization to follow their commitment to change. In the context of a marketing automation and customer data platform, the Champion would likely be someone who understands the importance of data-driven marketing and customer experience. This person would be able to articulate the business value of the offering and influence others to support the purchase decision."
      },
      {
       "title": "Chief Information Officer",
@@ -307,9 +395,11 @@
       "asked_as": "Technical Evaluator",
       "round": 0,
       "extra": false,
-      "judge_p": 0.995,
-      "checker_p": 0.5618,
-      "chance": 0.0455
+      "judge_p": 1.0,
+      "checker_p": 0.9799,
+      "chance": 0.0455,
+      "judge_reasoning": "The Technical Evaluator's role is to judge whether the product or service fits the company's systems, security standards, and workflows. Given this, the leader of the function most directly involved in managing and ensuring the technical aspects of the company's IT infrastructure and systems would be the most likely candidate. This function is typically handled by the IT department.",
+      "checker_reasoning": "To determine the Technical Evaluator in the buying group, we need to consider the role of the Technical Evaluator, which is to judge whether the product or service fits the company's systems, security standards, and workflows. Given that the offering being sold is a marketing automation and customer data platform, the Technical Evaluator would likely be someone who is responsible for ensuring that the technology aligns with the company's existing infrastructure and meets its technical requirements. In a retail or financial services company, this would likely be someone in the IT department."
      },
      {
       "title": "VP of Finance",
@@ -319,80 +409,68 @@
       "asked_as": "Ratifier",
       "round": 0,
       "extra": false,
-      "judge_p": 0.5468,
-      "checker_p": 0.9722,
-      "chance": 0.0455
+      "judge_p": 1.0,
+      "checker_p": 0.996,
+      "chance": 0.0455,
+      "judge_reasoning": "The Ratifier role is typically filled by individuals who manage the financial aspects of the purchase and ensure that the terms and conditions are met. Given the nature of the offering (marketing automation and customer data platform), the focus would be on ensuring that the financial implications are managed correctly. This role is most likely to be held by someone in the Finance function.",
+      "checker_reasoning": "The Ratifier is typically the person responsible for managing the settlement of terms, conditions, and pricing, often sitting in the finance, purchasing, and procurement functions. In the context of a marketing automation and customer data platform purchase, the Ratifier would likely be someone who is responsible for ensuring that the financial and contractual aspects of the purchase are properly managed. This would typically be a finance or procurement leader."
      },
      {
-      "title": "VP of Marketing",
+      "title": "Chief Marketing Officer",
       "function": "Marketing",
-      "level": "C-1",
-      "role": "Influencer",
-      "asked_as": "User",
-      "round": 0,
-      "extra": false,
-      "judge_p": 0.5197,
-      "checker_p": 0.7126,
-      "chance": 0.0455
-     },
-     {
-      "title": "Chief Customer Officer",
-      "function": "Customer",
       "level": "C",
       "role": "Influencer",
       "asked_as": "User",
       "round": 0,
       "extra": false,
-      "judge_p": 0.4796,
-      "checker_p": 0.2584,
-      "chance": 0.0455
+      "judge_p": 0.9973,
+      "checker_p": 0.9898,
+      "chance": 0.0455,
+      "judge_reasoning": "The User role in the buying group consists of individuals or groups whose daily activities are affected by the purchase. For a marketing automation and customer data platform, the primary users would be the marketing and customer service teams who will be directly interacting with and using the platform to manage their workflows and customer interactions.",
+      "checker_reasoning": "The User in the buying group is typically the individual or group whose daily activities are affected by the purchase. In the context of a marketing automation and customer data platform, the User would likely be the team responsible for managing and utilizing the platform, which is often the Marketing team. This team would be responsible for creating and executing marketing campaigns, analyzing customer data, and optimizing marketing strategies, making them the primary users of the platform."
+     },
+     {
+      "title": "Chief Procurement Officer",
+      "function": "Procurement",
+      "level": "C",
+      "role": "Influencer",
+      "asked_as": "Ratifier",
+      "round": 1,
+      "extra": false,
+      "judge_p": 1.0,
+      "checker_p": 0.9872,
+      "chance": 0.0526,
+      "judge_reasoning": "The Ratifier role is typically filled by individuals who manage the settlement of terms, conditions, and pricing, and often sit in finance, purchasing, and procurement functions. Given the options, the most likely function for the Ratifier would be Procurement, as their role directly involves managing the purchasing process and terms.",
+      "checker_reasoning": "The Ratifier is typically the person responsible for managing the settlement of terms, conditions, and pricing, often sitting in the finance, purchasing, and procurement functions. In the context of a marketing automation and customer data platform, the Ratifier would likely be someone who oversees the financial and contractual aspects of the purchase. Given the target company is in Retail or Financial Services, a likely candidate for the Ratifier role would be someone in the Finance or Procurement function."
      }
     ],
     "unfilled": {},
     "rejected": [
      {
-      "role": "Influencer",
-      "asked_as": "Ratifier",
-      "function": "Procurement",
+      "role": "Champion",
+      "asked_as": "Champion",
+      "function": "Marketing",
       "round": 0,
-      "extra": true,
-      "judge_p": 0.4532,
-      "checker_p": 0.0229,
-      "chance": 0.0455
+      "judge_p": 1.0,
+      "checker_p": 0.0334,
+      "chance": 0.0455,
+      "judge_reasoning": "The Champion is typically an individual who acts as the key advocate for the purchase and has the credibility to persuade others in the buying organization. In the context of a marketing automation and customer data platform, the primary users and decision-makers are likely to be closely involved in marketing and customer engagement activities. Therefore, the Champion would most likely come from the Marketing function.",
+      "checker_reasoning": "The Champion in the buying group is typically the leader who has the credibility to persuade others in the buying organization to follow their commitment to change. In the context of a marketing automation and customer data platform, the Champion would likely be someone who understands the potential impact of the technology on the company's customer relationships and business operations. This person would be able to articulate the benefits of the solution and rally support from other stakeholders."
      },
      {
       "role": "Influencer",
       "asked_as": "Influencer",
-      "function": "Data",
+      "function": "Compliance",
       "round": 0,
-      "extra": true,
-      "judge_p": 0.2317,
-      "checker_p": 0.0027,
-      "chance": 0.0455
-     },
-     {
-      "role": "Champion",
-      "asked_as": "Champion",
-      "function": "Product",
-      "round": 0,
-      "extra": true,
-      "judge_p": 0.2253,
-      "checker_p": 0.0001,
-      "chance": 0.0455
-     },
-     {
-      "role": "Economic Buyer",
-      "asked_as": "Economic Buyer",
-      "function": "Revenue",
-      "round": 0,
-      "extra": true,
-      "judge_p": 0.0602,
-      "checker_p": 0.0027,
-      "chance": 0.0455
+      "judge_p": 0.9985,
+      "checker_p": 0.0,
+      "chance": 0.0455,
+      "judge_reasoning": "Influencers are individuals or groups within an organization who have a stake in the purchase decision, even if they will not directly use the product. In the context of a marketing automation and customer data platform, the Technical Evaluators and Users would be directly involved, but the Influencers are those who help shape the decision, such as those in compliance, security, and legal who ensure the product aligns with regulatory requirements and security standards.",
+      "checker_reasoning": "The Influencer in the buying group would likely be someone who has a stake in the purchase decision, but may not be directly involved in the day-to-day use of the marketing automation and customer data platform. In the context of a retail or financial services company, the Customer function would be directly impacted by the implementation of a marketing automation and customer data platform, as it would likely be used to enhance customer interactions and experiences. Therefore, the leader of the Customer function would be a key influencer in the buying decision."
      }
     ],
-    "judge": "qwen2.5-7b-instruct-q4_k_m",
-    "checker": "llama-3.1-8b-instruct-q4_k_m",
+    "judge": "qwen2.5-7b-instruct",
+    "checker": "llama-3.1-8b-instruct",
     "seat_counts": {
      "Economic Buyer": 1,
      "Champion": 1,
@@ -405,19 +483,19 @@
    "split": "dev",
    "campaign_text": "Offering being sold: Identity and privileged access security software\nTarget companies: Financial Services, Healthcare",
    "judge_and_checker": {
-    "precision": 0.857,
+    "precision": 0.833,
     "recall": 0.667,
-    "f1": 0.75,
-    "size": 7,
+    "f1": 0.741,
+    "size": 6,
     "unfilled": {},
+    "qualified": true,
     "members": [
      "Economic Buyer: Chief Financial Officer",
-     "Champion: Chief Information Officer",
-     "Technical Evaluator: VP of IT",
-     "Influencer: IT Director",
+     "Champion: Chief Compliance Officer",
+     "Technical Evaluator: Chief Information Officer",
      "Influencer: VP of Finance",
-     "Influencer: Chief Information Security Officer",
-     "Influencer: Chief Compliance Officer (extra)"
+     "Influencer: Chief Procurement Officer",
+     "Influencer: Chief Information Security Officer"
     ],
     "wrong": [
      "Chief Compliance Officer"
@@ -429,20 +507,19 @@
     ]
    },
    "judge_only": {
-    "precision": 0.875,
+    "precision": 0.833,
     "recall": 0.667,
-    "f1": 0.757,
-    "size": 8,
+    "f1": 0.741,
+    "size": 6,
     "unfilled": {},
+    "qualified": true,
     "members": [
      "Economic Buyer: Chief Financial Officer",
-     "Champion: Chief Information Officer",
-     "Technical Evaluator: VP of IT",
-     "Influencer: IT Director",
-     "Influencer: VP of Finance",
-     "Influencer: Chief Information Security Officer",
-     "Influencer: Chief Procurement Officer (extra)",
-     "Influencer: Chief Compliance Officer (extra)"
+     "Champion: Chief Information Security Officer",
+     "Technical Evaluator: Chief Information Officer",
+     "Influencer: Chief Compliance Officer",
+     "Influencer: VP of IT",
+     "Influencer: VP of Finance"
     ],
     "wrong": [
      "Chief Compliance Officer"
@@ -454,26 +531,24 @@
     ]
    },
    "generic": {
-    "precision": 0.667,
+    "precision": 0.714,
     "recall": 0.667,
-    "f1": 0.667,
-    "size": 9,
+    "f1": 0.69,
+    "size": 7,
     "unfilled": {},
+    "qualified": true,
     "members": [
      "Economic Buyer: Chief Financial Officer",
-     "Champion: Chief Information Officer",
-     "Technical Evaluator: VP of IT",
-     "Influencer: Chief Customer Officer",
+     "Champion: Chief Executive Officer",
+     "Technical Evaluator: Chief Information Officer",
+     "Influencer: VP of IT",
      "Influencer: VP of Finance",
-     "Influencer: IT Director",
-     "Influencer: Chief Architect (extra)",
-     "Champion: Chief Executive Officer (extra)",
-     "Champion: Chief Technology Officer (extra)"
+     "Influencer: Chief Operating Officer",
+     "Influencer: Chief Customer Officer (extra)"
     ],
     "wrong": [
-     "Chief Customer Officer",
-     "Chief Architect",
-     "Chief Technology Officer"
+     "Chief Operating Officer",
+     "Chief Customer Officer"
     ],
     "missed_slots": [
      [
@@ -492,45 +567,39 @@
       "asked_as": "Economic Buyer",
       "round": 0,
       "extra": false,
-      "judge_p": 0.7996,
-      "checker_p": 0.7727,
-      "chance": 0.0455
+      "judge_p": 0.9999,
+      "checker_p": 0.8593,
+      "chance": 0.0455,
+      "judge_reasoning": "The Economic Buyer is typically the decision-maker with budget responsibilities and the authority to ensure that purchases align with organizational goals. In the context of a B2B enterprise buying group, this role is most likely to be held by a leader who oversees the financial aspects of the organization or has a direct impact on the budget.",
+      "checker_reasoning": "The Economic Buyer is typically a high-level executive or leader with budget responsibilities, responsible for ensuring that purchases align with organizational goals. In the context of a financial services or healthcare company, the Economic Buyer would likely be someone who oversees the budget for security and compliance-related expenses. This would typically be a senior executive, such as a Chief Financial Officer (CFO) or a Chief Operating Officer (COO), who has the authority to make significant financial decisions."
      },
      {
-      "title": "Chief Information Officer",
-      "function": "IT",
+      "title": "Chief Compliance Officer",
+      "function": "Compliance",
       "level": "C",
       "role": "Champion",
       "asked_as": "Champion",
       "round": 0,
       "extra": false,
-      "judge_p": 0.5175,
-      "checker_p": 0.1465,
-      "chance": 0.0455
+      "judge_p": 0.3762,
+      "checker_p": 0.9964,
+      "chance": 0.0455,
+      "judge_reasoning": "Given the nature of the identity and privileged access security software, which is critical for protecting sensitive data and ensuring compliance, the Champion would likely come from a function that focuses on security and compliance. This ensures that the software is seen as a priority and that the necessary changes are driven internally.",
+      "checker_reasoning": "The Champion in the buying group is typically the leader who has the credibility to persuade others in the buying organization to follow their commitment to change. In the context of identity and privileged access security software, the Champion would likely be someone who understands the importance of security and has a stake in ensuring that the company's sensitive data is protected. Given the target companies are in Financial Services and Healthcare, which are heavily regulated industries, the Champion is likely to be someone who is responsible for ensuring compliance with regulatory requirements."
      },
      {
-      "title": "VP of IT",
+      "title": "Chief Information Officer",
       "function": "IT",
-      "level": "C-1",
+      "level": "C",
       "role": "Technical Evaluator",
       "asked_as": "Technical Evaluator",
       "round": 0,
       "extra": false,
-      "judge_p": 0.999,
-      "checker_p": 0.8355,
-      "chance": 0.0455
-     },
-     {
-      "title": "IT Director",
-      "function": "IT",
-      "level": "C-2",
-      "role": "Influencer",
-      "asked_as": "User",
-      "round": 0,
-      "extra": false,
-      "judge_p": 0.9064,
-      "checker_p": 0.3879,
-      "chance": 0.0455
+      "judge_p": 0.9999,
+      "checker_p": 0.9861,
+      "chance": 0.0476,
+      "judge_reasoning": "The Technical Evaluator's role is to judge whether the product or service fits the company's systems, security standards, and workflows. Given this, the leader of the function most directly involved in managing and overseeing the company's technology infrastructure and ensuring it aligns with security standards would be the most likely candidate.",
+      "checker_reasoning": "To determine the Technical Evaluator in the buying group, we need to consider the role of the Technical Evaluator, which is to judge whether the product or service fits the company's systems, security standards, and workflows. Given that the offering being sold is identity and privileged access security software, the Technical Evaluator would likely be someone with expertise in IT and security. This person would be responsible for evaluating the technical feasibility and compatibility of the software with the company's existing systems and infrastructure."
      },
      {
       "title": "VP of Finance",
@@ -540,65 +609,73 @@
       "asked_as": "Ratifier",
       "round": 0,
       "extra": false,
-      "judge_p": 0.7045,
-      "checker_p": 0.9592,
-      "chance": 0.0455
+      "judge_p": 0.9998,
+      "checker_p": 0.9664,
+      "chance": 0.0476,
+      "judge_reasoning": "The Ratifier role is typically filled by individuals who manage the settlement of terms, conditions, and pricing, and often sit in finance, purchasing, and procurement functions. Given the nature of the identity and privileged access security software, the final decision on the financial and contractual aspects would likely be handled by the finance or procurement departments.",
+      "checker_reasoning": "To determine the Ratifier in the buying group, we need to identify the function that is responsible for managing the settlement of terms, conditions, and pricing. Typically, this role is associated with the finance or procurement functions, as they are often involved in negotiating and finalizing contracts and agreements. In the context of a B2B software purchase, the Ratifier would likely be someone who is responsible for ensuring that the financial and contractual aspects of the purchase are properly managed."
+     },
+     {
+      "title": "Chief Procurement Officer",
+      "function": "Procurement",
+      "level": "C",
+      "role": "Influencer",
+      "asked_as": "Ratifier",
+      "round": 1,
+      "extra": false,
+      "judge_p": 1.0,
+      "checker_p": 0.9957,
+      "chance": 0.0526,
+      "judge_reasoning": "The Ratifier role is typically filled by individuals in finance, purchasing, or procurement functions who manage the settlement of terms, conditions, and pricing. These individuals ensure that the financial aspects of the purchase align with the company's budget and financial policies.",
+      "checker_reasoning": "The Ratifier is typically the person responsible for managing the settlement of terms, conditions, and pricing, often sitting in the finance, purchasing, and procurement functions. In the context of a B2B buying decision, the Ratifier would likely be involved in reviewing and approving the contract and financial terms of the sale. Given the target company is in the Financial Services or Healthcare industry, a function that is closely related to finance and procurement would be a good fit for the Ratifier role."
      },
      {
       "title": "Chief Information Security Officer",
       "function": "Security",
       "level": "C",
       "role": "Influencer",
-      "asked_as": "Influencer",
-      "round": 0,
+      "asked_as": "User",
+      "round": 1,
       "extra": false,
-      "judge_p": 0.5045,
-      "checker_p": 0.3117,
-      "chance": 0.0455
-     },
-     {
-      "title": "Chief Compliance Officer",
-      "function": "Compliance",
-      "level": "C",
-      "role": "Influencer",
-      "asked_as": "Influencer",
-      "round": 0,
-      "extra": true,
-      "judge_p": 0.2383,
-      "checker_p": 0.2656,
-      "chance": 0.0455
+      "judge_p": 0.9913,
+      "checker_p": 0.1672,
+      "chance": 0.0526,
+      "judge_reasoning": "The User role in the buying group consists of individuals or groups whose daily activities are affected by the purchase. For identity and privileged access security software, the end-users would be the employees who interact with the software in their daily work, such as IT staff, system administrators, or security personnel.",
+      "checker_reasoning": "The User in the buying group is typically an individual or group whose daily activities are affected by the purchase. In the context of identity and privileged access security software, the User would likely be the employees who will be using the software to manage access to sensitive systems and data. This would typically be the IT or security teams within the organization."
      }
     ],
     "unfilled": {},
     "rejected": [
      {
-      "role": "Influencer",
-      "asked_as": "Ratifier",
-      "function": "Procurement",
+      "role": "Champion",
+      "asked_as": "Champion",
+      "function": "Security",
       "round": 0,
-      "extra": true,
-      "judge_p": 0.2918,
-      "checker_p": 0.0305,
-      "chance": 0.0455
+      "judge_p": 0.6208,
+      "checker_p": 0.0007,
+      "chance": 0.0455,
+      "judge_reasoning": "Given the nature of the identity and privileged access security software, which is critical for protecting sensitive data and ensuring compliance, the Champion would likely come from a function that focuses on security and compliance. This ensures that the software is seen as a priority and that the necessary changes are driven internally.",
+      "checker_reasoning": "The Champion in the buying group is typically the leader who has the credibility to persuade others in the buying organization to follow their commitment to change. In the context of identity and privileged access security software, the Champion would likely be someone who understands the importance of security and has a stake in ensuring that the company's sensitive data is protected. Given the target companies are in Financial Services and Healthcare, which are heavily regulated industries, the Champion is likely to be someone who is responsible for ensuring compliance with regulatory requirements."
      },
      {
-      "role": "Economic Buyer",
-      "asked_as": "Economic Buyer",
-      "function": "Procurement",
+      "role": "Influencer",
+      "asked_as": "Influencer",
+      "function": "IT",
       "round": 0,
-      "extra": true,
-      "judge_p": 0.2004,
-      "checker_p": 0.005,
-      "chance": 0.0455
+      "judge_p": 1.0,
+      "checker_p": 0.0175,
+      "chance": 0.0476,
+      "judge_reasoning": "Influencers are individuals or groups within an organization who have a stake in the purchase decision, often due to their involvement in evaluating the solution, even if they will not directly use it. In the context of identity and privileged access security software, the IT function would likely have a significant stake in the decision due to their role in evaluating the technical fit and security standards.",
+      "checker_reasoning": "The Influencer in the buying group is likely to be someone who has a stake in the purchase decision, but may not be directly involved in the day-to-day use of the product. In the context of identity and privileged access security software, the IT function is likely to be heavily involved in the evaluation and implementation of the product, but the leader of the IT function may not be the primary influencer. The Influencer is more likely to be someone who can provide input on the business requirements and implications of the product, such as the Chief Information Security Officer or the Chief Information Officer."
      }
     ],
-    "judge": "qwen2.5-7b-instruct-q4_k_m",
-    "checker": "llama-3.1-8b-instruct-q4_k_m",
+    "judge": "qwen2.5-7b-instruct",
+    "checker": "llama-3.1-8b-instruct",
     "seat_counts": {
      "Economic Buyer": 1,
      "Champion": 1,
      "Technical Evaluator": 1,
-     "Influencer": 4
+     "Influencer": 3
     }
    }
   },
@@ -611,64 +688,58 @@
     "f1": 1.0,
     "size": 6,
     "unfilled": {},
+    "qualified": true,
     "members": [
      "Economic Buyer: Chief Financial Officer",
      "Champion: Chief Human Resources Officer",
      "Technical Evaluator: Chief Information Officer",
-     "Influencer: VP of Finance",
      "Influencer: VP of Human Resources",
-     "Influencer: VP of IT"
+     "Influencer: VP of Finance",
+     "Influencer: Chief Procurement Officer"
     ],
     "wrong": [],
     "missed_slots": []
    },
    "judge_only": {
-    "precision": 0.7,
+    "precision": 0.833,
     "recall": 1.0,
-    "f1": 0.824,
-    "size": 10,
+    "f1": 0.909,
+    "size": 6,
     "unfilled": {},
+    "qualified": true,
     "members": [
      "Economic Buyer: Chief Financial Officer",
      "Champion: Chief Human Resources Officer",
      "Technical Evaluator: Chief Information Officer",
-     "Influencer: VP of Finance",
+     "Influencer: Chief Compliance Officer",
      "Influencer: VP of Human Resources",
-     "Influencer: VP of IT",
-     "Influencer: Chief Procurement Officer (extra)",
-     "Champion: Chief Executive Officer (extra)",
-     "Influencer: Chief Compliance Officer (extra)",
-     "Influencer: Chief Customer Officer (extra)"
+     "Influencer: VP of Finance"
     ],
     "wrong": [
-     "Chief Executive Officer",
-     "Chief Compliance Officer",
-     "Chief Customer Officer"
+     "Chief Compliance Officer"
     ],
     "missed_slots": []
    },
    "generic": {
-    "precision": 0.556,
+    "precision": 0.571,
     "recall": 0.667,
-    "f1": 0.606,
-    "size": 9,
+    "f1": 0.615,
+    "size": 7,
     "unfilled": {},
+    "qualified": true,
     "members": [
      "Economic Buyer: Chief Financial Officer",
-     "Champion: Chief Information Officer",
-     "Technical Evaluator: VP of IT",
-     "Influencer: Chief Customer Officer",
+     "Champion: Chief Executive Officer",
+     "Technical Evaluator: Chief Information Officer",
+     "Influencer: VP of IT",
      "Influencer: VP of Finance",
-     "Influencer: IT Director",
-     "Influencer: Chief Architect (extra)",
-     "Champion: Chief Executive Officer (extra)",
-     "Champion: Chief Technology Officer (extra)"
+     "Influencer: Chief Operating Officer",
+     "Influencer: Chief Customer Officer (extra)"
     ],
     "wrong": [
-     "Chief Customer Officer",
-     "Chief Architect",
      "Chief Executive Officer",
-     "Chief Technology Officer"
+     "Chief Operating Officer",
+     "Chief Customer Officer"
     ],
     "missed_slots": [
      [
@@ -687,9 +758,11 @@
       "asked_as": "Economic Buyer",
       "round": 0,
       "extra": false,
-      "judge_p": 0.9764,
-      "checker_p": 0.9151,
-      "chance": 0.0455
+      "judge_p": 1.0,
+      "checker_p": 0.9899,
+      "chance": 0.0455,
+      "judge_reasoning": "The Economic Buyer is typically the decision-maker with budget responsibilities and the final say in purchase decisions. In the context of a cloud HR and payroll software purchase, the leader most likely to have these responsibilities would be someone in the Finance function, as they are often responsible for managing the budget and ensuring that purchases align with organizational goals.",
+      "checker_reasoning": "The Economic Buyer is typically a high-level executive or leader with budget responsibilities, responsible for ensuring that purchases align with organizational goals. In a manufacturing or retail company, the Economic Buyer is likely to be a leader in the Finance function, as they are responsible for managing the company's budget and ensuring that investments align with financial goals. This role would have the final say in purchase decisions, making them the Economic Buyer in the buying group."
      },
      {
       "title": "Chief Human Resources Officer",
@@ -699,9 +772,11 @@
       "asked_as": "Champion",
       "round": 0,
       "extra": false,
-      "judge_p": 0.3915,
-      "checker_p": 0.9605,
-      "chance": 0.0455
+      "judge_p": 1.0,
+      "checker_p": 0.7553,
+      "chance": 0.0455,
+      "judge_reasoning": "The Champion is typically an individual who has a vested interest in the change and can advocate for the purchase within the organization. In the context of cloud HR and payroll software, the function most likely to have a vested interest would be the People function, as it directly manages and oversees the human resources and payroll processes.",
+      "checker_reasoning": "The Champion in the buying group is typically the leader who has the credibility to persuade others in the organization to follow their commitment to change. In the context of a cloud HR and payroll software, the Champion would likely be someone who is familiar with the current HR and payroll processes and can see the benefits of implementing a new system. This person would be able to communicate the value of the solution to others in the organization and drive the decision-making process."
      },
      {
       "title": "Chief Information Officer",
@@ -711,21 +786,11 @@
       "asked_as": "Technical Evaluator",
       "round": 0,
       "extra": false,
-      "judge_p": 0.9992,
-      "checker_p": 0.8703,
-      "chance": 0.0455
-     },
-     {
-      "title": "VP of Finance",
-      "function": "Finance",
-      "level": "C-1",
-      "role": "Influencer",
-      "asked_as": "Ratifier",
-      "round": 0,
-      "extra": false,
-      "judge_p": 0.7515,
-      "checker_p": 0.966,
-      "chance": 0.0455
+      "judge_p": 1.0,
+      "checker_p": 0.834,
+      "chance": 0.0455,
+      "judge_reasoning": "The Technical Evaluator's role is to judge whether the product or service fits the company's systems, security standards, and workflows. Given this, the leader of the function most directly involved in managing and ensuring the technical aspects of the company's operations and IT infrastructure would be the most likely candidate. This function is typically the IT department.",
+      "checker_reasoning": "The Technical Evaluator is responsible for judging whether the product or service fits the company's systems, security standards, and workflows. In the context of a cloud HR and payroll software, the Technical Evaluator would likely be someone who understands the company's existing IT infrastructure and systems, and can assess whether the new software can integrate seamlessly with these systems. This person would be responsible for evaluating the technical feasibility of the solution."
      },
      {
       "title": "VP of Human Resources",
@@ -735,78 +800,57 @@
       "asked_as": "User",
       "round": 0,
       "extra": false,
-      "judge_p": 0.7273,
-      "checker_p": 0.9486,
-      "chance": 0.0455
+      "judge_p": 1.0,
+      "checker_p": 1.0,
+      "chance": 0.0455,
+      "judge_reasoning": "The User role in the buying group consists of individuals or groups whose daily activities are affected by the purchase. For cloud HR and payroll software, the primary users would be the employees who will be using the software in their daily work, such as HR staff, payroll administrators, and possibly managers who oversee these functions.",
+      "checker_reasoning": "The User in the buying group would be the leader of the function that is most directly impacted by the cloud HR and payroll software. In this case, the software is related to HR and payroll, which is a key function of the People function. Therefore, the leader of the People function would be the User in the buying group."
      },
      {
-      "title": "VP of IT",
-      "function": "IT",
+      "title": "VP of Finance",
+      "function": "Finance",
       "level": "C-1",
       "role": "Influencer",
-      "asked_as": "Influencer",
+      "asked_as": "Ratifier",
       "round": 0,
       "extra": false,
-      "judge_p": 0.4959,
-      "checker_p": 0.0563,
-      "chance": 0.0455
+      "judge_p": 0.9968,
+      "checker_p": 0.9814,
+      "chance": 0.0455,
+      "judge_reasoning": "The Ratifier role is typically filled by individuals in finance, purchasing, or procurement functions who manage the settlement of terms, conditions, and pricing. These individuals ensure that the financial aspects of the purchase align with the company's budget and financial policies.",
+      "checker_reasoning": "The Ratifier is typically the person responsible for managing the settlement of terms, conditions, and pricing, often sitting in the finance, purchasing, and procurement functions. In the context of a B2B buying decision, the Ratifier would be the person who ensures that the financial and contractual aspects of the purchase are properly handled. Given the target company is a manufacturing or retail company, the Ratifier would likely be someone from the finance or procurement department."
+     },
+     {
+      "title": "Chief Procurement Officer",
+      "function": "Procurement",
+      "level": "C",
+      "role": "Influencer",
+      "asked_as": "Ratifier",
+      "round": 1,
+      "extra": false,
+      "judge_p": 1.0,
+      "checker_p": 0.975,
+      "chance": 0.0526,
+      "judge_reasoning": "The Ratifier role is typically filled by individuals in finance, purchasing, or procurement functions who manage the settlement of terms, conditions, and pricing. Given the options, the most likely candidate would be someone in the Procurement function, as they are specifically responsible for overseeing the purchasing process and ensuring that terms and conditions are met.",
+      "checker_reasoning": "The Ratifier is typically the person responsible for managing the settlement of terms, conditions, and pricing, often sitting in the finance, purchasing, and procurement functions. In the context of a B2B buying decision, the Ratifier would likely be involved in reviewing and approving the financial aspects of the purchase, such as the contract, pricing, and payment terms. Given the target company is a manufacturing or retail company, the Ratifier would likely be a finance or procurement leader."
      }
     ],
     "unfilled": {},
     "rejected": [
      {
       "role": "Influencer",
-      "asked_as": "Ratifier",
-      "function": "Procurement",
-      "round": 0,
-      "extra": true,
-      "judge_p": 0.2485,
-      "checker_p": 0.0306,
-      "chance": 0.0455
-     },
-     {
-      "role": "Champion",
-      "asked_as": "Champion",
-      "function": "Executive",
-      "round": 0,
-      "extra": true,
-      "judge_p": 0.2399,
-      "checker_p": 0.0013,
-      "chance": 0.0455
-     },
-     {
-      "role": "Influencer",
       "asked_as": "Influencer",
       "function": "Compliance",
       "round": 0,
-      "extra": true,
-      "judge_p": 0.1434,
-      "checker_p": 0.0035,
-      "chance": 0.0455
-     },
-     {
-      "role": "Champion",
-      "asked_as": "Champion",
-      "function": "Procurement",
-      "round": 0,
-      "extra": true,
-      "judge_p": 0.101,
-      "checker_p": 0.0029,
-      "chance": 0.0455
-     },
-     {
-      "role": "Influencer",
-      "asked_as": "User",
-      "function": "Customer",
-      "round": 0,
-      "extra": true,
-      "judge_p": 0.0689,
-      "checker_p": 0.0033,
-      "chance": 0.0455
+      "judge_p": 1.0,
+      "checker_p": 0.0349,
+      "chance": 0.0455,
+      "judge_reasoning": "Influencers are individuals or groups within an organization who have a stake in the purchase decision, even if they will not directly use the product. In the context of cloud HR and payroll software, the Compliance function's leader would be a key influencer, as ensuring compliance with labor laws and regulations is critical for this software's implementation and use.",
+      "checker_reasoning": "The Influencer in the buying group is likely to be someone who has a stake in the purchase decision, but may not be directly involved in the day-to-day use of the product. In the context of a cloud HR and payroll software, the Influencer could be someone who understands the company's HR and payroll processes and can provide input on how the software will integrate with existing systems. This person may be involved in evaluating the solution, but may not be the primary user of the software."
      }
     ],
-    "judge": "qwen2.5-7b-instruct-q4_k_m",
-    "checker": "llama-3.1-8b-instruct-q4_k_m",
+    "judge": "qwen2.5-7b-instruct",
+    "checker": "llama-3.1-8b-instruct",
     "seat_counts": {
      "Economic Buyer": 1,
      "Champion": 1,
@@ -819,18 +863,49 @@
    "split": "test",
    "campaign_text": "Offering being sold: PEO: outsourced HR, payroll, benefits and compliance for mid-size companies\nTarget companies: Technology, Professional Services",
    "judge_and_checker": {
+    "precision": 0.833,
+    "recall": 0.4,
+    "f1": 0.541,
+    "size": 6,
+    "unfilled": {},
+    "qualified": true,
+    "members": [
+     "Economic Buyer: Chief Financial Officer",
+     "Champion: Chief Human Resources Officer",
+     "Technical Evaluator: Chief Information Officer",
+     "Influencer: VP of Human Resources",
+     "Influencer: VP of Finance",
+     "Influencer: Chief Procurement Officer"
+    ],
+    "wrong": [
+     "Chief Information Officer"
+    ],
+    "missed_slots": [
+     [
+      "Technology"
+     ],
+     [
+      "Revenue"
+     ],
+     [
+      "Operations"
+     ]
+    ]
+   },
+   "judge_only": {
     "precision": 0.667,
     "recall": 0.4,
     "f1": 0.5,
     "size": 6,
     "unfilled": {},
+    "qualified": true,
     "members": [
      "Economic Buyer: Chief Financial Officer",
-     "Champion: VP of Finance",
+     "Champion: Chief Human Resources Officer",
      "Technical Evaluator: Chief Information Officer",
-     "Influencer: Finance Director",
-     "Influencer: Chief Human Resources Officer",
-     "Influencer: Chief Compliance Officer"
+     "Influencer: Chief Compliance Officer",
+     "Influencer: VP of Human Resources",
+     "Influencer: VP of Finance"
     ],
     "wrong": [
      "Chief Information Officer",
@@ -848,28 +923,27 @@
      ]
     ]
    },
-   "judge_only": {
-    "precision": 0.556,
+   "generic": {
+    "precision": 0.429,
     "recall": 0.4,
-    "f1": 0.465,
-    "size": 9,
+    "f1": 0.414,
+    "size": 7,
     "unfilled": {},
+    "qualified": true,
     "members": [
      "Economic Buyer: Chief Financial Officer",
-     "Champion: VP of Finance",
+     "Champion: Chief Executive Officer",
      "Technical Evaluator: Chief Information Officer",
-     "Influencer: Finance Director",
-     "Influencer: Chief Human Resources Officer",
-     "Influencer: Chief Compliance Officer",
-     "Champion: Chief Procurement Officer (extra)",
-     "Influencer: Chief Customer Officer (extra)",
-     "Champion: Chief Executive Officer (extra)"
+     "Influencer: VP of IT",
+     "Influencer: VP of Finance",
+     "Influencer: Chief Operating Officer",
+     "Influencer: Chief Customer Officer (extra)"
     ],
     "wrong": [
+     "Chief Executive Officer",
      "Chief Information Officer",
-     "Chief Compliance Officer",
-     "Chief Customer Officer",
-     "Chief Executive Officer"
+     "VP of IT",
+     "Chief Customer Officer"
     ],
     "missed_slots": [
      [
@@ -877,43 +951,6 @@
      ],
      [
       "Revenue"
-     ],
-     [
-      "Operations"
-     ]
-    ]
-   },
-   "generic": {
-    "precision": 0.333,
-    "recall": 0.4,
-    "f1": 0.364,
-    "size": 9,
-    "unfilled": {},
-    "members": [
-     "Economic Buyer: Chief Financial Officer",
-     "Champion: Chief Information Officer",
-     "Technical Evaluator: VP of IT",
-     "Influencer: Chief Customer Officer",
-     "Influencer: VP of Finance",
-     "Influencer: IT Director",
-     "Influencer: Chief Architect (extra)",
-     "Champion: Chief Executive Officer (extra)",
-     "Champion: Chief Technology Officer (extra)"
-    ],
-    "wrong": [
-     "Chief Information Officer",
-     "VP of IT",
-     "Chief Customer Officer",
-     "IT Director",
-     "Chief Architect",
-     "Chief Executive Officer"
-    ],
-    "missed_slots": [
-     [
-      "Revenue"
-     ],
-     [
-      "Operations"
      ],
      [
       "People",
@@ -932,21 +969,25 @@
       "asked_as": "Economic Buyer",
       "round": 0,
       "extra": false,
-      "judge_p": 0.897,
-      "checker_p": 0.9503,
-      "chance": 0.0455
+      "judge_p": 1.0,
+      "checker_p": 0.8427,
+      "chance": 0.0455,
+      "judge_reasoning": "The Economic Buyer is typically a high-level executive or leader with budget responsibilities who ensures that purchases align with organizational goals. In the context of a B2B offering like outsourced HR, payroll, benefits, and compliance, the leader who would most likely have the budget and strategic oversight is the Chief Financial Officer or a Vice President of Finance.",
+      "checker_reasoning": "The Economic Buyer is typically a high-level executive or leader with budget responsibilities, responsible for ensuring that purchases align with organizational goals. In the context of a mid-size company, the Economic Buyer is likely to be a senior executive who oversees the company's overall financial strategy and budget. Given the target company's industry (Technology or Professional Services), a likely candidate for the Economic Buyer would be someone with a broad view of the company's financial and operational needs."
      },
      {
-      "title": "VP of Finance",
-      "function": "Finance",
-      "level": "C-1",
+      "title": "Chief Human Resources Officer",
+      "function": "People",
+      "level": "C",
       "role": "Champion",
       "asked_as": "Champion",
       "round": 0,
       "extra": false,
-      "judge_p": 0.3621,
-      "checker_p": 0.0834,
-      "chance": 0.0455
+      "judge_p": 1.0,
+      "checker_p": 0.4006,
+      "chance": 0.0455,
+      "judge_reasoning": "The Champion role is typically filled by someone who has a vested interest in the internal processes and outcomes that the PEO offering will impact. In the context of HR, payroll, benefits, and compliance, the function that directly manages and oversees these areas would be the most likely to have a leader who can champion the change. This function is People, as it deals with human resources, which includes HR processes and compliance.",
+      "checker_reasoning": "The Champion in the buying group is typically the leader who has the credibility to persuade others in the organization to follow their commitment to change. In the context of a PEO offering, which involves outsourcing HR, payroll, benefits, and compliance, the Champion would likely be someone who is familiar with the complexities and challenges of managing these functions in-house. This person would be able to articulate the benefits of outsourcing these functions and persuade others to support the decision."
      },
      {
       "title": "Chief Information Officer",
@@ -956,112 +997,82 @@
       "asked_as": "Technical Evaluator",
       "round": 0,
       "extra": false,
-      "judge_p": 0.9463,
-      "checker_p": 0.6806,
-      "chance": 0.0455
+      "judge_p": 1.0,
+      "checker_p": 0.8041,
+      "chance": 0.0455,
+      "judge_reasoning": "The Technical Evaluator's role is to judge whether the product or service fits the company's systems, security standards, and workflows. In the context of outsourced HR, payroll, benefits, and compliance, the focus would be on ensuring these services integrate well with the company's existing IT infrastructure and compliance processes.",
+      "checker_reasoning": "The Technical Evaluator is responsible for judging whether the product or service fits the company's systems, security standards, and workflows. In the context of a PEO offering, the Technical Evaluator would likely be someone who understands the company's existing HR, payroll, and benefits systems, as well as its security and compliance requirements. This person would be responsible for ensuring that the PEO's services can integrate with the company's existing infrastructure and meet its specific needs."
      },
      {
-      "title": "Finance Director",
-      "function": "Finance",
-      "level": "C-2",
-      "role": "Influencer",
-      "asked_as": "Ratifier",
-      "round": 0,
-      "extra": false,
-      "judge_p": 0.8511,
-      "checker_p": 0.9742,
-      "chance": 0.0455
-     },
-     {
-      "title": "Chief Human Resources Officer",
+      "title": "VP of Human Resources",
       "function": "People",
-      "level": "C",
+      "level": "C-1",
       "role": "Influencer",
       "asked_as": "User",
       "round": 0,
       "extra": false,
-      "judge_p": 0.7429,
-      "checker_p": 0.6156,
-      "chance": 0.0455
+      "judge_p": 1.0,
+      "checker_p": 0.9999,
+      "chance": 0.0455,
+      "judge_reasoning": "The User role in the buying group typically includes individuals whose daily activities are affected by the purchase. For a PEO (outsourced HR, payroll, benefits, and compliance) offering, the users would be the employees who will directly interact with the HR and payroll services. In a technology or professional services company, the Human Resources Director would be most directly impacted by and using these services on a daily basis.",
+      "checker_reasoning": "The User in the buying group would be the leader of the function that would be most directly impacted by the PEO offering, which is a HR, payroll, benefits, and compliance solution. This would likely be the leader of the People function, as they would be responsible for managing the company's employees and ensuring compliance with relevant regulations. They would be the ones who would be most directly involved in implementing and utilizing the PEO solution."
      },
      {
-      "title": "Chief Compliance Officer",
-      "function": "Compliance",
-      "level": "C",
+      "title": "VP of Finance",
+      "function": "Finance",
+      "level": "C-1",
       "role": "Influencer",
-      "asked_as": "Influencer",
+      "asked_as": "Ratifier",
       "round": 0,
       "extra": false,
-      "judge_p": 0.4049,
-      "checker_p": 0.1451,
-      "chance": 0.0455
+      "judge_p": 1.0,
+      "checker_p": 0.9864,
+      "chance": 0.0455,
+      "judge_reasoning": "The Ratifier role is typically filled by individuals who manage the financial aspects and ensure that the terms and conditions of the purchase are aligned with the company's budget and financial policies. Given the nature of the PEO offering, which involves significant financial commitments, the Ratifier would most likely be a finance leader who ensures the financial viability and alignment with the company's budget.",
+      "checker_reasoning": "The Ratifier is typically the person responsible for managing the settlement of terms, conditions, and pricing, often sitting in the finance, purchasing, and procurement functions. In the context of a PEO offering, the Ratifier would likely be someone who is responsible for ensuring that the financial and operational implications of the PEO agreement are properly managed and integrated into the company's existing systems and processes. This person would need to have a good understanding of the company's financial and operational requirements and be able to negotiate and agree on the terms of the PEO contract."
+     },
+     {
+      "title": "Chief Procurement Officer",
+      "function": "Procurement",
+      "level": "C",
+      "role": "Influencer",
+      "asked_as": "Ratifier",
+      "round": 1,
+      "extra": false,
+      "judge_p": 1.0,
+      "checker_p": 0.9659,
+      "chance": 0.0526,
+      "judge_reasoning": "The Ratifier role is typically filled by individuals in finance, purchasing, or procurement functions who manage the settlement of terms, conditions, and pricing. Given the nature of the PEO (outsourced HR, payroll, benefits, and compliance) offering, the Ratifier would likely be someone who oversees the financial aspects of the deal and ensures that the terms align with the company's budget and financial strategy.",
+      "checker_reasoning": "The Ratifier is typically the person responsible for managing the settlement of terms, conditions, and pricing, often sitting in the finance, purchasing, and procurement functions. In the context of a PEO offering, which involves financial and compliance aspects, the Ratifier would likely be someone from the finance or procurement function. This person would be responsible for reviewing and approving the financial and contractual aspects of the PEO agreement."
      }
     ],
     "unfilled": {},
     "rejected": [
      {
-      "role": "Champion",
-      "asked_as": "Champion",
-      "function": "Procurement",
+      "role": "Influencer",
+      "asked_as": "Influencer",
+      "function": "Compliance",
       "round": 0,
-      "extra": true,
-      "judge_p": 0.2499,
-      "checker_p": 0.0183,
-      "chance": 0.0455
+      "judge_p": 1.0,
+      "checker_p": 0.0,
+      "chance": 0.0455,
+      "judge_reasoning": "Influencers are individuals who have a stake in the purchase decision, often due to their involvement in evaluating the solution, even if they will not directly use it. In the context of outsourced HR, payroll, benefits, and compliance, the Compliance function's leader would be highly involved in evaluating the solution to ensure it meets regulatory requirements and internal policies.",
+      "checker_reasoning": "The Influencer in the buying group would likely be someone who has a stake in the purchase decision, but may not directly use the product or service. In the context of a PEO offering, which impacts HR, payroll, benefits, and compliance, the leader of the People function would be a key stakeholder and influencer in the buying decision, as they would be responsible for managing the company's workforce and ensuring compliance with regulations."
      },
      {
       "role": "Influencer",
-      "asked_as": "User",
-      "function": "Customer",
-      "round": 0,
-      "extra": true,
-      "judge_p": 0.2416,
-      "checker_p": 0.0287,
-      "chance": 0.0455
-     },
-     {
-      "role": "Influencer",
-      "asked_as": "Ratifier",
-      "function": "Procurement",
-      "round": 0,
-      "extra": true,
-      "judge_p": 0.1489,
-      "checker_p": 0.0194,
-      "chance": 0.0455
-     },
-     {
-      "role": "Champion",
-      "asked_as": "Champion",
-      "function": "Executive",
-      "round": 0,
-      "extra": true,
-      "judge_p": 0.1362,
-      "checker_p": 0.0268,
-      "chance": 0.0455
-     },
-     {
-      "role": "Economic Buyer",
-      "asked_as": "Economic Buyer",
-      "function": "Procurement",
-      "round": 0,
-      "extra": true,
-      "judge_p": 0.103,
-      "checker_p": 0.0045,
-      "chance": 0.0455
-     },
-     {
-      "role": "Technical Evaluator",
-      "asked_as": "Technical Evaluator",
-      "function": "Procurement",
-      "round": 0,
-      "extra": true,
-      "judge_p": 0.0537,
-      "checker_p": 0.0034,
-      "chance": 0.0455
+      "asked_as": "Influencer",
+      "function": "Legal",
+      "round": 1,
+      "judge_p": 1.0,
+      "checker_p": 0.0008,
+      "chance": 0.0526,
+      "judge_reasoning": "Influencers are individuals or groups within an organization who have a stake in the purchase decision, often due to their involvement in evaluating the solution, even if they will not directly use it. In the context of outsourced HR, payroll, benefits, and compliance, the Legal function would be highly involved in evaluating the solution to ensure it complies with relevant laws and regulations.",
+      "checker_reasoning": "The Influencer in the buying group would likely be someone who has a stake in the purchase decision, but may not be directly involved in the day-to-day operations of the PEO offering. In the context of a mid-size company, the Influencer could be someone who understands the company's business goals and objectives, and can advocate for the PEO solution. Given the target companies are in Technology and Professional Services, a key stakeholder in these industries is often the Chief Operating Officer (COO) or the Chief Financial Officer (CFO), but since those roles are not listed, I will consider the next most likely role."
      }
     ],
-    "judge": "qwen2.5-7b-instruct-q4_k_m",
-    "checker": "llama-3.1-8b-instruct-q4_k_m",
+    "judge": "qwen2.5-7b-instruct",
+    "checker": "llama-3.1-8b-instruct",
     "seat_counts": {
      "Economic Buyer": 1,
      "Champion": 1,
@@ -1075,67 +1086,43 @@
    "campaign_text": "Offering being sold: Cloud ERP for finance, procurement, manufacturing and supply chain\nTarget companies: Manufacturing, Distribution",
    "judge_and_checker": {
     "precision": 1.0,
-    "recall": 1.0,
-    "f1": 1.0,
-    "size": 8,
+    "recall": 0.8,
+    "f1": 0.889,
+    "size": 6,
     "unfilled": {},
+    "qualified": true,
     "members": [
      "Economic Buyer: Chief Financial Officer",
      "Champion: VP of Finance",
      "Technical Evaluator: Chief Information Officer",
-     "Influencer: Finance Director",
-     "Influencer: VP of IT",
      "Influencer: Chief Operating Officer",
-     "Champion: Chief Procurement Officer (extra)",
-     "Influencer: Chief Supply Chain Officer (extra)"
+     "Influencer: Finance Director",
+     "Influencer: Chief Procurement Officer"
     ],
     "wrong": [],
-    "missed_slots": []
+    "missed_slots": [
+     [
+      "Supply Chain"
+     ]
+    ]
    },
    "judge_only": {
-    "precision": 0.889,
-    "recall": 1.0,
-    "f1": 0.941,
-    "size": 9,
+    "precision": 0.833,
+    "recall": 0.6,
+    "f1": 0.698,
+    "size": 6,
     "unfilled": {},
+    "qualified": true,
     "members": [
      "Economic Buyer: Chief Financial Officer",
      "Champion: VP of Finance",
      "Technical Evaluator: Chief Information Officer",
-     "Influencer: Finance Director",
-     "Influencer: VP of IT",
      "Influencer: Chief Operating Officer",
-     "Champion: Chief Procurement Officer (extra)",
-     "Influencer: Chief Compliance Officer (extra)",
-     "Influencer: Chief Supply Chain Officer (extra)"
+     "Influencer: Chief Compliance Officer",
+     "Influencer: Finance Director"
     ],
     "wrong": [
      "Chief Compliance Officer"
-    ],
-    "missed_slots": []
-   },
-   "generic": {
-    "precision": 0.556,
-    "recall": 0.4,
-    "f1": 0.465,
-    "size": 9,
-    "unfilled": {},
-    "members": [
-     "Economic Buyer: Chief Financial Officer",
-     "Champion: Chief Information Officer",
-     "Technical Evaluator: VP of IT",
-     "Influencer: Chief Customer Officer",
-     "Influencer: VP of Finance",
-     "Influencer: IT Director",
-     "Influencer: Chief Architect (extra)",
-     "Champion: Chief Executive Officer (extra)",
-     "Champion: Chief Technology Officer (extra)"
-    ],
-    "wrong": [
-     "Chief Customer Officer",
-     "Chief Architect",
-     "Chief Executive Officer",
-     "Chief Technology Officer"
     ],
     "missed_slots": [
      [
@@ -1143,9 +1130,35 @@
      ],
      [
       "Supply Chain"
+     ]
+    ]
+   },
+   "generic": {
+    "precision": 0.714,
+    "recall": 0.6,
+    "f1": 0.652,
+    "size": 7,
+    "unfilled": {},
+    "qualified": true,
+    "members": [
+     "Economic Buyer: Chief Financial Officer",
+     "Champion: Chief Executive Officer",
+     "Technical Evaluator: Chief Information Officer",
+     "Influencer: VP of IT",
+     "Influencer: VP of Finance",
+     "Influencer: Chief Operating Officer",
+     "Influencer: Chief Customer Officer (extra)"
+    ],
+    "wrong": [
+     "Chief Executive Officer",
+     "Chief Customer Officer"
+    ],
+    "missed_slots": [
+     [
+      "Procurement"
      ],
      [
-      "Operations"
+      "Supply Chain"
      ]
     ]
    },
@@ -1160,9 +1173,11 @@
       "asked_as": "Economic Buyer",
       "round": 0,
       "extra": false,
-      "judge_p": 0.7731,
-      "checker_p": 0.9518,
-      "chance": 0.0455
+      "judge_p": 1.0,
+      "checker_p": 0.9686,
+      "chance": 0.0455,
+      "judge_reasoning": "The Economic Buyer is typically the decision-maker with budget responsibilities and the final say in purchase decisions. At a target company, this role is most likely to be held by the leader who oversees the financial aspects of the business, ensuring that any purchase aligns with the company's financial goals and budget constraints.",
+      "checker_reasoning": "The Economic Buyer is typically a high-level executive or leader with budget responsibilities, responsible for ensuring that purchases align with organizational goals. In a manufacturing or distribution company, the Economic Buyer is likely to be someone who oversees the company's financial and operational budgets, such as the Chief Financial Officer (CFO) or the Chief Operating Officer (COO). The CFO is responsible for managing the company's financial resources and making strategic decisions about investments, which would include purchasing a cloud ERP system."
      },
      {
       "title": "VP of Finance",
@@ -1172,9 +1187,11 @@
       "asked_as": "Champion",
       "round": 0,
       "extra": false,
-      "judge_p": 0.6129,
-      "checker_p": 0.1641,
-      "chance": 0.0455
+      "judge_p": 1.0,
+      "checker_p": 0.0596,
+      "chance": 0.0455,
+      "judge_reasoning": "The Champion role is typically filled by someone who has a vested interest in the change and can advocate for the purchase within the organization. In the context of a Cloud ERP system, which impacts finance, procurement, manufacturing, and supply chain, the Finance function's leader would likely be the most motivated to champion this change, as it directly affects their department's operations and efficiency.",
+      "checker_reasoning": "The Champion in the buying group is typically the leader who has the credibility to persuade others in the organization to follow their commitment to change. In the context of a Cloud ERP for finance, procurement, manufacturing, and supply chain, the Champion would likely be someone who understands the current pain points and challenges in these areas and is motivated to drive change. Given the scope of the offering, the Champion would likely be someone who has a broad view of the organization's operations and is responsible for making strategic decisions."
      },
      {
       "title": "Chief Information Officer",
@@ -1185,32 +1202,10 @@
       "round": 0,
       "extra": false,
       "judge_p": 1.0,
-      "checker_p": 0.8139,
-      "chance": 0.0455
-     },
-     {
-      "title": "Finance Director",
-      "function": "Finance",
-      "level": "C-2",
-      "role": "Influencer",
-      "asked_as": "Ratifier",
-      "round": 0,
-      "extra": false,
-      "judge_p": 0.7664,
-      "checker_p": 0.9431,
-      "chance": 0.0455
-     },
-     {
-      "title": "VP of IT",
-      "function": "IT",
-      "level": "C-1",
-      "role": "Influencer",
-      "asked_as": "Influencer",
-      "round": 0,
-      "extra": false,
-      "judge_p": 0.5152,
-      "checker_p": 0.0922,
-      "chance": 0.0455
+      "checker_p": 0.9018,
+      "chance": 0.0455,
+      "judge_reasoning": "The Technical Evaluator's role is to judge whether the product or service fits the company's systems, security standards, and workflows. Given this, the leader of the function that deals most directly with technology and ensuring that systems and processes are aligned would be the most likely candidate. This function is closely related to the IT and Technology functions, as they are responsible for the company's technological infrastructure and ensuring that new systems integrate well with existing ones.",
+      "checker_reasoning": "To determine the Technical Evaluator in the buying group, we need to consider the role of the Technical Evaluator, which is to judge whether the product or service fits the company's systems, security standards, and workflows. Given that the offering being sold is a Cloud ERP for finance, procurement, manufacturing, and supply chain, the Technical Evaluator would likely be someone with expertise in these areas. This would typically be someone from the IT or Operations function, as they would be responsible for ensuring that the new system integrates with existing systems and meets the company's technical requirements."
      },
      {
       "title": "Chief Operating Officer",
@@ -1220,33 +1215,39 @@
       "asked_as": "User",
       "round": 0,
       "extra": false,
-      "judge_p": 0.4208,
-      "checker_p": 0.4446,
-      "chance": 0.0455
+      "judge_p": 1.0,
+      "checker_p": 0.7271,
+      "chance": 0.0455,
+      "judge_reasoning": "The User role in the buying group consists of individuals or groups whose daily activities are affected by the purchase. For a Cloud ERP system, the individuals who would be most directly impacted by the daily use of the system are likely to be those involved in the day-to-day operations and processes that the ERP will streamline and manage. In a manufacturing or distribution company, this would typically be the operational staff who use the ERP for their tasks.",
+      "checker_reasoning": "The User in the buying group would be the individual or group whose daily activities are affected by the purchase of the Cloud ERP for finance, procurement, manufacturing, and supply chain. In this case, the User would likely be the employees who will be using the system on a daily basis, such as accountants, procurement specialists, and supply chain managers. These individuals would be responsible for implementing and utilizing the new system, and would provide feedback to the buying group on its effectiveness."
+     },
+     {
+      "title": "Finance Director",
+      "function": "Finance",
+      "level": "C-2",
+      "role": "Influencer",
+      "asked_as": "Ratifier",
+      "round": 0,
+      "extra": false,
+      "judge_p": 0.9877,
+      "checker_p": 0.9964,
+      "chance": 0.0455,
+      "judge_reasoning": "The Ratifier role is typically filled by individuals in finance, purchasing, or procurement functions who manage the settlement of terms, conditions, and pricing. These individuals ensure that the financial aspects of the purchase align with the company's budget and financial policies.",
+      "checker_reasoning": "The Ratifier is typically the person responsible for managing the settlement of terms, conditions, and pricing, often sitting in the finance, purchasing, and procurement functions. In the context of a cloud ERP for finance, procurement, manufacturing, and supply chain, the Ratifier would likely be someone who oversees the financial and procurement aspects of the purchase. This would typically be a finance or procurement leader."
      },
      {
       "title": "Chief Procurement Officer",
       "function": "Procurement",
       "level": "C",
-      "role": "Champion",
-      "asked_as": "Champion",
-      "round": 0,
-      "extra": true,
-      "judge_p": 0.2533,
-      "checker_p": 0.1441,
-      "chance": 0.0455
-     },
-     {
-      "title": "Chief Supply Chain Officer",
-      "function": "Supply Chain",
-      "level": "C",
       "role": "Influencer",
-      "asked_as": "Influencer",
-      "round": 0,
-      "extra": true,
-      "judge_p": 0.0582,
-      "checker_p": 0.1325,
-      "chance": 0.0455
+      "asked_as": "Ratifier",
+      "round": 1,
+      "extra": false,
+      "judge_p": 1.0,
+      "checker_p": 0.9999,
+      "chance": 0.0526,
+      "judge_reasoning": "The Ratifier role is typically filled by individuals in finance, purchasing, or procurement functions who manage the settlement of terms, conditions, and pricing. These individuals ensure that the financial aspects of the purchase align with the company's budget and financial policies.",
+      "checker_reasoning": "The Ratifier is typically the person responsible for managing the settlement of terms, conditions, and pricing, often sitting in the finance, purchasing, and procurement functions. In the context of a cloud ERP offering, the procurement function is most closely related to the purchase, as it involves managing the acquisition of goods and services. Therefore, the leader of the procurement function would be the most likely Ratifier in the buying group."
      }
     ],
     "unfilled": {},
@@ -1256,19 +1257,20 @@
       "asked_as": "Influencer",
       "function": "Compliance",
       "round": 0,
-      "extra": true,
-      "judge_p": 0.1179,
-      "checker_p": 0.0045,
-      "chance": 0.0455
+      "judge_p": 1.0,
+      "checker_p": 0.0081,
+      "chance": 0.0455,
+      "judge_reasoning": "Influencers are individuals or groups within an organization who have a stake in the purchase decision, even if they will not directly use the product. In the context of a Cloud ERP system, compliance officers would be particularly interested in ensuring that the system adheres to regulatory requirements and maintains data security, making them key influencers.",
+      "checker_reasoning": "The Influencer in the buying group is likely to be someone who has a stake in the purchase decision, but may not be directly involved in the day-to-day use of the product. In the context of a Cloud ERP for finance, procurement, manufacturing, and supply chain, the Influencer is likely to be someone who understands the business processes and operations of the company, and can provide input on how the product will fit into those processes. This person may be involved in evaluating the solution, but may not be the final decision-maker."
      }
     ],
-    "judge": "qwen2.5-7b-instruct-q4_k_m",
-    "checker": "llama-3.1-8b-instruct-q4_k_m",
+    "judge": "qwen2.5-7b-instruct",
+    "checker": "llama-3.1-8b-instruct",
     "seat_counts": {
      "Economic Buyer": 1,
-     "Champion": 2,
+     "Champion": 1,
      "Technical Evaluator": 1,
-     "Influencer": 4
+     "Influencer": 3
     }
    }
   },
@@ -1276,71 +1278,63 @@
    "split": "test",
    "campaign_text": "Offering being sold: Enterprise data and analytics platform\nTarget companies: Financial Services, Retail",
    "judge_and_checker": {
+    "precision": 1.0,
+    "recall": 1.0,
+    "f1": 1.0,
+    "size": 6,
+    "unfilled": {},
+    "qualified": true,
+    "members": [
+     "Economic Buyer: Chief Financial Officer",
+     "Champion: Chief Data Officer",
+     "Technical Evaluator: Chief Information Officer",
+     "Influencer: VP of Finance",
+     "Influencer: Chief AI Officer",
+     "Influencer: Chief Procurement Officer"
+    ],
+    "wrong": [],
+    "missed_slots": []
+   },
+   "judge_only": {
     "precision": 0.833,
     "recall": 1.0,
     "f1": 0.909,
     "size": 6,
     "unfilled": {},
-    "members": [
-     "Economic Buyer: Chief Financial Officer",
-     "Champion: Chief Technology Officer",
-     "Technical Evaluator: Chief Information Officer",
-     "Influencer: VP of Finance",
-     "Influencer: VP of IT",
-     "Influencer: Chief Data Officer"
-    ],
-    "wrong": [
-     "Chief Technology Officer"
-    ],
-    "missed_slots": []
-   },
-   "judge_only": {
-    "precision": 0.7,
-    "recall": 1.0,
-    "f1": 0.824,
-    "size": 10,
-    "unfilled": {},
+    "qualified": true,
     "members": [
      "Economic Buyer: Chief Financial Officer",
      "Champion: Chief Information Officer",
      "Technical Evaluator: VP of IT",
+     "Influencer: Chief Compliance Officer",
      "Influencer: VP of Finance",
-     "Influencer: IT Director",
-     "Influencer: Chief Data Officer",
-     "Champion: Chief Technology Officer (extra)",
-     "Influencer: Chief Procurement Officer (extra)",
-     "Influencer: Chief Product Officer (extra)",
-     "Influencer: Chief Architect (extra)"
+     "Influencer: Chief Data Officer"
     ],
     "wrong": [
-     "Chief Technology Officer",
-     "Chief Product Officer",
-     "Chief Architect"
+     "Chief Compliance Officer"
     ],
     "missed_slots": []
    },
    "generic": {
-    "precision": 0.556,
+    "precision": 0.571,
     "recall": 0.5,
-    "f1": 0.526,
-    "size": 9,
+    "f1": 0.533,
+    "size": 7,
     "unfilled": {},
+    "qualified": true,
     "members": [
      "Economic Buyer: Chief Financial Officer",
-     "Champion: Chief Information Officer",
-     "Technical Evaluator: VP of IT",
-     "Influencer: Chief Customer Officer",
+     "Champion: Chief Executive Officer",
+     "Technical Evaluator: Chief Information Officer",
+     "Influencer: VP of IT",
      "Influencer: VP of Finance",
-     "Influencer: IT Director",
-     "Influencer: Chief Architect (extra)",
-     "Champion: Chief Executive Officer (extra)",
-     "Champion: Chief Technology Officer (extra)"
+     "Influencer: Chief Operating Officer",
+     "Influencer: Chief Customer Officer (extra)"
     ],
     "wrong": [
-     "Chief Customer Officer",
-     "Chief Architect",
      "Chief Executive Officer",
-     "Chief Technology Officer"
+     "Chief Operating Officer",
+     "Chief Customer Officer"
     ],
     "missed_slots": [
      [
@@ -1359,21 +1353,25 @@
       "asked_as": "Economic Buyer",
       "round": 0,
       "extra": false,
-      "judge_p": 0.991,
-      "checker_p": 0.96,
-      "chance": 0.0455
+      "judge_p": 1.0,
+      "checker_p": 0.1206,
+      "chance": 0.0455,
+      "judge_reasoning": "The Economic Buyer is typically the decision-maker with the final say in purchase decisions, often a high-level executive or leader with budget responsibilities. In the context of a B2B enterprise data and analytics platform, the leader of the Finance function would most likely have the budget and strategic oversight to make such a decision.",
+      "checker_reasoning": "The Economic Buyer is typically a high-level executive or leader with budget responsibilities, responsible for ensuring that purchases align with organizational goals. In the context of a financial services or retail company, the Economic Buyer would likely be someone who oversees the company's overall budget and financial strategy. This would typically be a member of the Executive function, such as the Chief Financial Officer (CFO) or the Chief Executive Officer (CEO)."
      },
      {
-      "title": "Chief Technology Officer",
-      "function": "Technology",
+      "title": "Chief Data Officer",
+      "function": "Data",
       "level": "C",
       "role": "Champion",
       "asked_as": "Champion",
-      "round": 0,
+      "round": 1,
       "extra": false,
-      "judge_p": 0.3573,
-      "checker_p": 0.0946,
-      "chance": 0.0455
+      "judge_p": 1.0,
+      "checker_p": 0.9992,
+      "chance": 0.0476,
+      "judge_reasoning": "The Champion role is typically filled by an individual who has a strong interest in the change and can advocate for the purchase within the organization. In the context of an enterprise data and analytics platform, which is a critical tool for improving operational efficiency and decision-making, the Chief Data Officer or a similar role would likely be the most enthusiastic and influential in driving the adoption of such a platform.",
+      "checker_reasoning": "The Champion in the buying group is typically the internal player who has the credibility to persuade others in the buying organization to follow their commitment to change. In the context of an enterprise data and analytics platform, the Champion would likely be someone who understands the business value of such a platform and can advocate for its adoption. Given the target companies are in Financial Services and Retail, a key stakeholder in these industries would be the Chief Data Officer, as they are responsible for overseeing the processes companies use to collect, manage, and store data."
      },
      {
       "title": "Chief Information Officer",
@@ -1383,9 +1381,11 @@
       "asked_as": "Technical Evaluator",
       "round": 0,
       "extra": false,
-      "judge_p": 0.9964,
-      "checker_p": 0.3934,
-      "chance": 0.0455
+      "judge_p": 1.0,
+      "checker_p": 0.9873,
+      "chance": 0.0455,
+      "judge_reasoning": "The Technical Evaluator's role is to judge whether the product or service fits the company's systems, security standards, and workflows. Given this, the leader of the function most directly involved in managing and overseeing the company's technology and ensuring it aligns with the company's IT infrastructure and standards would be the most likely candidate.",
+      "checker_reasoning": "To determine the Technical Evaluator in the buying group, we need to consider the role of the Technical Evaluator, which is to judge whether the product or service fits the company's systems, security standards, and workflows. Given that the offering being sold is an Enterprise data and analytics platform, the Technical Evaluator would likely be someone who is responsible for ensuring that the platform integrates with the company's existing systems and meets its technical requirements. This would typically be someone in the IT department, as they would be responsible for evaluating the technical feasibility and compatibility of the platform."
      },
      {
       "title": "VP of Finance",
@@ -1395,33 +1395,39 @@
       "asked_as": "Ratifier",
       "round": 0,
       "extra": false,
-      "judge_p": 0.696,
-      "checker_p": 0.975,
-      "chance": 0.0455
+      "judge_p": 0.9984,
+      "checker_p": 0.9986,
+      "chance": 0.0455,
+      "judge_reasoning": "The Ratifier role is typically filled by individuals who manage the settlement of terms, conditions, and pricing, and often sit in finance, purchasing, and procurement functions. Given the nature of the enterprise data and analytics platform, the Ratifier would likely be someone who ensures the financial and contractual aspects of the purchase are managed correctly.",
+      "checker_reasoning": "The Ratifier is typically the person responsible for managing the settlement of terms, conditions, and pricing, often sitting in the finance, purchasing, and procurement functions. In the context of a B2B buying decision, the Ratifier would be the person who ensures that the financial and contractual aspects of the purchase are properly executed. Given the target company is in the Financial Services or Retail industry, a likely candidate for the Ratifier would be someone in the Finance function."
      },
      {
-      "title": "VP of IT",
-      "function": "IT",
-      "level": "C-1",
-      "role": "Influencer",
-      "asked_as": "Influencer",
-      "round": 0,
-      "extra": false,
-      "judge_p": 0.5304,
-      "checker_p": 0.0908,
-      "chance": 0.0455
-     },
-     {
-      "title": "Chief Data Officer",
+      "title": "Chief AI Officer",
       "function": "Data",
       "level": "C",
       "role": "Influencer",
       "asked_as": "User",
       "round": 0,
       "extra": false,
-      "judge_p": 0.5284,
-      "checker_p": 0.6982,
-      "chance": 0.0455
+      "judge_p": 0.9964,
+      "checker_p": 0.9637,
+      "chance": 0.0455,
+      "judge_reasoning": "The User role in the buying group consists of individuals whose daily activities are affected by the purchase. For an Enterprise data and analytics platform, the users would be the employees who will be interacting with and utilizing the platform in their day-to-day work. This typically includes those in roles that require data analysis or who use data to make decisions.",
+      "checker_reasoning": "The User in the buying group is typically an individual or group whose daily activities are affected by the purchase. In the context of an enterprise data and analytics platform, the User would likely be someone who will be using the platform on a daily basis, such as a data analyst or a business intelligence team. This person would be responsible for providing feedback on the platform's usability and effectiveness."
+     },
+     {
+      "title": "Chief Procurement Officer",
+      "function": "Procurement",
+      "level": "C",
+      "role": "Influencer",
+      "asked_as": "Ratifier",
+      "round": 1,
+      "extra": false,
+      "judge_p": 1.0,
+      "checker_p": 0.9946,
+      "chance": 0.0526,
+      "judge_reasoning": "The Ratifier role is typically filled by individuals who manage the settlement of terms, conditions, and pricing, and often sit in finance, purchasing, and procurement functions. Given the options, the most likely function for the Ratifier would be Procurement, as their role directly involves managing the purchasing process and ensuring terms and conditions are met.",
+      "checker_reasoning": "The Ratifier is typically the person responsible for managing the settlement of terms, conditions, and pricing, often sitting in the finance, purchasing, and procurement functions. In the context of a B2B buying decision, the Ratifier would likely be involved in reviewing and approving the financial aspects of the purchase, such as the contract, pricing, and payment terms. Given the target company is in the Financial Services or Retail industry, a function that is closely related to finance and procurement would be a good fit for the Ratifier role."
      }
     ],
     "unfilled": {},
@@ -1431,53 +1437,26 @@
       "asked_as": "Champion",
       "function": "IT",
       "round": 0,
-      "judge_p": 0.581,
-      "checker_p": 0.0449,
-      "chance": 0.0455
+      "judge_p": 1.0,
+      "checker_p": 0.0,
+      "chance": 0.0455,
+      "judge_reasoning": "The Champion is typically an individual who has a strong interest in change and can advocate for the purchase within the organization. In the context of an enterprise data and analytics platform, which is a technology-driven solution, the leader of the IT function would likely be the most enthusiastic about change and the benefits this platform could bring, making them the natural Champion.",
+      "checker_reasoning": "The Champion in the buying group is typically the leader who has the credibility to persuade others in the organization to follow their commitment to change. In the context of an enterprise data and analytics platform, the Champion would likely be someone who understands the business value of such a platform and can advocate for its adoption. Given the target companies are in Financial Services and Retail, a leader in the Data function would be a strong candidate to be the Champion, as they would be familiar with the importance of data-driven decision-making and the potential benefits of a platform that can provide insights and analytics."
      },
      {
       "role": "Influencer",
-      "asked_as": "Ratifier",
-      "function": "Procurement",
+      "asked_as": "Influencer",
+      "function": "Compliance",
       "round": 0,
-      "extra": true,
-      "judge_p": 0.304,
-      "checker_p": 0.0203,
-      "chance": 0.0455
-     },
-     {
-      "role": "Influencer",
-      "asked_as": "User",
-      "function": "Product",
-      "round": 0,
-      "extra": true,
-      "judge_p": 0.2052,
-      "checker_p": 0.0014,
-      "chance": 0.0455
-     },
-     {
-      "role": "Influencer",
-      "asked_as": "User",
-      "function": "Architecture",
-      "round": 0,
-      "extra": true,
-      "judge_p": 0.0833,
-      "checker_p": 0.0103,
-      "chance": 0.0455
-     },
-     {
-      "role": "Champion",
-      "asked_as": "Champion",
-      "function": "Product",
-      "round": 0,
-      "extra": true,
-      "judge_p": 0.0573,
-      "checker_p": 0.0027,
-      "chance": 0.0455
+      "judge_p": 1.0,
+      "checker_p": 0.0,
+      "chance": 0.0455,
+      "judge_reasoning": "Influencers are individuals or groups within an organization who have a stake in a purchase decision. In the context of an enterprise data and analytics platform, the Compliance function's leader would be a key influencer, as ensuring compliance with regulations and internal policies is critical for such a platform. This is because the platform will directly impact how the company manages and analyzes its data, which is crucial for maintaining compliance.",
+      "checker_reasoning": "To determine the Influencer in the buying group, we need to consider which function's leader would have a stake in the purchase decision and be involved in evaluating the solution. In this case, the enterprise data and analytics platform would likely be used by various departments, but the Data function's leader would be most directly impacted by the purchase, as they would be responsible for overseeing the collection, management, and storage of data."
      }
     ],
-    "judge": "qwen2.5-7b-instruct-q4_k_m",
-    "checker": "llama-3.1-8b-instruct-q4_k_m",
+    "judge": "qwen2.5-7b-instruct",
+    "checker": "llama-3.1-8b-instruct",
     "seat_counts": {
      "Economic Buyer": 1,
      "Champion": 1,
@@ -1490,72 +1469,74 @@
    "split": "test",
    "campaign_text": "Offering being sold: Supply chain planning and inventory optimisation software\nTarget companies: Manufacturing, Consumer Goods",
    "judge_and_checker": {
-    "precision": 0.857,
+    "precision": 0.833,
     "recall": 0.75,
-    "f1": 0.8,
-    "size": 7,
+    "f1": 0.789,
+    "size": 6,
     "unfilled": {},
+    "qualified": true,
     "members": [
      "Economic Buyer: Chief Financial Officer",
      "Champion: Chief Supply Chain Officer",
-     "Technical Evaluator: VP of Supply Chain",
-     "Influencer: Director of Supply Chain",
+     "Technical Evaluator: Chief Information Officer",
+     "Influencer: Chief Operating Officer",
      "Influencer: VP of Finance",
-     "Influencer: Chief Procurement Officer",
-     "Influencer: Chief Operating Officer (extra)"
+     "Influencer: VP of Supply Chain"
     ],
     "wrong": [
      "Chief Operating Officer"
     ],
     "missed_slots": [
      [
-      "IT"
+      "Procurement"
      ]
     ]
    },
    "judge_only": {
-    "precision": 0.875,
-    "recall": 1.0,
-    "f1": 0.933,
-    "size": 8,
+    "precision": 0.667,
+    "recall": 0.75,
+    "f1": 0.706,
+    "size": 6,
     "unfilled": {},
+    "qualified": true,
     "members": [
      "Economic Buyer: Chief Financial Officer",
-     "Champion: Chief Information Officer",
-     "Technical Evaluator: VP of IT",
-     "Influencer: Chief Supply Chain Officer",
-     "Influencer: VP of Finance",
-     "Influencer: IT Director",
-     "Economic Buyer: Chief Procurement Officer (extra)",
-     "Influencer: Chief Operating Officer (extra)"
+     "Champion: Chief Supply Chain Officer",
+     "Technical Evaluator: Chief Information Officer",
+     "Influencer: Chief Compliance Officer",
+     "Influencer: Chief Operating Officer",
+     "Influencer: VP of Finance"
     ],
     "wrong": [
+     "Chief Compliance Officer",
      "Chief Operating Officer"
     ],
-    "missed_slots": []
+    "missed_slots": [
+     [
+      "Procurement"
+     ]
+    ]
    },
    "generic": {
-    "precision": 0.556,
+    "precision": 0.571,
     "recall": 0.5,
-    "f1": 0.526,
-    "size": 9,
+    "f1": 0.533,
+    "size": 7,
     "unfilled": {},
+    "qualified": true,
     "members": [
      "Economic Buyer: Chief Financial Officer",
-     "Champion: Chief Information Officer",
-     "Technical Evaluator: VP of IT",
-     "Influencer: Chief Customer Officer",
+     "Champion: Chief Executive Officer",
+     "Technical Evaluator: Chief Information Officer",
+     "Influencer: VP of IT",
      "Influencer: VP of Finance",
-     "Influencer: IT Director",
-     "Influencer: Chief Architect (extra)",
-     "Champion: Chief Executive Officer (extra)",
-     "Champion: Chief Technology Officer (extra)"
+     "Influencer: Chief Operating Officer",
+     "Influencer: Chief Customer Officer (extra)"
     ],
     "wrong": [
-     "Chief Customer Officer",
-     "Chief Architect",
      "Chief Executive Officer",
-     "Chief Technology Officer"
+     "Chief Operating Officer",
+     "Chief Customer Officer"
     ],
     "missed_slots": [
      [
@@ -1577,9 +1558,11 @@
       "asked_as": "Economic Buyer",
       "round": 0,
       "extra": false,
-      "judge_p": 0.5336,
-      "checker_p": 0.1609,
-      "chance": 0.0455
+      "judge_p": 1.0,
+      "checker_p": 0.9638,
+      "chance": 0.0455,
+      "judge_reasoning": "The Economic Buyer is typically the decision-maker with budget responsibilities and the final say in purchase decisions. In the context of a B2B software purchase, this role is most likely to be held by someone in the Finance function, as they are directly responsible for managing the company's budget and ensuring that purchases align with financial goals.",
+      "checker_reasoning": "The Economic Buyer is typically a high-level executive or leader with budget responsibilities, responsible for ensuring that purchases align with organizational goals. In a manufacturing or consumer goods company, the Economic Buyer would likely be someone who oversees the company's financial and operational planning, such as the Chief Financial Officer (CFO) or the Chief Operating Officer (COO). The CFO is responsible for managing the company's financial resources and making strategic decisions about investments, which would include purchasing supply chain planning and inventory optimization software."
      },
      {
       "title": "Chief Supply Chain Officer",
@@ -1589,33 +1572,39 @@
       "asked_as": "Champion",
       "round": 0,
       "extra": false,
-      "judge_p": 0.3232,
-      "checker_p": 0.9136,
-      "chance": 0.0455
+      "judge_p": 1.0,
+      "checker_p": 0.3689,
+      "chance": 0.0455,
+      "judge_reasoning": "The Champion is typically an individual who has a vested interest in the change and can advocate for the purchase within the organization. In the context of supply chain planning and inventory optimization software, the function most likely to have a direct and immediate interest in such a change would be Supply Chain, as it directly impacts their operations and efficiency.",
+      "checker_reasoning": "The Champion in the buying group is typically the internal player who has the credibility to persuade others to follow their commitment to change. In the context of supply chain planning and inventory optimization software, the Champion would likely be someone who is familiar with the current pain points and challenges in the company's supply chain operations. This person would be able to articulate the business case for implementing the software and rally support from other stakeholders."
      },
      {
-      "title": "VP of Supply Chain",
-      "function": "Supply Chain",
-      "level": "C-1",
+      "title": "Chief Information Officer",
+      "function": "IT",
+      "level": "C",
       "role": "Technical Evaluator",
       "asked_as": "Technical Evaluator",
       "round": 0,
       "extra": false,
-      "judge_p": 0.2574,
-      "checker_p": 0.9117,
-      "chance": 0.0455
+      "judge_p": 1.0,
+      "checker_p": 0.1061,
+      "chance": 0.0455,
+      "judge_reasoning": "The Technical Evaluator's role is to judge whether the product or service fits the company's systems, security standards, and workflows. Given the nature of supply chain planning and inventory optimization software, the IT function would be most likely to have the expertise and responsibility to evaluate how well this software integrates with existing systems and meets technical requirements.",
+      "checker_reasoning": "The Technical Evaluator is responsible for judging whether the product or service fits the company's systems, security standards, and workflows. In the context of supply chain planning and inventory optimization software, the Technical Evaluator would likely be someone with expertise in the company's existing supply chain and inventory management systems. This person would need to assess whether the new software can integrate with these systems and meet the company's specific requirements."
      },
      {
-      "title": "Director of Supply Chain",
-      "function": "Supply Chain",
-      "level": "C-2",
+      "title": "Chief Operating Officer",
+      "function": "Operations",
+      "level": "C",
       "role": "Influencer",
       "asked_as": "User",
       "round": 0,
       "extra": false,
-      "judge_p": 0.9458,
-      "checker_p": 0.7135,
-      "chance": 0.0455
+      "judge_p": 1.0,
+      "checker_p": 0.6512,
+      "chance": 0.0455,
+      "judge_reasoning": "The User role in the buying group consists of individuals or groups whose daily activities are affected by the purchase. For supply chain planning and inventory optimization software, the primary users would be those directly involved in supply chain operations and inventory management. This would typically be the Operations function, as they are the ones who would be using the software to manage and optimize their supply chain and inventory processes.",
+      "checker_reasoning": "The User in the buying group is typically the individual or group whose daily activities are affected by the purchase. In the context of supply chain planning and inventory optimization software, the User would likely be the person responsible for managing the day-to-day operations of the supply chain, such as inventory levels, shipping, and receiving. This person would be directly impacted by the implementation of the software and would likely be involved in testing and providing feedback on the system."
      },
      {
       "title": "VP of Finance",
@@ -1625,72 +1614,48 @@
       "asked_as": "Ratifier",
       "round": 0,
       "extra": false,
-      "judge_p": 0.7144,
-      "checker_p": 0.7039,
-      "chance": 0.0455
+      "judge_p": 0.9953,
+      "checker_p": 0.912,
+      "chance": 0.0455,
+      "judge_reasoning": "The Ratifier role is typically filled by individuals who manage the settlement of terms, conditions, and pricing, and often sit in finance, purchasing, and procurement functions. Given the nature of the supply chain planning and inventory optimization software, the Ratifier would likely be someone responsible for managing the financial aspects of the purchase.",
+      "checker_reasoning": "The Ratifier is typically the person responsible for managing the settlement of terms, conditions, and pricing, often sitting in the finance, purchasing, and procurement functions. In the context of a supply chain planning and inventory optimization software purchase, the Ratifier would likely be someone who is responsible for ensuring that the financial and contractual aspects of the purchase are properly managed. This would typically be a person in a finance or procurement role."
      },
      {
-      "title": "Chief Procurement Officer",
-      "function": "Procurement",
-      "level": "C",
-      "role": "Influencer",
-      "asked_as": "Ratifier",
-      "round": 0,
-      "extra": false,
-      "judge_p": 0.2855,
-      "checker_p": 0.2926,
-      "chance": 0.0455
-     },
-     {
-      "title": "Chief Operating Officer",
-      "function": "Operations",
-      "level": "C",
+      "title": "VP of Supply Chain",
+      "function": "Supply Chain",
+      "level": "C-1",
       "role": "Influencer",
       "asked_as": "User",
-      "round": 0,
-      "extra": true,
-      "judge_p": 0.0541,
-      "checker_p": 0.2532,
-      "chance": 0.0455
+      "round": 1,
+      "extra": false,
+      "judge_p": 1.0,
+      "checker_p": 0.9605,
+      "chance": 0.0526,
+      "judge_reasoning": "The User role in the buying group typically consists of individuals or groups whose daily activities are affected by the purchase. For supply chain planning and inventory optimization software, the primary users would be those directly involved in supply chain operations and inventory management. This aligns with the Supply Chain function, where the daily activities of managing supply chain operations and inventory would be significantly impacted by the software.",
+      "checker_reasoning": "The User in the buying group would be the individual or group whose daily activities are affected by the purchase of the supply chain planning and inventory optimization software. In this case, the users would likely be the people who are responsible for managing the company's supply chain and inventory, such as warehouse managers, logistics coordinators, or supply chain analysts. They would be the ones who would be using the software on a daily basis to optimize their processes and make decisions."
      }
     ],
     "unfilled": {},
     "rejected": [
      {
-      "role": "Champion",
-      "asked_as": "Champion",
-      "function": "IT",
-      "round": 0,
-      "judge_p": 0.4094,
-      "checker_p": 0.0002,
-      "chance": 0.0455
-     },
-     {
-      "role": "Technical Evaluator",
-      "asked_as": "Technical Evaluator",
-      "function": "IT",
-      "round": 0,
-      "judge_p": 0.7425,
-      "checker_p": 0.0437,
-      "chance": 0.0455
-     },
-     {
       "role": "Influencer",
       "asked_as": "Influencer",
-      "function": "IT",
+      "function": "Compliance",
       "round": 0,
-      "judge_p": 0.4922,
-      "checker_p": 0.0026,
-      "chance": 0.0455
+      "judge_p": 1.0,
+      "checker_p": 0.0,
+      "chance": 0.0455,
+      "judge_reasoning": "Influencers are individuals or groups within an organization who have a stake in the purchase decision, even if they will not directly use the product. In the context of supply chain planning and inventory optimization software, the Compliance function's leader would be a key influencer, as ensuring compliance with regulations and internal policies is crucial for the effective implementation and use of such software.",
+      "checker_reasoning": "The Influencer in the buying group would likely be someone who has a stake in the purchase decision, but may not directly use the software. In the context of supply chain planning and inventory optimization, the Supply Chain function would be directly impacted by the purchase, and its leader would likely have a significant interest in the decision. Therefore, the leader of the Supply Chain function would be the most likely Influencer in the buying group."
      }
     ],
-    "judge": "qwen2.5-7b-instruct-q4_k_m",
-    "checker": "llama-3.1-8b-instruct-q4_k_m",
+    "judge": "qwen2.5-7b-instruct",
+    "checker": "llama-3.1-8b-instruct",
     "seat_counts": {
      "Economic Buyer": 1,
      "Champion": 1,
      "Technical Evaluator": 1,
-     "Influencer": 4
+     "Influencer": 3
     }
    }
   },
@@ -1698,69 +1663,80 @@
    "split": "test",
    "campaign_text": "Offering being sold: Cloud migration and managed cloud infrastructure services\nTarget companies: Financial Services, Retail",
    "judge_and_checker": {
-    "precision": 0.857,
-    "recall": 1.0,
-    "f1": 0.923,
-    "size": 7,
+    "precision": 1.0,
+    "recall": 0.5,
+    "f1": 0.667,
+    "size": 6,
     "unfilled": {},
+    "qualified": true,
     "members": [
      "Economic Buyer: Chief Financial Officer",
      "Champion: Chief Information Officer",
      "Technical Evaluator: VP of IT",
-     "Influencer: IT Director",
      "Influencer: VP of Finance",
-     "Influencer: Chief Architect",
-     "Champion: Chief Technology Officer (extra)"
+     "Influencer: IT Director",
+     "Influencer: Chief Procurement Officer"
     ],
-    "wrong": [
-     "Chief Architect"
-    ],
-    "missed_slots": []
+    "wrong": [],
+    "missed_slots": [
+     [
+      "Platform",
+      "Technology"
+     ]
+    ]
    },
    "judge_only": {
-    "precision": 0.875,
-    "recall": 1.0,
-    "f1": 0.933,
-    "size": 8,
+    "precision": 0.833,
+    "recall": 0.5,
+    "f1": 0.625,
+    "size": 6,
     "unfilled": {},
+    "qualified": true,
     "members": [
      "Economic Buyer: Chief Financial Officer",
      "Champion: Chief Information Officer",
      "Technical Evaluator: VP of IT",
-     "Influencer: IT Director",
+     "Influencer: Chief Compliance Officer",
      "Influencer: VP of Finance",
-     "Influencer: Chief Procurement Officer",
-     "Champion: Chief Technology Officer (extra)",
-     "Influencer: Chief Architect (extra)"
+     "Influencer: IT Director"
     ],
     "wrong": [
-     "Chief Architect"
+     "Chief Compliance Officer"
     ],
-    "missed_slots": []
+    "missed_slots": [
+     [
+      "Platform",
+      "Technology"
+     ]
+    ]
    },
    "generic": {
-    "precision": 0.667,
-    "recall": 1.0,
-    "f1": 0.8,
-    "size": 9,
+    "precision": 0.571,
+    "recall": 0.5,
+    "f1": 0.533,
+    "size": 7,
     "unfilled": {},
+    "qualified": true,
     "members": [
      "Economic Buyer: Chief Financial Officer",
-     "Champion: Chief Information Officer",
-     "Technical Evaluator: VP of IT",
-     "Influencer: Chief Customer Officer",
+     "Champion: Chief Executive Officer",
+     "Technical Evaluator: Chief Information Officer",
+     "Influencer: VP of IT",
      "Influencer: VP of Finance",
-     "Influencer: IT Director",
-     "Influencer: Chief Architect (extra)",
-     "Champion: Chief Executive Officer (extra)",
-     "Champion: Chief Technology Officer (extra)"
+     "Influencer: Chief Operating Officer",
+     "Influencer: Chief Customer Officer (extra)"
     ],
     "wrong": [
-     "Chief Customer Officer",
-     "Chief Architect",
-     "Chief Executive Officer"
+     "Chief Executive Officer",
+     "Chief Operating Officer",
+     "Chief Customer Officer"
     ],
-    "missed_slots": []
+    "missed_slots": [
+     [
+      "Platform",
+      "Technology"
+     ]
+    ]
    },
    "committee": {
     "campaign": "Offering being sold: Cloud migration and managed cloud infrastructure services\nTarget companies: Financial Services, Retail",
@@ -1773,9 +1749,11 @@
       "asked_as": "Economic Buyer",
       "round": 0,
       "extra": false,
-      "judge_p": 0.9467,
-      "checker_p": 0.8301,
-      "chance": 0.0455
+      "judge_p": 1.0,
+      "checker_p": 0.9825,
+      "chance": 0.0455,
+      "judge_reasoning": "The Economic Buyer is typically the decision-maker with budget responsibilities and the authority to ensure that purchases align with organizational goals. In the context of a cloud migration and managed cloud infrastructure service, the leader who would have this role is most likely the Chief Financial Officer or a Vice President of Finance, as they are directly involved in budgeting and ensuring financial stability.",
+      "checker_reasoning": "The Economic Buyer is typically a high-level executive or leader with budget responsibilities, responsible for ensuring that purchases align with organizational goals. In the context of a cloud migration and managed cloud infrastructure services offering, the Economic Buyer would likely be someone who oversees the company's IT budget and is responsible for making strategic decisions about technology investments. This would typically be the Chief Information Officer (CIO) or the Chief Technology Officer (CTO), but since the CIO is not listed as an option, the next most likely candidate would be the Chief Financial Officer (CFO), who would be responsible for ensuring that the purchase aligns with the company's financial goals and budget."
      },
      {
       "title": "Chief Information Officer",
@@ -1785,9 +1763,11 @@
       "asked_as": "Champion",
       "round": 0,
       "extra": false,
-      "judge_p": 0.6038,
-      "checker_p": 0.2385,
-      "chance": 0.0455
+      "judge_p": 1.0,
+      "checker_p": 0.9439,
+      "chance": 0.0455,
+      "judge_reasoning": "The Champion role is typically filled by someone who has a vested interest in the change and can advocate for it within the organization. In the context of cloud migration, which involves significant changes to IT infrastructure and processes, the Chief Information Officer (CIO) or a similarly positioned IT leader would likely champion this initiative due to their direct involvement in IT strategy and operations.",
+      "checker_reasoning": "The Champion in the buying group is typically the internal player who has the credibility to persuade others in the buying organization to follow their commitment to change. In the context of a cloud migration and managed cloud infrastructure services offering, the Champion would likely be someone who understands the technical and business implications of the offering and can advocate for its adoption within the organization. Given the target companies are in Financial Services and Retail, a key consideration is the IT function, as they would be responsible for implementing and managing the cloud infrastructure."
      },
      {
       "title": "VP of IT",
@@ -1797,21 +1777,11 @@
       "asked_as": "Technical Evaluator",
       "round": 0,
       "extra": false,
-      "judge_p": 0.999,
-      "checker_p": 0.7001,
-      "chance": 0.0455
-     },
-     {
-      "title": "IT Director",
-      "function": "IT",
-      "level": "C-2",
-      "role": "Influencer",
-      "asked_as": "Influencer",
-      "round": 0,
-      "extra": false,
-      "judge_p": 0.8269,
-      "checker_p": 0.3355,
-      "chance": 0.0455
+      "judge_p": 1.0,
+      "checker_p": 0.9957,
+      "chance": 0.0455,
+      "judge_reasoning": "The Technical Evaluator's role is to judge whether the product or service fits the company's systems, security standards, and workflows. Among the listed functions, the IT function is most directly responsible for managing and evaluating the company's technology infrastructure, which would include assessing cloud migration and managed cloud infrastructure services.",
+      "checker_reasoning": "To determine the Technical Evaluator in the buying group, we need to consider the role of the Technical Evaluator, which is to judge whether the product or service fits the company's systems, security standards, and workflows. Given that the offering being sold is cloud migration and managed cloud infrastructure services, the Technical Evaluator would likely be someone who is responsible for overseeing the company's IT infrastructure and ensuring that any new technology or service aligns with their existing systems and security standards. This would typically be someone in the IT function."
      },
      {
       "title": "VP of Finance",
@@ -1821,62 +1791,60 @@
       "asked_as": "Ratifier",
       "round": 0,
       "extra": false,
-      "judge_p": 0.7438,
-      "checker_p": 0.9674,
-      "chance": 0.0455
+      "judge_p": 1.0,
+      "checker_p": 0.9957,
+      "chance": 0.0455,
+      "judge_reasoning": "The Ratifier role is typically filled by individuals who manage the settlement of terms, conditions, and pricing, and often sit in finance, purchasing, and procurement functions. Given the nature of the offering, which involves significant financial and technical considerations, the Ratifier would likely be someone from the Finance function who oversees the procurement and settlement of such services.",
+      "checker_reasoning": "The Ratifier is typically the person responsible for managing the settlement of terms, conditions, and pricing, often sitting in the finance, purchasing, and procurement functions. In the context of a cloud migration and managed cloud infrastructure services offering, the Ratifier would likely be involved in reviewing and approving the financial aspects of the deal, such as pricing, payment terms, and contract conditions. Given the nature of the offering, the Ratifier would likely be a finance or procurement leader."
      },
      {
-      "title": "Chief Architect",
-      "function": "Architecture",
-      "level": "C-1",
+      "title": "IT Director",
+      "function": "IT",
+      "level": "C-2",
       "role": "Influencer",
       "asked_as": "User",
       "round": 0,
       "extra": false,
-      "judge_p": 0.164,
-      "checker_p": 0.056,
-      "chance": 0.0455
+      "judge_p": 1.0,
+      "checker_p": 0.9979,
+      "chance": 0.0455,
+      "judge_reasoning": "The User role in the buying group consists of individuals or groups whose daily activities are affected by the purchase. For cloud migration and managed cloud infrastructure services, the primary users would be the departments that will be directly impacted by the new cloud infrastructure, such as IT, which will use the cloud services, or departments that rely on IT for their operations, such as Operations.",
+      "checker_reasoning": "The User in the buying group is typically the individual or group whose daily activities are affected by the purchase. In the context of cloud migration and managed cloud infrastructure services, the User would likely be the team responsible for managing and utilizing the cloud infrastructure, which is typically the IT department. Therefore, the leader of the IT function would be the User in the buying group."
      },
      {
-      "title": "Chief Technology Officer",
-      "function": "Technology",
+      "title": "Chief Procurement Officer",
+      "function": "Procurement",
       "level": "C",
-      "role": "Champion",
-      "asked_as": "Champion",
-      "round": 0,
-      "extra": true,
-      "judge_p": 0.3923,
-      "checker_p": 0.3335,
-      "chance": 0.0455
+      "role": "Influencer",
+      "asked_as": "Ratifier",
+      "round": 1,
+      "extra": false,
+      "judge_p": 1.0,
+      "checker_p": 0.9885,
+      "chance": 0.0526,
+      "judge_reasoning": "The Ratifier role is typically filled by individuals in finance, purchasing, or procurement functions who manage the settlement of terms, conditions, and pricing. These individuals ensure that the financial aspects of the purchase align with the company's budget and financial policies. Given the options, the most likely function to have a Ratifier is Procurement.",
+      "checker_reasoning": "The Ratifier is typically the person responsible for managing the settlement of terms, conditions, and pricing, often sitting in the finance, purchasing, and procurement functions. In the context of a cloud migration and managed cloud infrastructure services offering, the Ratifier would likely be someone who is responsible for ensuring that the financial and contractual aspects of the purchase are properly managed. This would typically be a person in a finance or procurement role."
      }
     ],
     "unfilled": {},
     "rejected": [
      {
       "role": "Influencer",
-      "asked_as": "Ratifier",
-      "function": "Procurement",
+      "asked_as": "Influencer",
+      "function": "Compliance",
       "round": 0,
-      "judge_p": 0.2562,
-      "checker_p": 0.0218,
-      "chance": 0.0455
-     },
-     {
-      "role": "Economic Buyer",
-      "asked_as": "Economic Buyer",
-      "function": "Procurement",
-      "round": 0,
-      "extra": true,
-      "judge_p": 0.0533,
-      "checker_p": 0.0012,
-      "chance": 0.0455
+      "judge_p": 1.0,
+      "checker_p": 0.0007,
+      "chance": 0.0455,
+      "judge_reasoning": "Influencers are individuals or groups within an organization who have a stake in the purchase decision, often due to their involvement in evaluating the solution, even if they will not directly use it. In the context of cloud migration and managed cloud infrastructure services, the Compliance function's leader would be a key influencer, as they are responsible for ensuring that the company adheres to regulatory requirements and internal policies, which are crucial factors in cloud migration.",
+      "checker_reasoning": "The Influencer in the buying group is likely to be someone who has a stake in the purchase decision, but may not be directly involved in the day-to-day use of the product or service. In the context of cloud migration and managed cloud infrastructure services, the IT department would likely be heavily involved in evaluating the technical feasibility and security of the solution, but the Influencer may be someone who can provide a broader business perspective on the benefits and trade-offs of the solution. This person may be a leader in the IT department, but also someone who can communicate the business case for the investment to other stakeholders."
      }
     ],
-    "judge": "qwen2.5-7b-instruct-q4_k_m",
-    "checker": "llama-3.1-8b-instruct-q4_k_m",
+    "judge": "qwen2.5-7b-instruct",
+    "checker": "llama-3.1-8b-instruct",
     "seat_counts": {
      "Economic Buyer": 1,
-     "Champion": 2,
+     "Champion": 1,
      "Technical Evaluator": 1,
      "Influencer": 3
     }
@@ -1887,22 +1855,24 @@
    "campaign_text": "Offering being sold: AdTech Platform Modernization & Strangler Fig Migration lookalike\nTarget companies: Core AdTech, agency management software, DSP/SSP, ad exchange; Media planning, ad verification, connected TV\nTechnology the offering works on: Explicit ASP.NET, .NET Framework, VB.NET or Java monolith; Desktop-era client, on-prem deployment, 10+ year codebase",
    "judge_and_checker": {
     "precision": 1.0,
-    "recall": 0.5,
-    "f1": 0.667,
-    "size": 8,
+    "recall": 0.333,
+    "f1": 0.5,
+    "size": 6,
     "unfilled": {},
+    "qualified": true,
     "members": [
      "Economic Buyer: Chief Financial Officer",
      "Champion: Chief Information Officer",
      "Technical Evaluator: VP of IT",
-     "Influencer: IT Director",
      "Influencer: VP of Finance",
      "Influencer: Chief Procurement Officer",
-     "Champion: Chief Technology Officer (extra)",
-     "Influencer: Chief Architect (extra)"
+     "Influencer: Chief Technology Officer"
     ],
     "wrong": [],
     "missed_slots": [
+     [
+      "Architecture"
+     ],
      [
       "Platform"
      ],
@@ -1913,32 +1883,36 @@
       "Operations"
      ]
     ],
-    "team_picks_held": "3 of 8",
+    "team_picks_held": "2 of 8",
     "team_picks_list": [
      "Chief Technology Officer",
-     "Chief Architect",
      "Chief Information Officer"
     ]
    },
    "judge_only": {
     "precision": 1.0,
-    "recall": 0.5,
-    "f1": 0.667,
-    "size": 8,
+    "recall": 0.167,
+    "f1": 0.286,
+    "size": 6,
     "unfilled": {},
+    "qualified": true,
     "members": [
      "Economic Buyer: Chief Financial Officer",
      "Champion: Chief Information Officer",
      "Technical Evaluator: VP of IT",
-     "Influencer: IT Director",
      "Influencer: VP of Finance",
-     "Influencer: Chief Procurement Officer",
-     "Champion: Chief Technology Officer (extra)",
-     "Influencer: Chief Architect (extra)"
+     "Influencer: IT Director",
+     "Influencer: Chief Procurement Officer"
     ],
     "wrong": [],
     "missed_slots": [
      [
+      "Technology"
+     ],
+     [
+      "Architecture"
+     ],
+     [
       "Platform"
      ],
      [
@@ -1948,50 +1922,49 @@
       "Operations"
      ]
     ],
-    "team_picks_held": "3 of 8",
+    "team_picks_held": "1 of 8",
     "team_picks_list": [
-     "Chief Technology Officer",
-     "Chief Architect",
      "Chief Information Officer"
     ]
    },
    "generic": {
-    "precision": 0.778,
-    "recall": 0.5,
-    "f1": 0.609,
-    "size": 9,
+    "precision": 0.714,
+    "recall": 0.333,
+    "f1": 0.455,
+    "size": 7,
     "unfilled": {},
+    "qualified": true,
     "members": [
      "Economic Buyer: Chief Financial Officer",
-     "Champion: Chief Information Officer",
-     "Technical Evaluator: VP of IT",
-     "Influencer: Chief Customer Officer",
+     "Champion: Chief Executive Officer",
+     "Technical Evaluator: Chief Information Officer",
+     "Influencer: VP of IT",
      "Influencer: VP of Finance",
-     "Influencer: IT Director",
-     "Influencer: Chief Architect (extra)",
-     "Champion: Chief Executive Officer (extra)",
-     "Champion: Chief Technology Officer (extra)"
+     "Influencer: Chief Operating Officer",
+     "Influencer: Chief Customer Officer (extra)"
     ],
     "wrong": [
-     "Chief Customer Officer",
-     "Chief Executive Officer"
+     "Chief Executive Officer",
+     "Chief Customer Officer"
     ],
     "missed_slots": [
+     [
+      "Technology"
+     ],
+     [
+      "Architecture"
+     ],
      [
       "Platform"
      ],
      [
       "Product"
-     ],
-     [
-      "Operations"
      ]
     ],
-    "team_picks_held": "3 of 8",
+    "team_picks_held": "2 of 8",
     "team_picks_list": [
-     "Chief Technology Officer",
-     "Chief Architect",
-     "Chief Information Officer"
+     "Chief Information Officer",
+     "Chief Operating Officer"
     ]
    },
    "committee": {
@@ -2005,9 +1978,11 @@
       "asked_as": "Economic Buyer",
       "round": 0,
       "extra": false,
-      "judge_p": 0.9998,
-      "checker_p": 0.6129,
-      "chance": 0.0455
+      "judge_p": 1.0,
+      "checker_p": 0.0687,
+      "chance": 0.0455,
+      "judge_reasoning": "The Economic Buyer is typically the decision-maker who ensures that the purchase aligns with the organization's goals and budget. In a B2B context, this role is most likely to be held by a leader who has direct responsibility for the company's financial strategy and budgeting processes. This aligns closely with the Finance function, which oversees financial planning, budgeting, and financial stability.",
+      "checker_reasoning": "The Economic Buyer is typically a high-level executive or leader with budget responsibilities, responsible for ensuring that purchases align with organizational goals. In the context of a B2B enterprise buying group, the Economic Buyer is often a member of the executive team, such as a C-level executive. Given the nature of the offering, which is a significant investment in technology and infrastructure, the Economic Buyer is likely to be a high-level executive with a broad view of the company's overall strategy and budget."
      },
      {
       "title": "Chief Information Officer",
@@ -2017,9 +1992,11 @@
       "asked_as": "Champion",
       "round": 0,
       "extra": false,
-      "judge_p": 0.7611,
-      "checker_p": 0.0773,
-      "chance": 0.0455
+      "judge_p": 0.9995,
+      "checker_p": 0.6132,
+      "chance": 0.0455,
+      "judge_reasoning": "The Champion role is typically filled by someone who has a vested interest in the change and can advocate for it within the organization. In the context of modernizing an adtech platform, the Chief Architect or IT Director would likely be the most influential in driving this change due to their deep understanding of the current technology stack and the vision for the future state.",
+      "checker_reasoning": "The Champion in the buying group is typically the leader who has the credibility to persuade others in the organization to follow their commitment to change. In this case, the offering being sold is an AdTech Platform Modernization & Strangler Fig Migration, which suggests that the solution is related to technology and infrastructure. Therefore, the Champion is likely to be someone who has a deep understanding of the company's technical infrastructure and can advocate for the change."
      },
      {
       "title": "VP of IT",
@@ -2029,21 +2006,11 @@
       "asked_as": "Technical Evaluator",
       "round": 0,
       "extra": false,
-      "judge_p": 0.9989,
-      "checker_p": 0.6152,
-      "chance": 0.0455
-     },
-     {
-      "title": "IT Director",
-      "function": "IT",
-      "level": "C-2",
-      "role": "Influencer",
-      "asked_as": "Influencer",
-      "round": 0,
-      "extra": false,
-      "judge_p": 0.8076,
-      "checker_p": 0.2896,
-      "chance": 0.0455
+      "judge_p": 1.0,
+      "checker_p": 0.9845,
+      "chance": 0.0455,
+      "judge_reasoning": "The Technical Evaluator role is responsible for judging whether the product or service fits the company's systems, security standards, and workflows. Given the technical nature of the AdTech Platform Modernization & Strangler Fig Migration offering, the leader who would be most likely to evaluate the technical aspects of the solution would be someone from the IT department, as they are typically responsible for the technology infrastructure and systems.",
+      "checker_reasoning": "The Technical Evaluator is responsible for judging whether the product or service fits the company's systems, security standards, and workflows. Given the technical nature of the AdTech Platform Modernization & Strangler Fig Migration offering, the leader who would be most concerned with evaluating its technical feasibility and compatibility would be the one responsible for overseeing the company's technology infrastructure and systems. This would likely be the IT function, as they would be responsible for ensuring that the new technology aligns with the company's existing systems and infrastructure."
      },
      {
       "title": "VP of Finance",
@@ -2053,9 +2020,11 @@
       "asked_as": "Ratifier",
       "round": 0,
       "extra": false,
-      "judge_p": 0.7497,
-      "checker_p": 0.8915,
-      "chance": 0.0455
+      "judge_p": 1.0,
+      "checker_p": 0.9549,
+      "chance": 0.0455,
+      "judge_reasoning": "The Ratifier role is typically filled by individuals who manage the settlement of terms, conditions, and pricing, and who often sit in the finance, purchasing, and procurement functions. Given the options, the most likely function for the Ratifier would be someone in Finance, as they are directly involved in the financial aspects of the purchase.",
+      "checker_reasoning": "The Ratifier is typically the person responsible for managing the settlement of terms, conditions, and pricing, often sitting in the finance, purchasing, or procurement functions. In the context of a B2B buying group, the Ratifier would be the person who ensures that the financial and contractual aspects of the purchase are properly executed. Given the technical nature of the offering being sold, it is likely that the Ratifier would be someone from the finance or procurement function."
      },
      {
       "title": "Chief Procurement Officer",
@@ -2063,46 +2032,116 @@
       "level": "C",
       "role": "Influencer",
       "asked_as": "Ratifier",
-      "round": 0,
+      "round": 1,
       "extra": false,
-      "judge_p": 0.2502,
-      "checker_p": 0.0921,
-      "chance": 0.0455
+      "judge_p": 1.0,
+      "checker_p": 0.9999,
+      "chance": 0.05,
+      "judge_reasoning": "The Ratifier role is typically filled by individuals in finance, purchasing, or procurement functions who manage the settlement of terms, conditions, and pricing. Given the options, the most fitting function would be Procurement, as their role often involves finalizing the purchase terms and ensuring the financial aspects align with the company's budget and policies.",
+      "checker_reasoning": "The Ratifier is typically the person responsible for managing the settlement of terms, conditions, and pricing, often sitting in the finance, purchasing, and procurement functions. In the context of a B2B buying group, the Ratifier would be the person who ensures that the purchase decision is executed and implemented, which is often a financial or procurement-related role. Given the technical nature of the offering being sold, it's likely that the Ratifier would be someone from the Procurement function."
      },
      {
       "title": "Chief Technology Officer",
       "function": "Technology",
       "level": "C",
-      "role": "Champion",
-      "asked_as": "Champion",
-      "round": 0,
-      "extra": true,
-      "judge_p": 0.2331,
-      "checker_p": 0.4477,
-      "chance": 0.0455
-     },
-     {
-      "title": "Chief Architect",
-      "function": "Architecture",
-      "level": "C-1",
       "role": "Influencer",
-      "asked_as": "User",
-      "round": 0,
-      "extra": true,
-      "judge_p": 0.1585,
-      "checker_p": 0.1834,
-      "chance": 0.0455
+      "asked_as": "Influencer",
+      "round": 2,
+      "extra": false,
+      "judge_p": 1.0,
+      "checker_p": 1.0,
+      "chance": 0.0769,
+      "judge_reasoning": "Considering the nature of the AdTech Platform Modernization & Strangler Fig Migration offering, which involves significant technological changes and modernization, the leader of the Technology function would likely be an Influencer. This is because they have a direct stake in ensuring the new technology aligns with the company's technological vision and infrastructure.",
+      "checker_reasoning": "The Influencer in the buying group would likely be the leader of the function that has a stake in the purchase decision, but may not have direct control over the final decision. In this case, the AdTech Platform Modernization & Strangler Fig Migration offering is a technical solution that requires significant changes to the company's existing infrastructure, so the leader of the function responsible for overseeing the company's technology and systems would be the most likely influencer. This would be the leader of the Technology function."
      }
     ],
     "unfilled": {},
-    "rejected": [],
-    "judge": "qwen2.5-7b-instruct-q4_k_m",
-    "checker": "llama-3.1-8b-instruct-q4_k_m",
+    "rejected": [
+     {
+      "role": "Influencer",
+      "asked_as": "Influencer",
+      "function": "IT",
+      "round": 0,
+      "judge_p": 1.0,
+      "checker_p": 0.0021,
+      "chance": 0.0455,
+      "judge_reasoning": "Considering the nature of the AdTech Platform Modernization & Strangler Fig Migration lookalike offering, which involves significant technological changes and impacts on existing systems, the leader of the IT function would likely be the Influencer. They would have a direct stake in ensuring the new platform integrates well with existing systems and meets technical standards.",
+      "checker_reasoning": "The Influencer in the buying group would likely be someone who has a stake in the purchase decision, but may not directly use the product. In the context of an AdTech Platform Modernization & Strangler Fig Migration, the person who would be most impacted by the purchase decision would be the one responsible for the company's technology infrastructure and systems. This would likely be the IT or Technical leader, but considering the specific nature of the offering, the Architecture leader would also be a key stakeholder."
+     },
+     {
+      "role": "Influencer",
+      "asked_as": "Influencer",
+      "function": "Compliance",
+      "round": 1,
+      "judge_p": 1.0,
+      "checker_p": 0.0,
+      "chance": 0.05,
+      "judge_reasoning": "Considering the nature of the AdTech Platform Modernization & Strangler Fig Migration lookalike offering, which involves significant technological changes and impacts on existing systems, the Compliance function's leader would likely be the Influencer. Compliance officers are often involved in ensuring that any changes align with regulatory requirements and internal policies, making them key stakeholders in such a decision.",
+      "checker_reasoning": "The Influencer in the buying group would likely be someone who has a stake in the purchase decision, but may not be the final decision-maker. In the context of AdTech Platform Modernization & Strangler Fig Migration, the leader of the Digital function would be a key influencer, as they would be responsible for overseeing the company's digital transformation and ensuring that the new platform aligns with the company's overall digital strategy."
+     },
+     {
+      "role": "Influencer",
+      "asked_as": "User",
+      "function": "Operations",
+      "round": 1,
+      "judge_p": 0.4817,
+      "checker_p": 0.0015,
+      "chance": 0.05,
+      "judge_reasoning": "The User role in the buying group consists of individuals or groups whose daily activities are affected by the purchase. For an AdTech Platform Modernization & Strangler Fig Migration, the primary users would be the teams directly interacting with the AdTech systems, such as those involved in media planning, ad verification, and connected TV operations.",
+      "checker_reasoning": "The User in the buying group is typically an individual or group whose daily activities are affected by the purchase. In this case, the AdTech Platform Modernization & Strangler Fig Migration offering is a technical solution that will likely be used by the IT or technical teams within the target company. Therefore, the leader of the function responsible for overseeing the technical aspects of the company would be the User in the buying group."
+     },
+     {
+      "role": "Influencer",
+      "asked_as": "User",
+      "function": "Strategy",
+      "round": 1,
+      "judge_p": 0.1954,
+      "checker_p": 0.0,
+      "chance": 0.05,
+      "judge_reasoning": "The User role in the buying group consists of individuals or groups whose daily activities are affected by the purchase. For an AdTech Platform Modernization & Strangler Fig Migration, the primary users would be the teams directly interacting with the AdTech systems, such as those involved in media planning, ad verification, and connected TV operations.",
+      "checker_reasoning": "The User in the buying group is typically an individual or group whose daily activities are affected by the purchase. In this case, the AdTech Platform Modernization & Strangler Fig Migration offering is a technical solution that will likely be used by the IT or technical teams within the target company. Therefore, the leader of the function responsible for overseeing the technical aspects of the company would be the User in the buying group."
+     },
+     {
+      "role": "Influencer",
+      "asked_as": "User",
+      "function": "Customer",
+      "round": 1,
+      "judge_p": 0.1181,
+      "checker_p": 0.0,
+      "chance": 0.05,
+      "judge_reasoning": "The User role in the buying group consists of individuals or groups whose daily activities are affected by the purchase. For an AdTech Platform Modernization & Strangler Fig Migration, the primary users would be the teams directly interacting with the AdTech systems, such as those involved in media planning, ad verification, and connected TV operations.",
+      "checker_reasoning": "The User in the buying group is typically an individual or group whose daily activities are affected by the purchase. In this case, the AdTech Platform Modernization & Strangler Fig Migration offering is a technical solution that will likely be used by the IT or technical teams within the target company. Therefore, the leader of the function responsible for overseeing the technical aspects of the company would be the User in the buying group."
+     },
+     {
+      "role": "Influencer",
+      "asked_as": "User",
+      "function": "Digital",
+      "round": 1,
+      "judge_p": 0.1034,
+      "checker_p": 0.0,
+      "chance": 0.05,
+      "judge_reasoning": "The User role in the buying group consists of individuals or groups whose daily activities are affected by the purchase. For an AdTech Platform Modernization & Strangler Fig Migration, the primary users would be the teams directly interacting with the AdTech systems, such as those involved in media planning, ad verification, and connected TV operations.",
+      "checker_reasoning": "The User in the buying group is typically an individual or group whose daily activities are affected by the purchase. In this case, the AdTech Platform Modernization & Strangler Fig Migration offering is a technical solution that will likely be used by the IT or technical teams within the target company. Therefore, the leader of the function responsible for overseeing the technical aspects of the company would be the User in the buying group."
+     },
+     {
+      "role": "Influencer",
+      "asked_as": "User",
+      "function": "Marketing",
+      "round": 1,
+      "judge_p": 0.0531,
+      "checker_p": 0.0,
+      "chance": 0.05,
+      "judge_reasoning": "The User role in the buying group consists of individuals or groups whose daily activities are affected by the purchase. For an AdTech Platform Modernization & Strangler Fig Migration, the primary users would be the teams directly interacting with the AdTech systems, such as those involved in media planning, ad verification, and connected TV operations.",
+      "checker_reasoning": "The User in the buying group is typically an individual or group whose daily activities are affected by the purchase. In this case, the AdTech Platform Modernization & Strangler Fig Migration offering is a technical solution that will likely be used by the IT or technical teams within the target company. Therefore, the leader of the function responsible for overseeing the technical aspects of the company would be the User in the buying group."
+     }
+    ],
+    "judge": "qwen2.5-7b-instruct",
+    "checker": "llama-3.1-8b-instruct",
     "seat_counts": {
      "Economic Buyer": 1,
-     "Champion": 2,
+     "Champion": 1,
      "Technical Evaluator": 1,
-     "Influencer": 4
+     "Influencer": 3
     }
    }
   }
@@ -2118,45 +2157,53 @@
     "asked_as": "Economic Buyer",
     "round": 0,
     "extra": false,
-    "judge_p": 0.6805,
-    "checker_p": 0.8321,
-    "chance": 0.0455
+    "judge_p": 1.0,
+    "checker_p": 0.9739,
+    "chance": 0.0455,
+    "judge_reasoning": "The Economic Buyer is typically the individual with budget responsibilities and the final say in purchase decisions. This role is most likely to be held by someone in the Finance function, as they are directly responsible for financial planning, budgeting, and ensuring cost-effectiveness of purchases.",
+    "checker_reasoning": "To determine the Economic Buyer in the buying group, we need to identify the function that typically has the final say in purchase decisions and is responsible for ensuring that purchases align with organizational goals. This role is often held by high-level executives or leaders with budget responsibilities. Based on the job descriptions provided, the Chief Financial Officer (CFO) is a key executive who works closely with the CEO on quarterly financial reports, investment possibilities, and company-wide budgeting efforts, indicating that they have a significant role in making financial decisions."
    },
    {
-    "title": "Chief Information Officer",
-    "function": "IT",
+    "title": "Chief Executive Officer",
+    "function": "Executive",
     "level": "C",
     "role": "Champion",
     "asked_as": "Champion",
     "round": 0,
     "extra": false,
-    "judge_p": 0.2682,
-    "checker_p": 0.0586,
-    "chance": 0.0455
+    "judge_p": 1.0,
+    "checker_p": 0.9266,
+    "chance": 0.0455,
+    "judge_reasoning": "To identify the Champion, we need to consider which function's leader is most likely to have the credibility and direct influence over the purchase decision. Typically, the Champion is someone who can advocate for the purchase and align it with the company's strategic goals. Given the options, the Chief Executive Officer (CEO) or President, who are part of the Executive function, would likely have the broadest influence and the highest-level perspective to champion a purchase.",
+    "checker_reasoning": "To determine the Champion in the buying group, we need to consider the role of the Champion as the key advocate for the purchase, often with the credibility to persuade others to follow their commitment to change. Typically, the Champion is a high-level executive or leader with a vested interest in the outcome of the purchase decision. In this case, the Champion would likely be someone who understands the company's overall goals and objectives, and can see the value in the offering being sold."
    },
    {
-    "title": "VP of IT",
+    "title": "Chief Information Officer",
     "function": "IT",
-    "level": "C-1",
+    "level": "C",
     "role": "Technical Evaluator",
     "asked_as": "Technical Evaluator",
     "round": 0,
     "extra": false,
     "judge_p": 1.0,
-    "checker_p": 0.7233,
-    "chance": 0.0455
+    "checker_p": 0.813,
+    "chance": 0.0455,
+    "judge_reasoning": "The Technical Evaluator's role is to judge whether the product or service fits the company's systems, security standards, and workflows. Among the listed functions, the IT function is most directly responsible for managing and evaluating the technical aspects of a product or service. Therefore, the leader of the IT function would most likely be the Technical Evaluator.",
+    "checker_reasoning": "To determine the Technical Evaluator in the buying group, we need to identify the function that is responsible for judging whether the product or service fits the company's systems, security standards, and workflows. This role typically involves technical expertise and a deep understanding of the company's internal systems and processes. Based on the job descriptions provided, the function that best fits this description is the one responsible for overseeing and managing the company's technology infrastructure and ensuring that it aligns with the company's goals and objectives."
    },
    {
-    "title": "Chief Customer Officer",
-    "function": "Customer",
-    "level": "C",
+    "title": "VP of IT",
+    "function": "IT",
+    "level": "C-1",
     "role": "Influencer",
-    "asked_as": "User",
+    "asked_as": "Influencer",
     "round": 0,
     "extra": false,
-    "judge_p": 0.564,
-    "checker_p": 0.4571,
-    "chance": 0.0455
+    "judge_p": 1.0,
+    "checker_p": 0.9874,
+    "chance": 0.0455,
+    "judge_reasoning": "To determine which function's leader would be the Influencer in the buying group, we need to consider the role of the Influencer, which includes people within an organization who have a stake in a purchase decision and can influence the decision, even if they will not directly use the product. Given the broad impact of the offering, the function that would most likely have multiple stakeholders and thus multiple influencers would be IT, as IT systems and security are often evaluated by various departments.",
+    "checker_reasoning": "To determine the Influencer in the buying group, we need to consider the role of the Influencer as described in the provided text. The Influencer is someone who has a stake in the purchase decision, but may not directly use the product or service. They often evaluate the solution and provide input to the buying decision.\n\nThe Influencer is likely to be someone who is involved in evaluating the solution, but may not directly use it. In the provided job descriptions, the role that fits this description is the IT Director, who is responsible for evaluating the technical feasibility and security of the solution, but may not directly use it."
    },
    {
     "title": "VP of Finance",
@@ -2166,180 +2213,103 @@
     "asked_as": "Ratifier",
     "round": 0,
     "extra": false,
-    "judge_p": 0.501,
-    "checker_p": 0.95,
-    "chance": 0.0455
+    "judge_p": 0.9998,
+    "checker_p": 0.9996,
+    "chance": 0.0455,
+    "judge_reasoning": "The Ratifier role in the buying group is typically filled by individuals who sit in finance, purchasing, and procurement functions, as their primary responsibility is to manage the settlement of terms, conditions, and pricing. This role requires a focus on financial aspects and ensuring that the purchase aligns with the company's budget and financial goals.",
+    "checker_reasoning": "To determine the Ratifier in the buying group, we need to identify the function that typically involves managing the settlement of terms, conditions, and pricing. The Ratifier is often involved in the financial or procurement aspects of the purchase, so we should look for a function that has a strong focus on financial or procurement responsibilities.\n\nThe Ratifier is likely to be the Finance function, as they are responsible for managing the financial aspects of the company, including budgeting, forecasting, and financial reporting. They would be involved in managing the settlement of terms, conditions, and pricing related to the purchase."
    },
    {
-    "title": "IT Director",
-    "function": "IT",
-    "level": "C-2",
+    "title": "Chief Operating Officer",
+    "function": "Operations",
+    "level": "C",
     "role": "Influencer",
-    "asked_as": "Influencer",
+    "asked_as": "User",
     "round": 0,
     "extra": false,
-    "judge_p": 0.4076,
-    "checker_p": 0.1559,
-    "chance": 0.0455
+    "judge_p": 0.5774,
+    "checker_p": 0.1976,
+    "chance": 0.0455,
+    "judge_reasoning": "To determine which function's leader would be the User in the buying group, we need to identify which function's activities would be most directly affected by the offering. Users are individuals or groups whose daily activities are affected by the purchase.",
+    "checker_reasoning": "To determine which function's leader would be the User in the buying group, we need to consider the role of the User in the buying process. The User is typically an individual or group whose daily activities are affected by the purchase, and they often participate in product or service trials to inform the buying decision. In this case, the User would likely be someone who would be directly impacted by the implementation of the offering being sold, but the specific function is not provided."
    },
    {
-    "title": "Chief Architect",
-    "function": "Architecture",
-    "level": "C-1",
+    "title": "Chief Customer Officer",
+    "function": "Customer",
+    "level": "C",
     "role": "Influencer",
     "asked_as": "User",
     "round": 0,
     "extra": true,
-    "judge_p": 0.3071,
-    "checker_p": 0.0522,
-    "chance": 0.0455
-   },
-   {
-    "title": "Chief Executive Officer",
-    "function": "Executive",
-    "level": "C",
-    "role": "Champion",
-    "asked_as": "Champion",
-    "round": 0,
-    "extra": true,
-    "judge_p": 0.2531,
-    "checker_p": 0.0944,
-    "chance": 0.0455
-   },
-   {
-    "title": "Chief Technology Officer",
-    "function": "Technology",
-    "level": "C",
-    "role": "Champion",
-    "asked_as": "Champion",
-    "round": 0,
-    "extra": true,
-    "judge_p": 0.1813,
-    "checker_p": 0.1813,
-    "chance": 0.0455
+    "judge_p": 0.0752,
+    "checker_p": 0.2738,
+    "chance": 0.0455,
+    "judge_reasoning": "To determine which function's leader would be the User in the buying group, we need to identify which function's activities would be most directly affected by the offering. Users are individuals or groups whose daily activities are affected by the purchase.",
+    "checker_reasoning": "To determine which function's leader would be the User in the buying group, we need to consider the role of the User in the buying process. The User is typically an individual or group whose daily activities are affected by the purchase, and they often participate in product or service trials to inform the buying decision. In this case, the User would likely be someone who would be directly impacted by the implementation of the offering being sold, but the specific function is not provided."
    }
   ],
   "unfilled": {},
-  "rejected": [
-   {
-    "role": "Influencer",
-    "asked_as": "Ratifier",
-    "function": "Procurement",
-    "round": 0,
-    "judge_p": 0.499,
-    "checker_p": 0.0444,
-    "chance": 0.0455
-   },
-   {
-    "role": "Influencer",
-    "asked_as": "Influencer",
-    "function": "Compliance",
-    "round": 0,
-    "extra": true,
-    "judge_p": 0.4073,
-    "checker_p": 0.0081,
-    "chance": 0.0455
-   },
-   {
-    "role": "Economic Buyer",
-    "asked_as": "Economic Buyer",
-    "function": "Procurement",
-    "round": 0,
-    "extra": true,
-    "judge_p": 0.3195,
-    "checker_p": 0.0071,
-    "chance": 0.0455
-   },
-   {
-    "role": "Champion",
-    "asked_as": "Champion",
-    "function": "Product",
-    "round": 0,
-    "extra": true,
-    "judge_p": 0.2107,
-    "checker_p": 0.0035,
-    "chance": 0.0455
-   },
-   {
-    "role": "Influencer",
-    "asked_as": "User",
-    "function": "Product",
-    "round": 0,
-    "extra": true,
-    "judge_p": 0.0522,
-    "checker_p": 0.0203,
-    "chance": 0.0455
-   },
-   {
-    "role": "Champion",
-    "asked_as": "Champion",
-    "function": "Procurement",
-    "round": 0,
-    "extra": true,
-    "judge_p": 0.0504,
-    "checker_p": 0.0007,
-    "chance": 0.0455
-   }
-  ],
-  "judge": "qwen2.5-7b-instruct-q4_k_m",
-  "checker": "llama-3.1-8b-instruct-q4_k_m",
+  "rejected": [],
+  "judge": "qwen2.5-7b-instruct",
+  "checker": "llama-3.1-8b-instruct",
   "seat_counts": {
    "Economic Buyer": 1,
-   "Champion": 3,
+   "Champion": 1,
    "Technical Evaluator": 1,
    "Influencer": 4
   }
  },
  "dev_mean": {
   "judge_and_checker": {
-   "precision": 0.922,
+   "precision": 0.916,
    "recall": 0.792,
-   "f1": 0.85
-  },
-  "judge_only": {
-   "precision": 0.819,
-   "recall": 0.875,
    "f1": 0.829
   },
+  "judge_only": {
+   "precision": 0.839,
+   "recall": 0.709,
+   "f1": 0.756
+  },
   "generic": {
-   "precision": 0.639,
+   "precision": 0.678,
    "recall": 0.584,
-   "f1": 0.602
+   "f1": 0.619
   }
  },
  "test_mean": {
   "judge_and_checker": {
-   "precision": 0.869,
-   "recall": 0.775,
-   "f1": 0.8
+   "precision": 0.944,
+   "recall": 0.631,
+   "f1": 0.731
   },
   "judge_only": {
-   "precision": 0.816,
-   "recall": 0.817,
-   "f1": 0.794
+   "precision": 0.805,
+   "recall": 0.57,
+   "f1": 0.621
   },
   "generic": {
-   "precision": 0.574,
-   "recall": 0.55,
-   "f1": 0.548
+   "precision": 0.595,
+   "recall": 0.472,
+   "f1": 0.52
   }
  },
  "all_mean": {
   "judge_and_checker": {
-   "precision": 0.89,
-   "recall": 0.782,
-   "f1": 0.82
+   "precision": 0.933,
+   "recall": 0.695,
+   "f1": 0.77
   },
   "judge_only": {
-   "precision": 0.817,
-   "recall": 0.84,
-   "f1": 0.808
+   "precision": 0.819,
+   "recall": 0.625,
+   "f1": 0.675
   },
   "generic": {
-   "precision": 0.6,
-   "recall": 0.563,
-   "f1": 0.57
+   "precision": 0.628,
+   "recall": 0.517,
+   "f1": 0.56
   }
  },
- "campaigns_with_unfilled_minimum": []
+ "campaigns_with_unfilled_minimum": [],
+ "committees_qualified_against_default_list": 10
 }

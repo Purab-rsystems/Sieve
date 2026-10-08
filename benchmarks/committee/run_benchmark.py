@@ -15,8 +15,11 @@ Baselines, graded the same way:
               sold: N/A"), applied to every campaign: what habit alone scores
 For the Simplifi campaign: how many of the team's 8 picks the committee holds.
 
-answers.json holds every model answer the run reads, so the numbers reproduce
-without the models. Model files: SIEVE_MODEL_DIR (default ~/llm).
+answers.json holds every model answer the run reads (with each model's written
+reasoning), so the numbers reproduce without the models. The models run in
+Ollama (`ollama pull qwen2.5:7b`, `ollama pull llama3.1:8b`).
+answers_v1_llamacpp.json / results_v1_llamacpp.json are the earlier method
+(no written reasoning, llama.cpp), kept for comparison.
 """
 
 from __future__ import annotations
@@ -36,7 +39,8 @@ sys.path.insert(0, str(ROOT / "src"))
 
 from sieve.committee.campaign import EMPTY_CAMPAIGN, campaign_text   # noqa: E402
 from sieve.committee.decide import AnswerStore, ModelRunner, decide_many   # noqa: E402
-from sieve.committee.reference import by_title   # noqa: E402
+from sieve.committee.qualify import qualify   # noqa: E402
+from sieve.committee.reference import by_title, load_rules   # noqa: E402
 
 REF = yaml.safe_load((HERE / "reference.yaml").read_text())
 FINE = set(REF["also_fine_everywhere"])
@@ -61,6 +65,7 @@ def grade(c: dict, committee) -> dict:
     f1 = 2 * precision * recall / (precision + recall) if precision + recall else 0.0
     out = {"precision": round(precision, 3), "recall": round(recall, 3), "f1": round(f1, 3),
            "size": len(chosen), "unfilled": dict(committee.unfilled),
+           "qualified": qualify(committee.members, load_rules()["minimums"])["qualified"],
            "members": [f"{m['role']}: {m['title']}" + (" (extra)" if m["extra"] else "") for m in committee.members],
            "wrong": [t for t in chosen if fn[t] not in ok],
            "missed_slots": [sorted(s) for s in slots if not (s & funcs)]}
@@ -75,7 +80,6 @@ def main() -> None:
     ap = argparse.ArgumentParser()
     ap.add_argument("--offline", action="store_true", help="use recorded answers only")
     ap.add_argument("--answers", default=str(HERE / "answers.json"))
-    ap.add_argument("--state-dir", default=str(HERE / ".model_state"))
     ap.add_argument("--out", default=str(HERE / "results.json"))
     a = ap.parse_args()
 
@@ -83,8 +87,7 @@ def main() -> None:
     store = AnswerStore(a.answers)
     texts = {c["id"]: campaign_of(c) for c in REF["campaigns"]}
     texts["_empty"] = EMPTY_CAMPAIGN
-    runner = None if a.offline else ModelRunner(store, Path(a.state_dir),
-                                                log=lambda m: print(f"[{time.time() - t0:6.0f}s] {m}", flush=True))
+    runner = None if a.offline else ModelRunner(store, log=lambda m: print(f"[{time.time() - t0:6.0f}s] {m}", flush=True))
     try:
         both = decide_many(texts, store, use_checker=True, run_models=not a.offline, runner=runner)
         judge_only = decide_many(texts, store, use_checker=False, run_models=not a.offline, runner=runner)
@@ -114,6 +117,8 @@ def main() -> None:
                                 for m in ("judge_and_checker", "judge_only", "generic")}
     res["campaigns_with_unfilled_minimum"] = [cid for cid, r in res["campaigns"].items()
                                               if r["judge_and_checker"]["unfilled"]]
+    res["committees_qualified_against_default_list"] = sum(r["judge_and_checker"]["qualified"]
+                                                           for r in res["campaigns"].values())
     Path(a.out).write_text(json.dumps(res, indent=1))
 
     print(f"\n{'campaign':22s} {'split':5s} {'J+C P':>6s} {'R':>5s} {'F1':>5s} | {'judge-only F1':>13s} | {'generic F1':>10s} | unfilled")
@@ -127,6 +132,7 @@ def main() -> None:
               f"{m['judge_and_checker']['f1']:5.2f} | {m['judge_only']['f1']:13.2f} | {m['generic']['f1']:10.2f}")
     lm = res["campaigns"]["legacy_modernization"]["judge_and_checker"]
     print(f"\nSimplifi team picks held: {lm.get('team_picks_held')} {lm.get('team_picks_list')}")
+    print(f"Committees that qualify against the default list: {res['committees_qualified_against_default_list']} of 10")
     print(f"Done in {time.time() - t0:.0f}s")
 
 
