@@ -122,7 +122,33 @@ def test_answer_store_round_trip(tmp_path):
     assert k == answer_key("m", "camp", "Champion", ("Data", "IT"))      # order-free key
     s.put(k, "m", "camp", "Champion", ("IT", "Data"), {"IT": 0.7, "Data": 0.3})
     s.save()
-    assert AnswerStore(tmp_path / "a.json").get(k) == {"IT": 0.7, "Data": 0.3}
+    assert AnswerStore(tmp_path / "a.json").get(k)["probs"] == {"IT": 0.7, "Data": 0.3}
+
+
+def test_reasoning_travels_to_members_and_rejections():
+    def answers(a):
+        probs = {f: (1.0 if f == ("Finance" if a.model == "judge" or a.role != "Economic Buyer" else "Executive")
+                     else 0.0) for f in a.options}
+        if a.role == "Economic Buyer" and a.model == "judge" and "Finance" not in a.options:
+            probs = {f: (1.0 if f == "Executive" else 0.0) for f in a.options}
+        return {"probs": probs, "reasoning": f"{a.model} thinks about {a.role} among {len(a.options)}"}
+    c = assemble("camp", answers)
+    eb = [m for m in c.members if m["role"] == "Economic Buyer"][0]
+    assert eb["function"] == "Executive"                          # Finance rejected, follow-up picked Executive
+    assert eb["judge_reasoning"].startswith("judge thinks about Economic Buyer")
+    assert eb["checker_reasoning"].startswith("checker thinks about Economic Buyer")
+    rej = [r for r in c.rejected if r["function"] == "Finance" and r["role"] == "Economic Buyer"][0]
+    assert rej["checker_reasoning"] and rej["judge_reasoning"]
+
+
+def test_option_probs_from_first_tokens():
+    from sieve.committee.models import option_probs
+    import math
+    top = [{"token": " Finance", "logprob": math.log(0.6)}, {"token": " IT", "logprob": math.log(0.2)},
+           {"token": " P", "logprob": math.log(0.1)}, {"token": " The", "logprob": math.log(0.1)}]
+    p = option_probs(top, ["Finance", "IT", "Product", "People", "Data"])
+    assert abs(sum(p.values()) - 1) < 1e-9
+    assert p["Finance"] > p["IT"] > p["Product"] == p["People"] > p["Data"] == 0
 
 
 # ---------------------------------------------------------------- inputs the models see
@@ -189,7 +215,7 @@ def test_match_contacts_reports_missing_seats():
     df = pd.DataFrame({"Company": ["a", "a", "a", "b"],
                        "Title": ["CTO", "SVP Engineering", "Head of Sales", "Chief Architect"]})
     rows, accounts = match_contacts(df, committee)
-    assert list(rows["sv_committee_role"]) == ["Economic Buyer", "Champion", "", "Technical Evaluator"]
+    assert list(rows["sv_decided_role"]) == ["Economic Buyer", "Champion", "", "Technical Evaluator"]
     a = accounts.set_index("account")
     assert a.loc["a", "seats_Economic Buyer"] == 1 and not a.loc["a", "minimums_met"]
     assert "Technical Evaluator x1" in a.loc["a", "missing"] and "Influencer x3" in a.loc["a", "missing"]

@@ -131,13 +131,13 @@ def test_cli_decide_then_match(store_path, tmp_path):
     assert r.returncode == 0, r.stderr + r.stdout
     rows = pd.read_csv(tmp_path / "rows.csv", keep_default_na=False)
     acc = pd.read_csv(tmp_path / "acc.csv", keep_default_na=False)
-    assert len(rows) == 424 and {"sv_committee_title", "sv_committee_role"} <= set(rows.columns)
+    assert len(rows) == 424 and {"sv_decided_title", "sv_decided_role"} <= set(rows.columns)
     assert len(acc) == rows["Website URL"].nunique()
     # every seated contact's title really holds its seat's title
     from sieve.committee.reference import holds
-    seated = rows[rows["sv_committee_title"] != ""]
+    seated = rows[rows["sv_decided_title"] != ""]
     assert len(seated) > 0
-    assert all(t in holds(raw) for raw, t in zip(seated["Title"], seated["sv_committee_title"]))
+    assert all(t in holds(raw) for raw, t in zip(seated["Title"], seated["sv_decided_title"]))
 
 
 def test_match_real_workbook_all_regions(store_path):
@@ -197,3 +197,12 @@ def test_benchmark_end_to_end_offline(tmp_path, monkeypatch, capsys):
     lm = res["campaigns"]["legacy_modernization"]["judge_and_checker"]
     assert lm["team_picks_held"].endswith("of 8")
     assert "Simplifi team picks held" in capsys.readouterr().out
+
+
+def test_saved_answers_need_no_ollama(store_path, monkeypatch):
+    """A committee whose answers are all saved is decided even with Ollama down."""
+    from sieve.committee import models
+    monkeypatch.setattr(models, "OLLAMA_URL", "http://127.0.0.1:9")                 # nothing listens here
+    monkeypatch.setattr(models, "check_ollama", lambda *a, **k: ["Ollama is not running"])
+    c = decide_many({"x": campaign_text(CAMPAIGN)}, AnswerStore(store_path), run_models=True)["x"]
+    assert c.complete and c.members
