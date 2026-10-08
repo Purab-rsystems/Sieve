@@ -25,7 +25,7 @@ def _pick(df: pd.DataFrame, names) -> str:
 
 def match_contacts(contacts: pd.DataFrame, committee: dict, title_col: str | None = None,
                    account_col: str | None = None) -> tuple[pd.DataFrame, pd.DataFrame]:
-    """Returns (contacts with sv_committee_title / sv_committee_role, per-account coverage)."""
+    """Returns (contacts with sv_decided_title / sv_decided_role, per-account coverage)."""
     tcol = title_col or _pick(contacts, TITLE_COLUMNS)
     acol = account_col or _pick(contacts, ACCOUNT_COLUMNS)
     seats = {m["title"]: m["role"] for m in committee["members"]}
@@ -36,15 +36,15 @@ def match_contacts(contacts: pd.DataFrame, committee: dict, title_col: str | Non
         held = sorted((t for t in holds(str(raw)) if t in seats), key=order.get)
         titles.append(held[0] if held else "")
         roles.append(seats[held[0]] if held else "")
-    out["sv_committee_title"] = titles
-    out["sv_committee_role"] = roles
+    out["sv_decided_title"] = titles
+    out["sv_decided_role"] = roles
 
     minimums = load_rules()["minimums"]
     rows = []
     for account, g in out.groupby(acol, sort=True):
         filled = {r: 0 for r in minimums}
         seen = set()
-        for t, r in zip(g["sv_committee_title"], g["sv_committee_role"]):
+        for t, r in zip(g["sv_decided_title"], g["sv_decided_role"]):
             if t and t not in seen:            # one seat per committee title per account
                 seen.add(t)
                 filled[r] = filled.get(r, 0) + 1

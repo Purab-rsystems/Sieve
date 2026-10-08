@@ -1,213 +1,178 @@
-"""Local models for the committee step: Qwen2.5-7B (judge), Llama-3.1-8B (checker).
+"""The committee models, run by Ollama: Qwen2.5-7B (judge), Llama-3.1-8B (checker).
 
-Both run on CPU through llama.cpp. Nothing is generated: every answer is read
-from the model's own next-token probabilities, so no title or function can be
-invented and no answer can be malformed.
+Ollama is a separate Windows/macOS/Linux app that runs the models; Sieve
+talks to it over http://localhost:11434 with the standard library only, so
+Sieve itself is plain Python (3.14 included) with nothing to compile.
 
-    judge    answers a lettered multiple-choice question; the probability of
-             each option letter is read, over four option orders, to cancel
-             the pull towards the first letter.
-    checker  answers with the function's name, scored token by token (cloze
-             prompting), over two option orders. Llama binds answers to option
-             letters poorly; smaller models do better scored on the answer text
-             (Robinson & Wingate, ICLR 2023).
+    ollama pull qwen2.5:7b
+    ollama pull llama3.1:8b
 
-The long shared part of every prompt (role definitions and the role reference
-sheet) is evaluated once per model and its state saved to disk, so each
-campaign only costs its own text and questions.
+How a model answers a question (reason first, then answer)
+------------------------------------------------------------
+1. The model writes its reasoning, at temperature 0, until it starts its
+   answer line ("Answer:").
+2. Sieve then appends "Answer:" to that reasoning and reads the model's
+   probability for the first word of every option at that point (Ollama's
+   logprobs). The answer is read *after* the model's own reasoning, so the
+   reasoning shown is what the answer was produced from.
 
-Only one model is in memory at a time (the two do not fit together in 7 GB).
+The options are function names, answered by name: smaller models tie answers
+to option letters poorly (Robinson & Wingate, ICLR 2023).
 """
 
 from __future__ import annotations
 
-import gc
-import hashlib
+import json
+import math
 import os
-import pickle
+import re
 import time
+import urllib.error
+import urllib.request
 from dataclasses import dataclass
-from pathlib import Path
 from typing import Sequence
 
-import numpy as np
-
-def _default_model_dir() -> Path:
-    try:
-        return Path.home() / "llm"
-    except RuntimeError:                 # no home directory known (stripped environment)
-        return Path("llm").resolve()
-
-
-MODEL_DIR = Path(os.getenv("SIEVE_MODEL_DIR") or _default_model_dir())
+OLLAMA_URL = os.getenv("SIEVE_OLLAMA_URL", "http://127.0.0.1:11434").rstrip("/")
+NUM_CTX = int(os.getenv("SIEVE_NUM_CTX", "6144"))      # the prompt is ~5,300 tokens
+REASON_TOKENS = int(os.getenv("SIEVE_REASON_TOKENS", "220"))
+TOP_LOGPROBS = 20                          # the most Ollama returns per token
 
 
 @dataclass(frozen=True)
 class ModelSpec:
-    name: str
-    path: Path
-    family: str                  # "qwen" | "llama"
-    style: str                   # "letters" | "cloze"
-    orders: int
+    name: str        # shown in results and used in the answer store key
+    tag: str         # Ollama model tag
+    family: str      # "qwen" | "llama": chat template
 
 
-JUDGE = ModelSpec(
-    "qwen2.5-7b-instruct-q4_k_m",
-    Path(os.getenv("SIEVE_JUDGE_MODEL", MODEL_DIR / "qwen2.5-7b-instruct-q4_k_m-00001-of-00002.gguf")),
-    "qwen", "letters", 4)
-CHECKER = ModelSpec(
-    "llama-3.1-8b-instruct-q4_k_m",
-    Path(os.getenv("SIEVE_CHECKER_MODEL", MODEL_DIR / "llama-3.1-8b-instruct-q4_k_m.gguf")),
-    "llama", "cloze", 2)
-
-LETTERS = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
+JUDGE = ModelSpec("qwen2.5-7b-instruct", os.getenv("SIEVE_JUDGE_MODEL", "qwen2.5:7b"), "qwen")
+CHECKER = ModelSpec("llama-3.1-8b-instruct", os.getenv("SIEVE_CHECKER_MODEL", "llama3.1:8b"), "llama")
 
 
-def chat_head(family: str, system: str) -> str:
+class OllamaError(RuntimeError):
+    pass
+
+
+def chat_prompt(family: str, system: str, user: str) -> str:
+    """The model's own chat template, written out so the prompt is exact."""
     if family == "qwen":
-        return f"<|im_start|>system\n{system}<|im_end|>\n<|im_start|>user\n"
-    return (f"<|start_header_id|>system<|end_header_id|>\n\n{system}<|eot_id|>"
-            f"<|start_header_id|>user<|end_header_id|>\n\n")
+        return (f"<|im_start|>system\n{system}<|im_end|>\n<|im_start|>user\n{user}<|im_end|>\n"
+                f"<|im_start|>assistant\n")
+    return (f"<|begin_of_text|><|start_header_id|>system<|end_header_id|>\n\n{system}<|eot_id|>"
+            f"<|start_header_id|>user<|end_header_id|>\n\n{user}<|eot_id|>"
+            f"<|start_header_id|>assistant<|end_header_id|>\n\n")
 
 
-def chat_tail(family: str) -> str:
-    if family == "qwen":
-        return "<|im_end|>\n<|im_start|>assistant\n"
-    return "<|eot_id|><|start_header_id|>assistant<|end_header_id|>\n\n"
+def _post(path: str, body: dict, timeout: float = 1800) -> dict:
+    req = urllib.request.Request(OLLAMA_URL + path, data=json.dumps(body).encode(),
+                                 headers={"Content-Type": "application/json"})
+    try:
+        with urllib.request.urlopen(req, timeout=timeout) as r:
+            return json.loads(r.read())
+    except urllib.error.HTTPError as e:
+        raise OllamaError(f"Ollama {path}: {e.code} {e.read().decode(errors='ignore')[:300]}") from e
+    except urllib.error.URLError as e:
+        raise OllamaError(f"Ollama is not reachable at {OLLAMA_URL}. Start the Ollama app "
+                          f"(or run `ollama serve`). ({e.reason})") from e
 
 
-def option_orders(options: Sequence[str], n: int) -> list[list[str]]:
-    """n orders of the options: forward, reversed, and (for 4) both halves
-    rotated, so every order starts with a different option."""
-    base = list(options)
-    orders = [base, base[::-1]]
-    if n >= 4:
-        k = len(base) // 2
-        rot = base[k:] + base[:k]
-        orders += [rot, rot[::-1]]
-    return orders[:n]
+def check_ollama(specs: Sequence[ModelSpec] = (JUDGE, CHECKER)) -> list[str]:
+    """Problems that stop the models from running ([] when all is well)."""
+    try:
+        req = urllib.request.Request(OLLAMA_URL + "/api/tags")
+        with urllib.request.urlopen(req, timeout=5) as r:
+            have = {m["name"] for m in json.loads(r.read()).get("models", [])}
+    except Exception as e:  # noqa: BLE001
+        return [f"Ollama is not running at {OLLAMA_URL}: start the Ollama app. ({e})"]
+    problems = []
+    for s in specs:
+        if s.tag not in have and f"{s.tag}:latest" not in have:
+            problems.append(f"Model {s.tag} is not pulled: run `ollama pull {s.tag}`")
+    return problems
 
 
-def _log_softmax(z: np.ndarray) -> np.ndarray:
-    m = z.max()
-    return z - (m + np.log(np.exp(z - m).sum()))
+def option_probs(top: list[dict], options: Sequence[str]) -> dict[str, float]:
+    """Spread the next-token probabilities over the options whose name the
+    token starts. A token shared by several names (e.g. "P") is split evenly
+    between them; tokens that start no option are dropped and the rest
+    renormalised."""
+    mass = {o: 0.0 for o in options}
+    for t in top:
+        tok = t["token"].strip().lower()
+        if not tok:
+            continue
+        hits = [o for o in options if o.lower().startswith(tok)]
+        if not hits:
+            continue
+        p = math.exp(t["logprob"])
+        for o in hits:
+            mass[o] += p / len(hits)
+    total = sum(mass.values())
+    if total <= 0:
+        return {o: 1.0 / len(options) for o in options}
+    return {o: v / total for o, v in mass.items()}
 
 
-class LocalModel:
-    """One llama.cpp model with a cached shared prefix."""
+class OllamaModel:
+    """One model behind Ollama. Same shared prompt prefix for every question,
+    so Ollama's prompt cache only evaluates each campaign's own part."""
 
-    def __init__(self, spec: ModelSpec, n_ctx: int = 8192, state_dir: Path | None = None,
-                 threads: int | None = None) -> None:
-        from llama_cpp import Llama          # optional dependency: sieve[committee]
-
-        if not spec.path.exists():
-            raise FileNotFoundError(f"{spec.name}: model file not found at {spec.path}")
+    def __init__(self, spec: ModelSpec, other: "OllamaModel | None" = None) -> None:
         self.spec = spec
-        self.state_dir = Path(state_dir) if state_dir else None
-        t0 = time.time()
-        self.llm = Llama(model_path=str(spec.path), n_ctx=n_ctx, n_batch=256,
-                         n_threads=threads or os.cpu_count(), flash_attn=True,
-                         type_k=8, type_v=8, logits_all=False, verbose=False)
-        self.load_seconds = time.time() - t0
-        self.n_vocab = self.llm.n_vocab()
-        self._prefix_len = 0
-        self._campaign_key: str | None = None
-        self._campaign_len = 0
+        self.other = other              # the model to free if memory runs out
         self.calls = 0
         self.seconds = 0.0
 
-    # ------------------------------------------------------------ tokens
-    def tok(self, text: str) -> list[int]:
-        return self.llm.tokenize(text.encode("utf-8"), add_bos=False, special=True)
-
-    def _eval(self, tokens: list[int]) -> np.ndarray:
-        self.llm.eval(tokens)
-        return np.ctypeslib.as_array(self.llm._ctx.get_logits(), shape=(self.n_vocab,)).copy()
-
-    # ------------------------------------------------------------ prefix
-    def set_prefix(self, system: str, shared_text: str) -> None:
-        """Evaluate the shared opening once (or load it from disk)."""
-        text = chat_head(self.spec.family, system) + shared_text
-        tokens = ([self.llm.token_bos()] if self.spec.family == "llama" else []) + self.tok(text)
-        key = hashlib.sha1((self.spec.name + "\x00" + text).encode()).hexdigest()[:16]
-        path = self.state_dir / f"{self.spec.name}-{key}.state" if self.state_dir else None
-        self.llm.reset()
-        if path and path.exists():
-            with open(path, "rb") as fh:
-                self.llm.load_state(pickle.load(fh))
-        else:
-            t0 = time.time()
-            self.llm.eval(tokens)
-            self.prefix_seconds = time.time() - t0
-            if path:
-                path.parent.mkdir(parents=True, exist_ok=True)
-                tmp = path.with_suffix(".tmp")
-                with open(tmp, "wb") as fh:
-                    pickle.dump(self.llm.save_state(), fh)
-                tmp.replace(path)
-        self._prefix_len = len(tokens)
-        self._campaign_key = None
-
-    def _set_campaign(self, campaign_text: str) -> None:
-        if self._campaign_key == campaign_text:
-            self.llm.n_tokens = self._campaign_len
-            return
-        self.llm.n_tokens = self._prefix_len
-        self._eval(self.tok(campaign_text))
-        self._campaign_key = campaign_text
-        self._campaign_len = self.llm.n_tokens
-
-    # ------------------------------------------------------------ answers
-    def letter_probs(self, campaign_text: str, question: str, options: Sequence[str],
-                     options_block) -> dict[str, float]:
-        """Probability of each option, read from the option letters, averaged over orders."""
-        t0 = time.time()
-        total = {o: 0.0 for o in options}
-        orders = option_orders(options, self.spec.orders)
-        for order in orders:
-            self._set_campaign(campaign_text)
-            letters = LETTERS[:len(order)]
-            text = question + "\n" + options_block(order, letters) + "\nAnswer with one letter." + chat_tail(self.spec.family)
-            z = self._eval(self.tok(text))
-            ids = [self.tok(l)[0] for l in letters]
-            lp = _log_softmax(np.array([z[i] for i in ids]))
-            for o, p in zip(order, np.exp(lp)):
-                total[o] += float(p) / len(orders)
-        self.calls += len(orders)
-        self.seconds += time.time() - t0
-        return total
-
-    def cloze_probs(self, campaign_text: str, question: str, options: Sequence[str],
-                    options_block) -> dict[str, float]:
-        """Probability of each option, scored on the option's own words, averaged over orders."""
-        t0 = time.time()
-        total = {o: 0.0 for o in options}
-        orders = option_orders(options, self.spec.orders)
-        for order in orders:
-            self._set_campaign(campaign_text)
-            text = question + "\n" + options_block(order, None) + "\nAnswer with the function's name only." + chat_tail(self.spec.family)
-            z0 = self._eval(self.tok(text))
-            base = self.llm.n_tokens
-            scores = []
-            for o in order:
-                ids = self.tok(o)
-                lp = float(_log_softmax(z0)[ids[0]])
-                self.llm.n_tokens = base
-                for k in range(1, len(ids)):
-                    z = self._eval([ids[k - 1]])
-                    lp += float(_log_softmax(z)[ids[k]])
-                scores.append(lp)
-            p = np.exp(_log_softmax(np.array(scores)))
-            for o, v in zip(order, p):
-                total[o] += float(v) / len(orders)
-        self.calls += len(orders)
-        self.seconds += time.time() - t0
-        return total
-
-    def close(self) -> None:
+    def unload(self) -> None:
+        """Free this model's memory in Ollama."""
         try:
-            self.llm.close()
-        except Exception:
+            _post("/api/generate", {"model": self.spec.tag, "keep_alive": 0}, timeout=60)
+        except OllamaError:
             pass
-        self.llm = None
-        gc.collect()
+
+    def _generate(self, prompt: str, num_predict: int, logprobs: bool, stop: list[str] | None = None) -> dict:
+        body = {"model": self.spec.tag, "prompt": prompt, "raw": True, "stream": False,
+                "keep_alive": "30m",
+                "options": {"temperature": 0, "seed": 0, "num_ctx": NUM_CTX, "num_predict": num_predict,
+                            "use_mmap": True}}
+        if stop:
+            body["options"]["stop"] = stop
+        if logprobs:
+            body["logprobs"] = True
+            body["top_logprobs"] = TOP_LOGPROBS
+        try:
+            out = _post("/api/generate", body)
+        except OllamaError as e:
+            # Not enough memory for both models at once: free the other one and retry.
+            if self.other is None or not re.search(r"terminated|killed|memory|resources|timed out", str(e), re.I):
+                raise
+            self.other.unload()
+            out = _post("/api/generate", body)
+        used = int(out.get("prompt_eval_count") or 0) + int(out.get("eval_count") or 0)
+        if used >= NUM_CTX:
+            # Ollama drops the start of a prompt that does not fit: never accept that silently.
+            raise OllamaError(f"prompt and answer need {used} tokens but the context is {NUM_CTX}: "
+                              f"set SIEVE_NUM_CTX higher")
+        return out
+
+    def ask(self, system: str, user: str, options: Sequence[str]) -> dict:
+        """Reasoning, then the probability of each option read after it."""
+        t0 = time.time()
+        prompt = chat_prompt(self.spec.family, system, user)
+        first = self._generate(prompt, REASON_TOKENS, logprobs=False, stop=["Answer:", "ANSWER:"])
+        reasoning = re.split(r"\n?\s*(?:\*\*)?Answer\s*:", first.get("response", ""), maxsplit=1)[0].strip()
+        second = self._generate(prompt + reasoning + "\nAnswer:", 1, logprobs=True)
+        lp = second.get("logprobs") or []
+        if not lp:
+            raise OllamaError("Ollama returned no logprobs: update Ollama to 0.12 or newer.")
+        top = lp[0].get("top_logprobs") or [{"token": lp[0]["token"], "logprob": lp[0]["logprob"]}]
+        probs = option_probs(top, options)
+        self.calls += 1
+        self.seconds += time.time() - t0
+        return {"probs": probs, "reasoning": reasoning,
+                "answer_token": lp[0].get("token", "").strip()}
+
+    def write(self, system: str, user: str, max_tokens: int = 160) -> str:
+        """Plain text from the model (temperature 0), e.g. a role description."""
+        out = self._generate(chat_prompt(self.spec.family, system, user), max_tokens, logprobs=False)
+        return out.get("response", "").strip()

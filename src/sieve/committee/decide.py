@@ -11,10 +11,11 @@ Never an account, a contact or a contact's title.
 
 What they are asked
 -------------------
-For each role: "which function would supply the <role>?", with the functions
-as the options. The judge's answer is read from its option-letter
-probabilities over four orders, the checker's from the function names
-themselves over two orders (see models.py).
+For each role: "which function's leader would be the <role>?", with the
+functions as the options. Each model first writes its reasoning, then its
+answer is read from its own probabilities right after that reasoning (see
+models.py). The reasoning is stored with the answer and shown on every pick
+and every rejection.
 
 Assembly (no tuned setting)
 ---------------------------
@@ -52,6 +53,13 @@ from .reference import TitleDef, functions, load_reference, load_rules
 SYSTEM = "You are an expert in B2B enterprise buying groups."
 QUESTION = ("Question: At a target company buying this offering, which function's leader "
             "would be the {role} in the buying group?")
+INSTRUCTION = ("First explain your thinking in 2 to 4 sentences. Then give your answer on its own "
+               "line as \"Answer: <function>\", using one of the options exactly as written.")
+
+
+def question_text(role: str, options) -> str:
+    return (QUESTION.format(role=role) + "\nOptions:\n" + "\n".join(f"- {o}" for o in options)
+            + "\n" + INSTRUCTION)
 DEFAULT_STORE = Path(__file__).resolve().parents[3] / "config" / "committee" / "answers.json"
 
 
@@ -82,18 +90,21 @@ def campaign_block(text: str) -> str:
     return f"A seller is running this B2B campaign:\n{text}\n\n"
 
 
-def letters_block(order, letters):
-    return "\n".join(f"{l}) {o}" for l, o in zip(letters, order))
-
-
-def names_block(order, _letters):
-    return "Options:\n" + "\n".join(f"- {o}" for o in order)
-
-
 # ---------------------------------------------------------------- answers
-def answer_key(model: str, campaign: str, role: str, options: Iterable[str]) -> str:
+def answer_key(model: str, campaign: str, role: str, options: Iterable[str], ctx: str = "") -> str:
     h = hashlib.sha1(campaign.encode()).hexdigest()[:12]
-    return f"{model}|{h}|{role}|{','.join(sorted(options))}"
+    return f"{ctx}{model}|{h}|{role}|{','.join(sorted(options))}"
+
+
+def ctx_of(rules: dict | None) -> str:
+    """Saved answers are kept apart per role list: the same question with other role
+    definitions in the prompt may get another answer. The default list keeps no prefix."""
+    if rules is None:
+        return ""
+    text = shared_text(rules)
+    if text == shared_text():
+        return ""
+    return "ctx:" + hashlib.sha1(text.encode()).hexdigest()[:10] + "|"
 
 
 class AnswerStore:
@@ -106,14 +117,16 @@ class AnswerStore:
             self.data = json.loads(self.path.read_text())
         self._lock = threading.Lock()
 
-    def get(self, key: str) -> dict[str, float] | None:
-        row = self.data.get(key)
-        return row["probs"] if row else None
+    def get(self, key: str) -> dict | None:
+        """{"probs": {function: p}, "reasoning": str} or None."""
+        return self.data.get(key)
 
-    def put(self, key: str, model: str, campaign: str, role: str, options, probs) -> None:
+    def put(self, key: str, model: str, campaign: str, role: str, options, probs,
+            reasoning: str = "", answer_token: str = "") -> None:
         with self._lock:
             self.data[key] = {"model": model, "campaign": campaign, "role": role,
-                              "options": sorted(options), "probs": probs}
+                              "options": sorted(options), "probs": probs,
+                              "reasoning": reasoning, "answer_token": answer_token}
 
     def save(self) -> None:
         if self.path:
@@ -160,8 +173,10 @@ class Committee:
 
 def assemble(campaign: str, answers: Callable[[Ask], dict | None], rules: dict | None = None,
              reference: tuple[TitleDef, ...] | None = None, use_checker: bool = True,
-             judge_name: str = "", checker_name: str = "") -> Committee:
-    rules = rules or load_rules()
+             judge_name: str = "", checker_name: str = "", minimums: dict | None = None) -> Committee:
+    rules = dict(rules or load_rules())
+    if minimums is not None:                     # a list generated for this campaign replaces the default
+        rules["minimums"] = {r: int(n) for r, n in minimums.items()}
     funcs = functions(reference)
     all_functions = sorted(funcs)
     minimums = rules["minimums"]
@@ -179,11 +194,17 @@ def assemble(campaign: str, answers: Callable[[Ask], dict | None], rules: dict |
     def free_title(f: str) -> TitleDef | None:
         return next((t for t in funcs[f] if t.title not in used), None)
 
+    reasons: dict[tuple[str, str, tuple[str, ...]], str] = {}
+
     def ask(model: str, role: str, options: tuple[str, ...]) -> dict | None:
         a = Ask(model, campaign, role, options)
         got = answers(a)
         if got is None:
             c.missing.append(a)
+            return None
+        if "probs" in got:                              # a stored answer: probs + reasoning
+            reasons[(model, role, options)] = got.get("reasoning", "")
+            return got["probs"]
         return got
 
     def passes(role: str, f: str, options: tuple[str, ...]) -> tuple[bool | None, float | None]:
@@ -193,6 +214,10 @@ def assemble(campaign: str, answers: Callable[[Ask], dict | None], rules: dict |
         if pc is None:
             return None, None
         return pc[f] > 1.0 / len(options), round(pc[f], 4)
+
+    def why(role: str, options: tuple[str, ...]) -> dict:
+        return {"judge_reasoning": reasons.get(("judge", role, options), ""),
+                "checker_reasoning": reasons.get(("checker", role, options), "") if use_checker else ""}
 
     for role in order:
         need = minimums[role]
@@ -234,7 +259,7 @@ def assemble(campaign: str, answers: Callable[[Ask], dict | None], rules: dict |
                     excluded.add(f)
                     c.rejected.append({"role": role, "asked_as": asked_as, "function": f, "round": rnd,
                                        "judge_p": round(p, 4), "checker_p": pc,
-                                       "chance": round(1.0 / len(options), 4)})
+                                       "chance": round(1.0 / len(options), 4), **why(asked_as, options)})
                     continue
                 t = free_title(f)
                 if t is None:
@@ -244,7 +269,7 @@ def assemble(campaign: str, answers: Callable[[Ask], dict | None], rules: dict |
                 c.members.append({"title": t.title, "function": f, "level": t.level, "role": role,
                                   "asked_as": asked_as, "round": rnd, "extra": False,
                                   "judge_p": round(p, 4), "checker_p": pc,
-                                  "chance": round(1.0 / len(options), 4)})
+                                  "chance": round(1.0 / len(options), 4), **why(asked_as, options)})
         short = need - sum(1 for m in c.members if m["role"] == role)
         if short > 0:
             c.unfilled[role] = short
@@ -262,7 +287,7 @@ def assemble(campaign: str, answers: Callable[[Ask], dict | None], rules: dict |
         if not ok:
             c.rejected.append({"role": role_of[asked_as], "asked_as": asked_as, "function": f, "round": 0,
                                "extra": True, "judge_p": round(p, 4), "checker_p": pc,
-                               "chance": round(1.0 / len(options), 4)})
+                               "chance": round(1.0 / len(options), 4), **why(asked_as, options)})
             continue
         t = free_title(f)
         if t is None:
@@ -270,104 +295,150 @@ def assemble(campaign: str, answers: Callable[[Ask], dict | None], rules: dict |
         used.add(t.title)
         c.members.append({"title": t.title, "function": f, "level": t.level, "role": role_of[asked_as],
                           "asked_as": asked_as, "round": 0, "extra": True,
-                          "judge_p": round(p, 4), "checker_p": pc, "chance": round(1.0 / len(options), 4)})
+                          "judge_p": round(p, 4), "checker_p": pc, "chance": round(1.0 / len(options), 4),
+                          **why(asked_as, options)})
     return c
 
 
 # ---------------------------------------------------------------- running the models
 class ModelRunner:
-    """Answers missing questions, loading one model at a time."""
+    """Answers missing questions through Ollama, one model's batch at a time
+    (so Ollama does not keep swapping the two models in and out of memory)."""
 
-    def __init__(self, store: AnswerStore, state_dir: Path | None = None, log=print) -> None:
-        from .models import CHECKER, JUDGE
+    def __init__(self, store: AnswerStore, log=print, progress=None, rules: dict | None = None) -> None:
+        from .models import CHECKER, JUDGE, OllamaModel
+        self.checked = False                # Ollama is checked only when a question is really asked
         self.specs = {"judge": JUDGE, "checker": CHECKER}
+        judge, checker = OllamaModel(JUDGE), OllamaModel(CHECKER)
+        judge.other, checker.other = checker, judge
+        self.models = {"judge": judge, "checker": checker}
         self.store = store
-        self.state_dir = state_dir
         self.log = log
-        self.loaded = None
-        self.model = None
-        self.shared = shared_text()
+        self.progress = progress            # called with (answered_so_far, label) for the UI
+        self.loaded: str | None = None
+        self.shared = shared_text(rules)
+        self.ctx = ctx_of(rules)
+        self.answered = 0
 
     def name(self, which: str) -> str:
         return self.specs[which].name
 
-    def lookup(self, a: Ask) -> dict | None:
-        return self.store.get(answer_key(self.name(a.model), a.campaign, a.role, a.options))
+    def key(self, a) -> str:
+        if hasattr(a, "store_key"):
+            return self.ctx + a.store_key(self.name(a.model))
+        return answer_key(self.name(a.model), a.campaign, a.role, a.options, self.ctx)
 
-    def _load(self, which: str) -> None:
-        if self.loaded == which:
-            return
-        from .models import LocalModel
-        if self.model is not None:
-            self.model.close()
-            self.model = None
-        spec = self.specs[which]
-        self.log(f"loading {which}: {spec.name}")
-        m = LocalModel(spec, n_ctx=8192, state_dir=self.state_dir)
-        n_shared = len(m.tok(self.shared))
-        m.set_prefix(SYSTEM, self.shared)
-        self.log(f"  loaded in {m.load_seconds:.0f}s, shared prompt {n_shared} tokens")
-        self.model, self.loaded = m, which
+    def user_text(self, a) -> str:
+        if hasattr(a, "prompt_text"):
+            return self.shared + a.prompt_text()
+        return self.shared + campaign_block(a.campaign) + question_text(a.role, a.options)
 
-    def answer(self, asks: Iterable[Ask]) -> None:
+    def lookup(self, a) -> dict | None:
+        return self.store.get(self.key(a))
+
+    def answer(self, asks: Iterable) -> None:
+        if not self.checked:
+            from .models import OllamaError, check_ollama
+            problems = check_ollama()
+            if problems:
+                raise OllamaError("; ".join(problems))
+            self.checked = True
         todo = {}
         for a in asks:
-            todo.setdefault(answer_key(self.name(a.model), a.campaign, a.role, a.options), a)
+            todo.setdefault(self.key(a), a)
         for which in ("judge", "checker"):
             batch = [a for a in todo.values() if a.model == which]
             if not batch:
                 continue
-            self._load(which)
-            batch.sort(key=lambda a: a.campaign)            # reuse each campaign's cached text
+            self.loaded = which
+            model = self.models[which]
+            batch.sort(key=lambda a: a.campaign)            # similar prompts back to back: prompt cache
             for a in batch:
-                if self.specs[which].style == "letters":
-                    probs = self.model.letter_probs(campaign_block(a.campaign), QUESTION.format(role=a.role),
-                                                    a.options, letters_block)
-                else:
-                    probs = self.model.cloze_probs(campaign_block(a.campaign), QUESTION.format(role=a.role),
-                                                   a.options, names_block)
-                self.store.put(answer_key(self.name(which), a.campaign, a.role, a.options),
-                               self.name(which), a.campaign, a.role, a.options, probs)
+                what = getattr(a, "label", a.role)
+                label = f"{'Qwen (judge)' if which == 'judge' else 'Llama (checker)'}: {what}"
+                if self.progress:
+                    self.progress(self.answered, label)
+                got = model.ask(SYSTEM, self.user_text(a), a.options)
+                self.store.put(self.key(a), self.name(which), a.campaign, a.role, a.options, got["probs"],
+                               got["reasoning"], got["answer_token"])
                 self.store.save()                                # resumable after a restart
-            self.log(f"  {which}: {len(batch)} questions answered ({self.model.seconds:.0f}s so far)")
+                self.answered += 1
+            self.log(f"  {which}: {len(batch)} questions answered ({model.seconds:.0f}s so far)")
 
     def close(self) -> None:
-        if self.model is not None:
-            self.model.close()
-            self.model = None
-            self.loaded = None
+        pass
 
 
 def decide_many(campaigns: dict[str, str], store: AnswerStore, use_checker: bool = True,
-                run_models: bool = True, state_dir: Path | None = None, log=print,
-                runner: "ModelRunner | None" = None) -> dict[str, Committee]:
-    """Decide several committees together, so each model is loaded as few times as possible.
+                run_models: bool = True, log=print, runner: "ModelRunner | None" = None,
+                progress=None, minimums: dict | None = None, rules: dict | None = None) -> dict[str, Committee]:
+    """Decide several committees together, batching each model's questions.
     campaigns maps a name to its campaign text. Without run_models, only stored answers are used."""
     from .models import CHECKER, JUDGE
-    own = runner is None and run_models
-    runner = runner or (ModelRunner(store, state_dir, log) if run_models else None)
+    runner = runner or (ModelRunner(store, log, progress, rules=rules) if run_models else None)
+    ctx = ctx_of(rules)
 
     def lookup(a: Ask):
         name = (JUDGE if a.model == "judge" else CHECKER).name
-        return store.get(answer_key(name, a.campaign, a.role, a.options))
+        return store.get(answer_key(name, a.campaign, a.role, a.options, ctx))
 
-    try:
-        while True:
-            out = {k: assemble(t, lookup, use_checker=use_checker, judge_name=JUDGE.name,
-                               checker_name=CHECKER.name) for k, t in campaigns.items()}
-            missing = [a for c in out.values() for a in c.missing]
-            if not missing or runner is None:
-                return out
-            # Answer the loaded model's questions first, to avoid swapping models.
-            first = runner.loaded if runner.loaded in {a.model for a in missing} else missing[0].model
-            runner.answer([a for a in missing if a.model == first])
-    finally:
-        if own and runner is not None:
-            runner.close()
+    while True:
+        out = {k: assemble(t, lookup, rules=rules, use_checker=use_checker, judge_name=JUDGE.name,
+                           checker_name=CHECKER.name, minimums=minimums) for k, t in campaigns.items()}
+        missing = [a for c in out.values() for a in c.missing]
+        if not missing or runner is None:
+            return out
+        # The model used last answers first, to avoid swapping models.
+        first = runner.loaded if runner.loaded in {a.model for a in missing} else missing[0].model
+        runner.answer([a for a in missing if a.model == first])
 
 
-def decide_committee(campaign_file: str | Path, store_path: str | Path | None = DEFAULT_STORE,
-                     run_models: bool = True, state_dir: Path | None = None, log=print) -> Committee:
+def decide_committee(campaign_file: str | Path | dict, store_path: str | Path | None = DEFAULT_STORE,
+                     run_models: bool = True, log=print, progress=None) -> Committee:
     text = read_campaign(campaign_file)
     store = AnswerStore(store_path)
-    return decide_many({"campaign": text}, store, run_models=run_models, state_dir=state_dir, log=log)["campaign"]
+    return decide_many({"campaign": text}, store, run_models=run_models, log=log,
+                       progress=progress)["campaign"]
+
+
+def decide_targets(roster, committee: dict, campaign: str, store: AnswerStore, run_models: bool = True,
+                   log=print, progress=None, runner: "ModelRunner | None" = None, use_checker: bool = True,
+                   rules: dict | None = None):
+    """Pick the contacts to target at each Tier A company (see targets.py), batching
+    each model's questions across every company and seat."""
+    from .models import CHECKER, JUDGE
+    from .targets import pick_key, pick_targets
+    runner = runner or (ModelRunner(store, log, progress, rules=rules) if run_models else None)
+    ctx = ctx_of(rules)
+
+    def lookup(a):
+        return store.get(ctx + pick_key((JUDGE if a.model == "judge" else CHECKER).name, a))
+
+    while True:
+        out = pick_targets(roster, committee, campaign, lookup, use_checker=use_checker)
+        missing = [a for t in out.values() for a in t.missing]
+        if not missing or runner is None:
+            return out
+        first = runner.loaded if runner.loaded in {a.model for a in missing} else missing[0].model
+        runner.answer([a for a in missing if a.model == first])
+
+
+def decide_list(campaign: str, store: AnswerStore, run_models: bool = True, log=print, progress=None,
+                runner: "ModelRunner | None" = None, use_checker: bool = True,
+                exclude: dict | None = None, roles: list | None = None, rules: dict | None = None) -> dict | None:
+    """The committee list generated for this campaign (see required.py)."""
+    from .models import CHECKER, JUDGE
+    from .required import generate_list
+    runner = runner or (ModelRunner(store, log, progress, rules=rules) if run_models else None)
+    ctx = ctx_of(rules)
+
+    def lookup(a):
+        return store.get(ctx + a.store_key((JUDGE if a.model == "judge" else CHECKER).name))
+
+    while True:
+        out, missing = generate_list(campaign, lookup, use_checker=use_checker, exclude=exclude, roles=roles,
+                                     rules=rules)
+        if not missing or runner is None:
+            return out
+        first = runner.loaded if runner.loaded in {a.model for a in missing} else missing[0].model
+        runner.answer([a for a in missing if a.model == first])
