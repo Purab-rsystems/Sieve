@@ -300,14 +300,12 @@ def committee_decide_command(
     answers: Path = typer.Option(
         Path("config/committee/answers.json"), "--answers",
         help="Model answers, saved and reused so a decision reproduces."),
-    state_dir: Path = typer.Option(Path(".sieve_model_state"), "--state-dir"),
     offline: bool = typer.Option(False, "--offline", help="Use saved answers only; never load a model."),
 ) -> None:
-    """Qwen2.5-7B judges, Llama-3.1-8B checks. No contact is read."""
+    """Qwen2.5-7B judges, Llama-3.1-8B checks (both through Ollama). No contact is read."""
     from .committee.decide import decide_committee
 
-    c = decide_committee(campaign, store_path=answers, run_models=not offline, state_dir=state_dir,
-                         log=typer.echo)
+    c = decide_committee(campaign, store_path=answers, run_models=not offline, log=typer.echo)
     if not c.complete:
         typer.echo("Answers missing: run without --offline.")
         raise typer.Exit(1)
@@ -322,7 +320,7 @@ def committee_decide_command(
 def committee_match_command(
     committee: Path = typer.Option(..., "--committee", help="Output of `sieve committee decide`."),
     inp: Path = typer.Option(..., "--in", help="Contact file."),
-    out: Path = typer.Option(..., "--out", help="Contacts with sv_committee_title / sv_committee_role."),
+    out: Path = typer.Option(..., "--out", help="Contacts with sv_decided_title / sv_decided_role."),
     accounts_out: Path = typer.Option(..., "--accounts-out", help="Per-account seat coverage."),
 ) -> None:
     """Match contacts to a decided committee and report each account's missing seats."""
@@ -332,8 +330,20 @@ def committee_match_command(
     rows, accounts = match_contacts(frame, json.loads(committee.read_text()))
     write_table(rows, out)
     write_table(accounts, accounts_out)
-    typer.echo(f"{(rows['sv_committee_role'] != '').sum()} of {len(rows)} contacts hold a committee seat; "
+    typer.echo(f"{(rows['sv_decided_role'] != '').sum()} of {len(rows)} contacts hold a committee seat; "
                f"{int(accounts['minimums_met'].sum())} of {len(accounts)} accounts meet every minimum.")
+
+
+@app.command("ui")
+def ui_command(
+    port: int = typer.Option(8765, "--port"),
+    no_browser: bool = typer.Option(False, "--no-browser", help="Do not open a browser tab."),
+) -> None:
+    """Open Sieve in the browser: upload files, then committee, TAL scores, roster, approve."""
+    from .app.server import main as serve
+
+    typer.echo(f"Sieve is running at http://127.0.0.1:{port}/  (Ctrl+C to stop)")
+    serve(port=port, open_browser=not no_browser)
 
 
 def main() -> None:
