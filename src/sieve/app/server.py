@@ -20,6 +20,7 @@ import json
 import os
 import shutil
 import threading
+import time
 import traceback
 import uuid
 from datetime import datetime, timezone
@@ -31,7 +32,7 @@ from fastapi import FastAPI, File, Form, HTTPException, UploadFile
 from fastapi.responses import FileResponse, HTMLResponse, JSONResponse, PlainTextResponse
 
 from ..committee.campaign import campaign_text
-from ..committee.decide import AnswerStore, decide_list, decide_many, decide_targets
+from ..committee.decide import AnswerStore, ModelRunner, decide_list, decide_many, decide_targets
 from ..committee.qualify import qualify
 from ..committee.rolelist import ListError, fill_descriptions, parse_list, rules_for, template_csv
 from ..committee.targets import to_dict as targets_to_dict
@@ -162,15 +163,34 @@ def _committee_job(rid: str) -> None:
         store = AnswerStore(answers_path())
         run.update(committee_status="running", committee_error=None, committee_started=_now())
 
+        timings: list[dict] = []
+        runner = None
+
+        def metrics():
+            return {"timings": [{k: v for k, v in t.items() if k != "t0"} for t in timings],
+                    "models": runner.stats if runner else {}}
+
         def progress_for(stage):
             def progress(n, label):
-                run.update(committee_stage=stage, committee_progress={"answered": n, "now": label})
+                run.update(committee_stage=stage, committee_progress={"answered": n, "now": label},
+                           metrics=metrics())
             return progress
 
-        def decide(minimums):
-            run.update(committee_stage="committee")
-            c = decide_many({"c": text}, store, log=lambda *_: None, progress=progress_for("committee"),
-                            minimums=minimums, rules=rules)["c"].to_dict()
+        def begin(stage):
+            now = time.time()
+            if timings and timings[-1]["seconds"] is None:
+                timings[-1]["seconds"] = round(now - timings[-1]["t0"], 1)
+            if stage:
+                timings.append({"stage": stage, "started": _now(), "t0": now, "seconds": None})
+            if runner is not None:
+                runner.stage = stage
+                runner.progress = progress_for(stage)
+            run.update(committee_stage=stage or "done", metrics=metrics())
+
+        def decide(minimums, stage="committee"):
+            begin(stage)
+            c = decide_many({"c": text}, store, log=lambda *_: None, progress=progress_for(stage),
+                            minimums=minimums, rules=rules, runner=runner)["c"].to_dict()
             c["rules"] = minimums
             c["seat_order"] = [r for r in rules["seat_order"] if r in minimums]
             c["role_definitions"] = {r: rules["roles"][r] for r in minimums if r in rules["roles"]}
@@ -178,8 +198,8 @@ def _committee_job(rid: str) -> None:
             return c
 
         if any(not r.get("description") for r in (m.get("role_list") or [])):
-            run.update(committee_stage="descriptions",
-                       committee_progress={"answered": 0, "now": "Qwen (judge): describing roles"})
+            begin("descriptions")
+            run.update(committee_progress={"answered": 0, "now": "Qwen (judge): describing roles"})
             from ..committee.models import JUDGE, OllamaModel, check_ollama
             from ..committee.decide import SYSTEM as _SYS
             qwen = None
@@ -202,29 +222,31 @@ def _committee_job(rid: str) -> None:
             filled = fill_descriptions(m["role_list"], write)
             m = run.update(role_list=filled)
         rules = run_rules(m)
+        runner = ModelRunner(store, log=lambda *_: None, rules=rules)
         lst = active_list(m)
         attempts = []
         if lst["mode"] == "generated":
             # Generate committee: the AI writes the list, then a committee must meet it.
             # If the first try does not qualify, one retry: the failed numbers are taken
             # off those roles' options and the list is asked again for them.
-            run.update(committee_stage="list")
-            gl = decide_list(text, store, log=lambda *_: None, progress=progress_for("list"), rules=rules)
+            begin("list")
+            gl = decide_list(text, store, log=lambda *_: None, progress=progress_for("list"), rules=rules,
+                             runner=runner)
             minimums = {r: d["count"] for r, d in gl.items()}
             c = decide(minimums)
             attempts.append({"list": minimums, "qualified": c["qualification"]["qualified"],
                              "failed": c["qualification"]["failed"]})
             if not c["qualification"]["qualified"]:
                 failed_roles = [ln["role"] for ln in c["qualification"]["lines"] if not ln["met"]]
-                run.update(committee_stage="list")
-                retry = decide_list(text, store, log=lambda *_: None, progress=progress_for("list"),
+                begin("list (retry)")
+                retry = decide_list(text, store, log=lambda *_: None, progress=progress_for("list (retry)"),
                                     exclude={r: {str(minimums[r])} for r in failed_roles}, roles=failed_roles,
-                                    rules=rules)
+                                    rules=rules, runner=runner)
                 for r, d in retry.items():
                     d["retry"] = True
                     gl[r] = d
                 minimums = {r: d["count"] for r, d in gl.items()}
-                c = decide(minimums)
+                c = decide(minimums, stage="committee (retry)")
                 attempts.append({"list": minimums, "qualified": c["qualification"]["qualified"],
                                  "failed": c["qualification"]["failed"]})
             _write_json(run.dir / "list.json", gl)
@@ -236,19 +258,24 @@ def _committee_job(rid: str) -> None:
         _write_json(run.dir / "committee.json", c)
 
         if c["qualification"]["qualified"]:
-            run.update(committee_stage="targets")
+            begin("targets")
             picked = decide_targets(run.roster(), c, text, store, log=lambda *_: None, progress=progress_for("targets"),
-                                    rules=rules)
+                                    rules=rules, runner=runner)
             out = {}
             for k, v in picked.items():
                 d = targets_to_dict(v)
                 d["qualification"] = qualify(d["picks"], c["rules"], who="name")
                 out[k] = d
             _write_json(run.dir / "targets.json", out)
+        begin(None)
         run.update(committee_status="done", committee_stage="done", committee_finished=_now(),
                    committee_qualified=c["qualification"]["qualified"],
                    committee_progress={"answered": None, "now": ""})
     except Exception as e:  # noqa: BLE001
+        try:
+            begin(None)
+        except Exception:  # noqa: BLE001
+            pass
         run.update(committee_status="error", committee_error=str(e),
                    committee_trace=traceback.format_exc()[-2000:])
 
@@ -396,6 +423,67 @@ def create_app(resume: bool = True) -> FastAPI:
                 "roles": {r: {"text": " ".join(v["text"].split()), "source": v.get("source", "")}
                           for r, v in run_rules(m)["roles"].items() if r in run_rules(m)["minimums"]},
                 "generated_list": run.gen_list(), "committee": c, "coverage": coverage}
+
+    @app.get("/api/runs/{rid}/metrics")
+    def run_metrics(rid: str):
+        """Time per stage and per model, model calls and swaps, and what the
+        committee and Tier A steps did."""
+        run = Run(rid)
+        m = run.meta()
+        mx = m.get("metrics") or {}
+        models = []
+        for name, v in (mx.get("models") or {}).get("models", {}).items():
+            models.append({"model": name, "calls": v["calls"], "seconds": v["seconds"],
+                           "per_call": round(v["seconds"] / v["calls"], 1) if v["calls"] else None,
+                           "kinds": v.get("kinds", {})})
+        stages = []
+        for t in mx.get("timings", []):
+            per = (mx.get("models") or {}).get("stages", {}).get(t["stage"], {})
+            stages.append({**t, "models": {k: {"calls": v["calls"], "seconds": v["seconds"]} for k, v in per.items()}})
+        c = run.committee()
+        com = None
+        if c:
+            cands = [x for chain in (c.get("candidates") or {}).values() for x in chain]
+            offered = [r for r in c.get("rejected", []) if r.get("offered_from")] + \
+                      [x for x in c.get("members", []) if x.get("offered_from")]
+            com = {"members": len(c["members"]), "extras": sum(1 for x in c["members"] if x.get("extra")),
+                   "qwen_candidates": sum(1 for x in cands if not x.get("stop")),
+                   "qwen_said_none": sum(1 for x in cands if x.get("function") == "None"),
+                   "llama_rejections": sum(1 for r in c.get("rejected", []) if not r.get("offered_from")),
+                   "offered_to_other_roles": len(offered),
+                   "seated_from_offers": sum(1 for x in c["members"] if x.get("offered_from")),
+                   "unfilled": c.get("unfilled", {}),
+                   "qualified": (c.get("qualification") or {}).get("qualified"),
+                   "settings": c.get("settings", {})}
+        t = _read_json(run.dir / "targets.json") if (run.dir / "targets.json").exists() else None
+        tgt = None
+        if t:
+            tgt = {"companies": len(t), "picked": sum(len(v["picks"]) for v in t.values()),
+                   "empty_seats": sum(len(v["empty"]) for v in t.values()),
+                   "llama_rejections": sum(len(v["rejected"]) for v in t.values()),
+                   "companies_qualified": sum(1 for v in t.values() if (v.get("qualification") or {}).get("qualified"))}
+        total = None
+        if m.get("committee_started") and m.get("committee_finished"):
+            total = round((datetime.fromisoformat(m["committee_finished"]) -
+                           datetime.fromisoformat(m["committee_started"])).total_seconds(), 1)
+        return {"status": m.get("committee_status"), "started": m.get("committee_started"),
+                "finished": m.get("committee_finished"), "total_seconds": total,
+                "stages": stages, "models": models, "swaps": (mx.get("models") or {}).get("swaps", 0),
+                "committee": com, "targets": tgt}
+
+    @app.get("/api/metrics/benchmark")
+    def benchmark_metrics():
+        """The committee accuracy on the 10-campaign reference set: before and after
+        the recall fixes, per check type and candidates per question, with
+        leave-one-out."""
+        path = Path(__file__).resolve().parents[3] / "benchmarks" / "committee" / "results.json"
+        if not path.exists():
+            return {"available": False}
+        r = json.loads(path.read_text())
+        if "methods" not in r:                     # results from before the recall fixes
+            return {"available": True, "before": r.get("all_mean", {}).get("judge_and_checker"), "methods": {}}
+        return {"available": True, "before": r.get("before"), "methods": r["methods"],
+                "leave_one_out": r.get("leave_one_out"), "settings": r.get("settings"), "seconds": r.get("seconds")}
 
     @app.post("/api/runs/{rid}/list")
     def set_list(rid: str, body: dict):

@@ -137,6 +137,7 @@ input[type=checkbox] { accent-color:var(--honey); width:16px; height:16px; curso
     <div><b>Sieve</b><span>TAL scoring and buying committee</span></div>
   </div>
   <button class="primary" onclick="location.hash='#/'">+ New run</button>
+  <button onclick="location.hash='#/metrics'">Accuracy metrics</button>
   <div id="health" class="health">Checking the models…</div>
   <h2>Runs</h2>
   <div id="runs" style="display:flex;flex-direction:column;gap:10px"></div>
@@ -221,7 +222,7 @@ function viewNew() {
 // ------------------------------------------------------------------ run shell
 async function viewRun(id, tab) {
   const m = await api(`/api/runs/${id}`);
-  const tabs = [['committee', 'Committee'], ['scores', 'TAL scores'], ['roster', 'Roster'], ['approve', 'Approve & export']];
+  const tabs = [['committee', 'Committee'], ['scores', 'TAL scores'], ['roster', 'Roster'], ['approve', 'Approve & export'], ['metrics', 'Metrics']];
   const t = m.tiers || {};
   $('#view').innerHTML = `
     <div class="runhead"><p class="hello" style="margin:0">${esc(m.campaign_name)}</p>
@@ -238,7 +239,7 @@ async function viewRun(id, tab) {
     ${m.ingest.skipped.length ? `<p class="note small" style="margin-top:12px">Skipped: ${m.ingest.skipped.map(esc).join('; ')}</p>` : ''}
     <nav class="tabs">${tabs.map(([k, l]) => `<a href="#/run/${id}/${k}" class="${k === tab ? 'on' : ''}">${l}</a>`).join('')}</nav>
     <div id="tab"></div>`;
-  ({committee: tabCommittee, scores: tabScores, roster: tabRoster, approve: tabApprove})[tab](id, m);
+  ({committee: tabCommittee, scores: tabScores, roster: tabRoster, approve: tabApprove, metrics: tabMetrics})[tab](id, m);
 }
 async function delRun(id) {
   if (!confirm('Delete this run and its files?')) return;
@@ -352,17 +353,32 @@ async function tabCommittee(id) {
     h += ms.map(m => `<div class="member"><div class="top"><b>${esc(m.title)}</b>
         <span class="chip">${esc(m.function)}</span><span class="chip">${esc(m.level)}</span>
         ${m.asked_as !== role ? `<span class="chip">asked as ${esc(m.asked_as)}</span>` : ''}
-        ${m.round ? `<span class="chip honey">follow-up ${m.round}</span>` : ''}${m.extra ? '<span class="chip">extra member</span>' : ''}</div>
+        ${m.round ? `<span class="chip honey">Qwen's answer #${m.round + 1}</span>` : ''}${m.extra ? '<span class="chip">extra member</span>' : ''}
+        ${m.offered_from ? `<span class="chip honey">rejected as ${esc(m.offered_from)}, offered here</span>` : ''}</div>
       <div class="why">
-        ${voice('', 'Qwen (judge) proposed ' + esc(m.function), m.judge_p, m.chance, '', m.judge_reasoning)}
+        ${m.offered_from ? `<div class="voice"><div class="who">Offered by Sieve</div><p>Llama turned ${esc(m.function)} down as ${esc(m.offered_from)}, so it was offered to the other roles with a yes/no question.</p></div>`
+          : voice('', 'Qwen (judge) proposed ' + esc(m.function), m.judge_p, m.chance, '', m.judge_reasoning)}
         ${voice('check', 'Llama (checker)', m.checker_p, m.chance, '<span class="chip ok">passed</span>', m.checker_reasoning)}
       </div></div>`).join('') || '<p class="muted small">Nobody passed for this role.</p>';
   }
+  if (c.briefs && Object.keys(c.briefs).length) {
+    const B = c.briefs, qs = Object.keys(B.judge || {});
+    h += `<p class="role-h">How each model described the roles for this campaign (from the sourced definitions)</p>` + qs.map(q => `<details class="rej"><summary>${esc(q)}</summary>
+      <div class="body why"><div class="voice"><div class="who">Qwen (judge)</div><p>${esc(B.judge[q])}</p></div>
+      ${B.checker ? `<div class="voice check"><div class="who">Llama (checker)</div><p>${esc(B.checker[q] || '')}</p></div>` : ''}</div></details>`).join('');
+  }
+  if (c.candidates && Object.keys(c.candidates).length) {
+    const S = c.settings || {};
+    h += `<p class="role-h">Qwen's answers per question, in order (asked up to ${S.candidates_per_question} times, earlier answers removed; cap ${S.max_members} members; Llama's check: ${esc(S.check)})</p>
+      <div class="wrap"><table><thead><tr><th>Question</th><th>Qwen's answers</th></tr></thead><tbody>${Object.entries(c.candidates).map(([q, ch]) => `<tr><td><b>${esc(q)}</b></td>
+      <td>${ch.map(x => `<span class="chip ${x.function === 'None' ? 'bad' : x.stop ? '' : 'honey'}" title="${esc(x.judge_reasoning)}">${esc(x.function === 'None' ? 'no other fits' : x.function)} ${pct(x.judge_p)}</span>`).join(' ')}</td></tr>`).join('')}</tbody></table></div>`;
+  }
   if (c.rejected.length) {
     h += `<p class="role-h">Turned down by the checker · ${c.rejected.length}</p>`;
-    h += c.rejected.map(x => `<details class="rej"><summary>${esc(x.function)} as ${esc(x.role)}${x.extra ? ' (extra member)' : ''}
-        <span class="muted small">· Qwen ${pct(x.judge_p)}, Llama ${pct(x.checker_p)}, chance ${pct(x.chance)}</span></summary>
-      <div class="body why">${voice('', 'Qwen (judge) proposed ' + esc(x.function), x.judge_p, x.chance, '', x.judge_reasoning)}
+    h += c.rejected.map(x => `<details class="rej"><summary>${esc(x.function)} as ${esc(x.role)}${x.offered_from ? ` (offered after rejection as ${esc(x.offered_from)})` : ''}
+        <span class="muted small">· ${x.judge_p != null ? `Qwen ${pct(x.judge_p)}, ` : ''}Llama ${pct(x.checker_p)}, chance ${pct(x.chance)}</span></summary>
+      <div class="body why">${x.offered_from ? '<div class="voice"><div class="who">Offered by Sieve</div><p>A yes/no question to Llama after its rejection as ' + esc(x.offered_from) + '.</p></div>'
+          : voice('', 'Qwen (judge) proposed ' + esc(x.function), x.judge_p, x.chance, '', x.judge_reasoning)}
         ${voice('reject', 'Llama (checker)', x.checker_p, x.chance, '<span class="chip bad">rejected</span>', x.checker_reasoning)}</div></details>`).join('');
   }
   h += c.qualification && c.qualification.qualified
@@ -464,11 +480,71 @@ async function tabApprove(id, m) {
   };
 }
 
+// ------------------------------------------------------------------ metrics
+const secs = s => s == null ? '–' : s < 90 ? `${Math.round(s)} s` : s < 5400 ? `${(s / 60).toFixed(1)} min` : `${(s / 3600).toFixed(1)} h`;
+const f2 = x => x == null ? '–' : Number(x).toFixed(2);
+async function tabMetrics(id) {
+  stopPoll();
+  const r = await api(`/api/runs/${id}/metrics`);
+  const c = r.committee, t = r.targets;
+  let h = `<div class="card"><h3>Time</h3><div class="stats">
+      <div class="stat"><b>${secs(r.total_seconds)}</b><span>total${r.status !== 'done' ? ' (running)' : ''}</span></div>
+      ${r.models.map(m => `<div class="stat"><b>${secs(m.seconds)}</b><span>${esc(m.model)} · ${m.calls} calls · ${secs(m.per_call)} per call</span></div>`).join('')}
+      <div class="stat"><b>${r.swaps}</b><span>model swaps</span></div></div>
+    <div class="wrap" style="margin-top:14px"><table><thead><tr><th>Stage</th><th>Started (UTC)</th><th class="num">Time</th><th>Model calls</th></tr></thead>
+    <tbody>${r.stages.map(s => `<tr><td><b>${esc(s.stage)}</b></td><td class="muted">${esc((s.started || '').replace('T', ' ').slice(0, 19))}</td>
+      <td class="num">${s.seconds == null ? 'running' : secs(s.seconds)}</td>
+      <td>${Object.entries(s.models).map(([k, v]) => `${esc(k)}: ${v.calls} (${secs(v.seconds)})`).join(' · ') || '<span class="muted">answers already saved</span>'}</td></tr>`).join('')
+      || '<tr><td colspan="4" class="muted">No timings recorded for this run.</td></tr>'}</tbody></table></div></div>`;
+  if (c) h += `<div class="card"><h3>Committee</h3><div class="stats">
+      <div class="stat"><b>${c.members}</b><span>members (${c.extras} beyond the minimums)</span></div>
+      <div class="stat"><b>${c.qwen_candidates}</b><span>Qwen candidates</span></div>
+      <div class="stat"><b>${c.qwen_said_none}</b><span>questions where Qwen said no other fits</span></div>
+      <div class="stat"><b>${c.llama_rejections}</b><span>Llama rejections</span></div>
+      <div class="stat"><b>${c.seated_from_offers} / ${c.offered_to_other_roles}</b><span>seated after being offered to another role</span></div>
+      <div class="stat"><b>${c.qualified ? 'yes' : 'no'}</b><span>qualified against the list</span></div></div>
+      <p class="small muted" style="margin:10px 0 0">Settings: ${esc(c.settings.candidates_per_question)} answers per question, cap ${esc(c.settings.max_members)} members, Llama's check ${esc(c.settings.check)}.
+      ${Object.keys(c.unfilled || {}).length ? 'Unfilled: ' + Object.entries(c.unfilled).map(([k, n]) => `${n} ${esc(k)}`).join(', ') : ''}</p></div>`;
+  if (t) h += `<div class="card"><h3>People picked at the companies</h3><div class="stats">
+      <div class="stat"><b>${t.companies}</b><span>companies</span></div><div class="stat"><b>${t.picked}</b><span>people picked</span></div>
+      <div class="stat"><b>${t.empty_seats}</b><span>seats nobody fits</span></div><div class="stat"><b>${t.llama_rejections}</b><span>Llama rejections</span></div>
+      <div class="stat"><b>${t.companies_qualified}</b><span>companies whose picks meet the list</span></div></div></div>`;
+  h += `<p class="note small">Precision, recall and F1 are measured on the 10-campaign reference set: <a href="#/metrics">Accuracy metrics</a>.</p>`;
+  $('#tab').innerHTML = h;
+  if (r.status === 'running') poll = setTimeout(() => tabMetrics(id), 5000);
+}
+async function viewBenchmark() {
+  const r = await api('/api/metrics/benchmark');
+  let h = `<p class="hello">Accuracy metrics</p><p class="promise">The buying committee against the 10-campaign reference set (each campaign's
+    committee functions from published research). Precision: share of the committee's titles in a reference function (finance and procurement
+    count as fine). Recall: share of the reference functions the committee holds.</p>`;
+  if (!r.available) { $('#view').innerHTML = h + '<p class="note">No benchmark results yet: run <code>python benchmarks/committee/run_benchmark.py</code>.</p>'; return; }
+  const row = (name, m, t, q, note) => `<tr><td><b>${esc(name)}</b>${note ? `<br><span class="small muted">${esc(note)}</span>` : ''}</td>
+    <td class="num">${f2(m.precision)}</td><td class="num">${f2(m.recall)}</td><td class="num"><b>${f2(m.f1)}</b></td>
+    <td class="num">${m.size != null ? Number(m.size).toFixed(1) : '–'}</td><td class="num">${t ? `${f2(t.precision)} / ${f2(t.recall)} / ${f2(t.f1)}` : '–'}</td>
+    <td class="num">${q ?? '–'}</td><td>${m.precision != null && m.precision < 0.85 ? '<span class="chip bad">precision below 0.85</span>' : ''}</td></tr>`;
+  const LABEL = {judge_only: 'Qwen only (no checker)', same_question: 'Qwen + Llama, same-question check', yes_no: 'Qwen + Llama, yes/no check'};
+  h += `<div class="card"><h3>Before and after the recall fixes</h3><div class="wrap"><table><thead><tr><th>Method</th><th class="num">Precision</th><th class="num">Recall</th>
+    <th class="num">F1</th><th class="num">Size</th><th class="num">Test P / R / F1</th><th class="num">Qualified</th><th></th></tr></thead><tbody>
+    ${r.before ? row('Before: one answer per seat, 6 seats', r.before.all || r.before, r.before.test, null, '') : ''}
+    ${Object.entries(r.methods).map(([k, m]) => { const [chk, n] = k.split('/');
+      return row(`${LABEL[chk] || chk}, ${n} answers per question`, m.all, m.test, m.qualified != null ? `${m.qualified}/10` : null, `generic committee: F1 ${f2(m.generic_all.f1)}`); }).join('')}
+    </tbody></table></div><p class="small muted" style="margin:10px 0 0">Test campaigns are only 3 of the 10, so the test column is a sanity check, not proof.</p></div>`;
+  if (r.leave_one_out) h += `<div class="card"><h3>Leave-one-out</h3><p class="small muted" style="margin:0 0 10px">Answers per question chosen on 9 campaigns
+    (best F1 with precision at least 0.85), then graded on the 10th; rotated through all 10.</p><div class="wrap"><table><thead><tr><th>Check</th><th class="num">Precision</th>
+    <th class="num">Recall</th><th class="num">F1</th><th>Chosen</th></tr></thead><tbody>
+    ${Object.entries(r.leave_one_out).map(([k, v]) => `<tr><td><b>${esc(LABEL[k] || k)}</b></td><td class="num">${f2(v.held_out_mean.precision)}</td>
+      <td class="num">${f2(v.held_out_mean.recall)}</td><td class="num"><b>${f2(v.held_out_mean.f1)}</b></td>
+      <td class="small">${Object.entries(v.chosen_per_held_out_campaign).map(([c, n]) => `${esc(c)}: ${n}`).join(' · ')}</td></tr>`).join('')}</tbody></table></div></div>`;
+  if (r.seconds) h += `<p class="note small">The benchmark took ${secs(r.seconds)}.</p>`;
+  $('#view').innerHTML = h;
+}
+
 // ------------------------------------------------------------------ router
 async function route() {
   stopPoll();
-  const mm = location.hash.match(/^#\/run\/([^/]+)\/(committee|scores|roster|approve)/);
-  try { mm ? await viewRun(mm[1], mm[2]) : viewNew(); }
+  const mm = location.hash.match(/^#\/run\/([^/]+)\/(committee|scores|roster|approve|metrics)/);
+  try { mm ? await viewRun(mm[1], mm[2]) : location.hash === '#/metrics' ? await viewBenchmark() : viewNew(); }
   catch (e) { $('#view').innerHTML = `<p class="note bad">${esc(e.message)}</p>`; }
   loadSide();
 }
