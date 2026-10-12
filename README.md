@@ -1,209 +1,248 @@
-# Sieve v1.0
+# Sieve
 
-**Quality and intelligence engine, downstream of LeadDrip.**
+Sieve takes a campaign file and the contact files for that campaign, and gives back:
 
-Implements the PRD: modules M0, M3, M4, M6, M7 and M8.
+1. a **TAL score** and tier for every target account (rule-based, repeatable);
+2. the **buying committee** for the campaign (which job functions take part, and as
+   which role), decided by two local AI models: Qwen2.5-7B proposes, Llama-3.1-8B
+   checks;
+3. the **people to target** at each Tier A account, picked from the contacts by the
+   same two models, with each model's written reasoning;
+4. after a rep's sign-off, the **exports**: Salesforce upsert files, a dial queue and
+   the target list.
 
----
-
-## In a nutshell
-
-You give it a `Format-DB.csv`. It gives you the same file back with analytical
-columns appended, plus an audit log. Every added column starts with `sv_`, so
-nothing collides with your schema or with Salesforce. No column you passed in
-is ever modified, reordered or dropped.
-
-| Command | Give it | Get back |
-|---|---|---|
-| `sieve run` | Format-DB file from LeadDrip | `verified_prospect_roster.csv` with all 12 PRD columns, plus `sieve_audit_log.jsonl` and a JSON summary |
-| `sieve score` | Any contact file | `sv_icp_score`, `sv_target_tier`, `sv_score_breakdown` |
-| `sieve validate` | Any contact file | `sv_flags`, `sv_confidence`, `sv_validation_status` |
-| `sieve designate` | Any file with a title column | `sv_canonical_title`, `sv_seniority`, `sv_is_authoritative` |
-| `sieve console` | A roster | `review_console.html` for rep sign-off (M8 step i) |
-| `sieve sync` | A roster plus `approval.json` | Salesforce Bulk API upsert payloads (M8 step iii) |
-| `sieve queue` | A roster | `compass_max_dial_queue.csv`, priority ordered (M8 step iv) |
-| `sieve normalize` | Raw Phantom / Zoom / Apollo dumps | Canonical accounts and contacts |
-| `sieve inspect` | Any file | Which adapter each sheet scores against |
-
-```bash
-sieve run --in format_db_input.csv \
-          --out verified_prospect_roster.csv \
-          --audit sieve_audit_log.jsonl \
-          --report run_report.json
-```
-
-```python
-from sieve import run
-result = run(df)              # DataFrame in, DataFrame out
-result.summary                # counts by tier, flag, committee seat
-```
+It runs as a web app (`sieve ui`) or from the command line. Everything runs on your
+own machine; the models run in Ollama.
 
 ---
 
-## What each stage does
+## 1. How to run it
 
-**M0 identity.** Deterministic UUID5 IDs. `sv_account_id` hashes the
-normalized domain, `sv_contact_id` hashes the email inside that account
-namespace. Same input, same ID, every machine, every run.
+Windows, Python 3.14 (PowerShell). macOS and Linux are the same with
+`source .venv/bin/activate`.
 
-**M3 scoring (Gate 1).** Four pillars, each 0-100, each weighted 25%: industry
-fit, legacy stack signals, platform scale, modernization triggers. Tier A at
-80+, Tier B at 60-79, Tier C below. No model calls, so it is repeatable and
-free. The rubric is `config/icp_adtech_modernization.yaml`; a new campaign
-means a new file.
+**Once:**
 
-**M6 designation.** Normalizes titles onto a taxonomy seeded from 552 real
-observed titles. `VP Tech & Architecture` and `Head of Engineering` both
-resolve to `VP of Engineering`. Derives seniority, authority and which
-committee seat the role naturally fills.
+1. Install Ollama from https://ollama.com/download and pull the two models:
+   ```powershell
+   ollama pull qwen2.5:7b
+   ollama pull llama3.1:8b
+   ```
+2. In the `sieve` folder:
+   ```powershell
+   python -m venv .venv
+   .venv\Scripts\activate
+   pip install -e ".[dev]"
+   pytest -q
+   ```
+   `pytest` should report 318 passed (22 tests that need recorded model answers are skipped).
 
-**M4 validation (Gate 2).** Six flags at four severities, each subtracting
-from a 1.00 confidence: TITLE_MISMATCH, ROLE_DEPARTED, GENERIC_EMAIL,
-DOMAIN_ANOMALY, SENIORITY_AMBIGUITY, DISPOSABLE_PHONE. Nothing is dropped.
-
-**M7 committee.** For each Tier A account, fills Economic Buyer, Champion and
-up to three Influencer seats. Selection sorts by seniority, then confidence,
-then contact ID, so two runs produce the same committee.
-
-**M8 export.** Four pieces. Dial priority as `(icp x 0.50) +
-(seniority x 0.30) + (phone verified x 0.20)`. A JSONL audit log carrying every
-scoring decision, flag and committee promotion. A self-contained HTML review
-console where a rep works the flagged rows and clicks Approve Roster. And
-Salesforce Bulk API upsert payloads for Account and Contact, keyed on the
-external IDs.
-
-The sign-off is a real gate: `sieve sync` refuses to build a payload without an
-approval file, and anything the rep drops in the console never reaches the
-payload. `--force` stages an unapproved dry run. Sending the payload needs
-credentials and a sandbox; everything up to the HTTP call is here.
-
-Stage order in `run` is M0, M3, M6, M4, M7, M8. M6 comes before M4 because
-SENIORITY_AMBIGUITY needs the seniority mapping.
-
----
-
-## Measured
-
-| Requirement | Target | Measured |
-|---|---|---|
-| Throughput | 5,000 rows under 15s | 2.55s, ~1,957 rows/sec |
-| Reproducibility | Bitwise identical | Identical SHA-256 across runs |
-| Audit coverage | Every decision logged | 1,530 lines for 633 rows |
-
-244 unit tests in 2 seconds, plus two acceptance harnesses that run the whole
-pipeline over the real 633-contact campaign file:
-
-```bash
-pytest -q                                          # 244 unit tests
-python evals/prd_acceptance.py --data-dir sample-input   # 28 criteria, M0-M8
-python evals/m0_acceptance.py  --data-dir sample-input   # 15 criteria, ingestion
-python evals/io_demo.py        --data-dir sample-input   # input/output walkthrough
-```
-
-The unit suite covers logic against small built frames. The acceptance
-harnesses are what catch data problems, and they earn their place: the PRD
-harness found two source rows describing the same person under different
-company labels, which would have produced a repeated external id in a
-Salesforce batch and failed the Bulk API job.
-
----
-
-## Three things found in the data
-
-**`"NA"` means North America and pandas eats it.** The campaign Region column
-carries `"NA"` on 80 rows. Pandas treats that string as null by default, so a
-plain `read_excel` loses the whole North America segment. Sieve keeps it. If
-you read that sheet yourself, pass `keep_default_na=False`.
-
-**`Industry` says nothing about AdTech.** Format-DB's Industry column carries
-ZoomInfo's coarse taxonomy (Business Services, Software). The vertical that
-matters lives in the campaign sheet's `Category` column. Scoring on Industry
-alone left the industry pillar averaging 5 of 100 and produced zero Tier A
-accounts.
-
-**Apollo carries both `title` and `Title`.** They differ only in case and hold
-different values, the PhantomBuster input and Apollo's answer. Any
-case-insensitive column lookup silently returns the same one for both.
-
----
-
-## Run it (Windows, Python 3.14)
-
-1. Install Ollama from https://ollama.com/download, then pull the two models:
-   `ollama pull qwen2.5:7b` and `ollama pull llama3.1:8b`.
-2. In the sieve folder:
+**Every time:**
 
 ```powershell
-python -m venv .venv
 .venv\Scripts\activate
-pip install -e ".[dev]"
 sieve ui
 ```
 
-`sieve ui` opens Sieve in the browser. Upload the campaign file and the
-contact files. Then, in order:
+The app opens at http://127.0.0.1:8765. Ollama must be running (the app shows
+"Models ready" in the sidebar when it is).
 
-1. TAL scores (rule-based, ready at once): each check's band and the text that triggered it.
-   Optional on upload: a committee list (CSV/Excel: Role, Count, Description;
-   template at /api/list-template.csv). It replaces the default list for the
-   run; a role without a description gets one written by Qwen (marked so).
-2. Committee: decided from the campaign by Qwen (judge) and Llama (checker),
-   with both models' reasoning on every pick and every rejection. It uses the
-   default list (1 Economic Buyer, 1 Champion, 1 Technical Evaluator,
-   3 Influencers); "Generate list for this campaign" has the models decide how
-   many people each role needs instead (the default list stays as it is).
-3. Roster: for every Tier A company and every committee seat, Qwen picks the
-   contact to target, or says nobody fits, with its reasoning; Llama checks
-   every pick. Locked until steps 2 and 3 are done.
-4. Approve & export: the kept targets go to the approval file, the Salesforce
-   upsert files, the dial queue and tier_a_targets.csv (with the reasoning).
+**Command line, without the app:**
 
-## Buying committee: judge + checker
-
-Decided from the campaign file before any contact is looked at. Qwen2.5-7B
-(judge) proposes which function fills each role; Llama-3.1-8B (checker) must
-pass every pick. Both run in Ollama. Each model writes its reasoning first and
-its answer is read right after that reasoning, so the reasoning shown on every
-pick and every rejection is what the answer came from. Minimums
-(config/committee/rules.yaml): 1 Champion, 1 Economic Buyer, 1 Technical
-Evaluator, 3 Influencers; more members are fine. One title, one role. A
-minimum nothing passes is reported unfilled, never forced.
-
-```bash
+```powershell
+sieve run --in format_db.csv --out verified_prospect_roster.csv --audit sieve_audit_log.jsonl --report run_report.json
 sieve committee decide --campaign config/icp_adtech_modernization.yaml --out committee.json
-sieve committee match  --committee committee.json --in roster.xlsx \
-                       --out matched.csv --accounts-out coverage.csv
-python benchmarks/committee/run_benchmark.py --offline     # accuracy, recorded answers
+sieve committee match --committee committee.json --in verified_prospect_roster.csv --out matched.csv --accounts-out coverage.csv
 ```
 
-Role reference sheet: config/committee/role_reference.json, 51 titles in 22
-functions, descriptions copied word for word from AvaHR (26) / Workable (8),
-the closest O*NET occupation marked approximate (10), or none (7). Rebuilt with
-tools/role_reference/extract.py.
+**Accuracy benchmark** (the committee against 10 reference campaigns, section 6):
 
-Accuracy on the 10-campaign reference set: see benchmarks/committee/results.json.
-The earlier method (no written reasoning, llama.cpp) scored 0.82 F1
-(results_v1_llamacpp.json).
+```powershell
+python benchmarks/committee/run_benchmark.py              # asks the models; answers are saved, a stopped run resumes
+python benchmarks/committee/run_benchmark.py --offline    # recorded answers only, no models
+python benchmarks/committee/run_benchmark.py --campaigns crm,legacy_modernization,martech --checks same_question --candidates 3 --out benchmarks/committee/results_quick.json
+```
+
+Optional settings (environment variables): `SIEVE_HOME` (where the app keeps runs
+and saved answers, default `~/.sieve`), `SIEVE_PARALLEL` (questions sent to Ollama at
+once; match `OLLAMA_NUM_PARALLEL`), `SIEVE_NUM_CTX` (model context, default 6144).
 
 ---
 
-## Layout
+## 2. What it takes as input
+
+| Input | What it is | Required |
+|---|---|---|
+| **Campaign file** (`.yaml`) | The TAL checks with their bands and weights (what makes an account a fit), the tier cut-offs, and optionally an `offering` block (what is sold and to whom). Example: `config/icp_adtech_modernization.yaml`. The committee is decided from this file alone. | yes |
+| **Contact files** (`.csv`, `.xlsx`) | One or more: LeadDrip's Format-DB, a campaign workbook (contact sheets plus a research sheet such as Status), or ZoomInfo / Apollo exports. Any sheet with a Title column is read as contacts; research sheets are joined by domain, then company name. Example: `sample-input/Modernization_Campaign_-_Simplifi_-_List__31-08-26___1_.xlsx`. | yes |
+| **Committee list** (`.csv`, `.xlsx`) | Columns `Role`, `Count`, `Description`: one row per role the committee must hold. A missing description is written by Qwen (and marked so). Without it, the default list is used: 1 Economic Buyer, 1 Champion, 1 Technical Evaluator, 3 Influencers. Template: `/api/list-template.csv` in the app. | no |
+
+---
+
+## 3. What it gives back
+
+**In the app**, per run:
+
+| Tab | Shows |
+|---|---|
+| Committee | The committee and whether it qualifies against the list, with proof (who fills each line, both models' scores and quotes from their reasoning); the list (default, uploaded, edited, or generated by the AI); each model's description of every role for this campaign; Qwen's answers to each question in order; every pick Llama rejected, with both models' reasoning. |
+| TAL scores | Every account's TAL score and tier; click an account for each check's band and the exact text that triggered it. |
+| Roster | Opens once the committee qualifies. For every Tier A company and every committee seat: the contact Qwen picked (or "nobody here fits"), Llama's check, both models' reasoning, and whether that company's picks meet the list. Untick a person to drop them. |
+| Approve & export | Signs off the roster and writes the files below. |
+| Metrics | Time per stage and per model, model calls and swaps, and committee and pick counts. |
+
+The sidebar's **Accuracy metrics** page shows the benchmark results (section 6).
+
+**Files** (downloadable from the Approve tab; in `~/.sieve/runs/<run id>/exports/`):
+
+| File | Contents |
+|---|---|
+| `verified_prospect_roster.csv` | Every contact with Sieve's columns added (all start with `sv_`; no input column is changed): IDs, TAL score and tier, title normalization, validation flags and confidence, committee seat, dial priority. |
+| `tier_a_targets.csv` / `.json` | The approved targets at Tier A companies, with seat, both models' reasoning and the company's qualification. |
+| `committee.json`, `qualification.json` | The decided committee and its proof against the list. |
+| `approval.json` | Who was approved and who was dropped. |
+| Salesforce upsert files | Account and Contact Bulk API payloads keyed on Sieve's external IDs (built only after approval). |
+| `compass_max_dial_queue.csv` | Approved targets in dial-priority order. |
+| `sieve_audit_log.jsonl` | Every scoring decision, flag and committee placement. |
+
+---
+
+## 4. How it works
+
+```
+campaign file ──► TAL scoring (rules) ──► tiers A / B / C
+      │
+      └──► committee (Qwen proposes, Llama checks) ──► qualifies against the list?
+                                                          │ yes
+contact files ──► IDs, titles, validation ──► Tier A contacts ──► people picked per seat (Qwen picks, Llama checks)
+                                                          │
+                                       rep review ──► approve ──► Salesforce files, dial queue, target list
+```
+
+**TAL scoring (no AI).** Each check in the campaign file scores an account 0–100 from
+its bands, weighted and summed. Tier A at 80+, Tier B at 60–79, Tier C below (set in
+the campaign file). Same input, same score, every run.
+
+**Contacts (no AI).** Deterministic IDs (UUID5 of domain and email); titles normalized
+onto a taxonomy built from 552 observed titles (seniority, authority); six
+validation flags (title mismatch, role departed, generic email, domain anomaly,
+seniority ambiguity, disposable phone), each lowering a 1.00 confidence. Nothing is
+dropped.
+
+**Buying committee (AI).** Decided from the campaign file before any contact is read.
+The models read the buying-group role definitions quoted from their sources
+(Forrester, Callbox; `config/committee/rules.yaml`), a role reference sheet of 51 job
+titles in 22 functions with published job descriptions
+(`config/committee/role_reference.json`), and the campaign. Every answer: the model
+writes its reasoning first, then its answer is read from its own probabilities right
+after that reasoning, so the reasoning shown is what the answer came from.
+
+1. Each model writes its own description of every role for this campaign, from the
+   sourced definitions.
+2. For each role question (Economic Buyer, Champion, Technical Evaluator, Influencer,
+   and Forrester's User and Ratifier, which fill Influencer seats), Qwen names the
+   function whose leader would hold it, up to `candidates_per_question` times, its
+   earlier answers removed each time; it can answer "None".
+3. Llama checks every answer: it answers the same question and passes the function
+   if it also rates it above chance (`check: same_question`), or answers "should the
+   leader of <function> be a <role>?" (`check: yes_no`). A function Llama rejects for
+   one role is offered to the other roles with the yes/no question.
+4. Minimums are floors: each role is filled to its minimum first, then passed
+   answers join as extra members up to `max_members` (10). One title, one role.
+   A seat nothing passes stays empty and is reported; nothing is forced in.
+5. The committee qualifies only when it meets every line of the list.
+
+Settings: `config/committee/rules.yaml`.
+
+**People at Tier A companies (AI).** For every Tier A company and every committee
+seat, Qwen reads the company's contacts (name and title) and picks the one who would
+play that part, or answers that nobody fits; Llama must also rate that person above
+chance. One person, one seat; a rejected pick is removed and Qwen is asked again.
+Companies with more than 25 contacts are asked in groups of 25, then once more
+between the group winners.
+
+**Approval.** A rep reviews the roster; nothing reaches Salesforce without the
+approval file, and anyone dropped never reaches the payload.
+
+---
+
+## 5. Project layout
 
 ```
 src/sieve/
-  identity.py              M0  deterministic UUID5 IDs
-  scoring/icp.py           M3  four-pillar rubric
-  taxonomy/designation.py  M6  title normalization and authority
-  validation/engine.py     M4  six flags, severities, confidence
-  committee/assembly.py    M7  seat eligibility and selection
-  export/                  M8  dial priority, audit log, review console,
-                               Salesforce staging, dial queue
-  roster.py                    the stages, frame in and frame out
-  io/                          readers, adapters, additive writer
-  pipeline.py                  raw dump normalization
+  identity.py              deterministic IDs
+  scoring/icp.py           TAL scoring from the campaign file
+  taxonomy/designation.py  title normalization, seniority, authority
+  validation/engine.py     the six validation flags
+  committee/               buying committee: models.py (Ollama), decide.py (committee),
+                           targets.py (people per seat), qualify.py (proof against the list),
+                           required.py (generated list), rolelist.py (uploaded list), match.py
+  export/                  dial priority, audit log, Salesforce staging, dial queue
+  app/                     the web app (server.py, static/index.html)
+  roster.py, cli.py        the pipeline and the command line
 config/
-  icp_adtech_modernization.yaml
-  titles.yaml
+  icp_adtech_modernization.yaml   the Simplifi campaign file
+  committee/rules.yaml            committee minimums, role definitions, settings
+  committee/role_reference.json   51 titles in 22 functions with job descriptions
+benchmarks/committee/             reference set, benchmark script, recorded answers, results
+sample-input/                     the Simplifi workbook and sample dumps
+tests/                            unit, integration and app tests
 ```
 
-Dependencies: pandas, openpyxl, pydantic, rapidfuzz, pyyaml, typer.
+---
+
+## 6. Accuracy so far
+
+Measured on the committee step only, against `benchmarks/committee/reference.yaml`:
+10 campaigns, each with the job functions published research says take part in that
+purchase (sources in the file; finance and procurement count as fine everywhere).
+"Dev" and "test" are labels kept for comparison; no campaign was used to tune
+anything except where leave-one-out says so.
+
+- **Precision**: share of the committee's titles whose function the research names.
+- **Recall**: share of the research's functions the committee holds.
+- **F1**: their harmonic mean.
+
+These are the only runs made so far.
+
+**Full set, 10 campaigns, default list (6 seats), one answer per seat**
+(`results_before.json`):
+
+| Method | Precision | Recall | F1 | Dev F1 | Test F1 |
+|---|---|---|---|---|---|
+| Qwen + Llama | 0.93 | 0.69 | **0.77** | 0.83 | 0.73 |
+| Qwen only | | | 0.68 | | |
+| One generic committee for every campaign | | | 0.56 | | |
+
+All 10 committees met the default list. An earlier version of the same method (no
+written reasoning, run through llama.cpp) scored precision 0.89, recall 0.78,
+F1 0.82 (`results_v1_llamacpp.json`).
+
+**Quick run, current method, 3 campaigns** (CRM, martech, legacy modernization /
+Simplifi), 3 answers per question, same-question check, cap 10
+(`results_quick.json`):
+
+| | Precision | Recall | F1 | Size | Qualified |
+|---|---|---|---|---|---|
+| Before (same 3 campaigns) | 0.94 | 0.61 | 0.69 | 6.0 | 3 of 3 |
+| Qwen only | 0.73 | 0.61 | 0.64 | 10.0 | 3 of 3 |
+| Qwen + Llama | 0.76 | 0.72 | **0.71** | 9.3 | 1 of 3 |
+
+| Campaign | Before P / R / F1 | Now P / R / F1 |
+|---|---|---|
+| CRM | 1.00 / 0.50 / 0.67 | 0.88 / 0.67 / 0.76 |
+| Martech | 0.83 / 1.00 / 0.91 | 0.60 / 1.00 / 0.75 |
+| Legacy modernization (Simplifi) | 1.00 / 0.33 / 0.50 | 0.80 / 0.50 / 0.62 |
+
+Recall went up, precision fell below the 0.85 target, and two committees left a
+minimum seat empty. What the run showed: Qwen never answered "None", so every
+question gave 3 answers and committees filled toward the cap with weak extras;
+Llama's same-question check passes only its own top answer, so it turned down some
+correct picks and passed some wrong ones; Llama said no to 31 of 34 offers to other
+roles. Not yet run: the yes/no check, 4 and 5 answers per question, and the full
+10 campaigns with the current method.
+
+On Simplifi, the committee from the earlier method held 2 of the 8 roles the team
+recommended (Status sheet: Chief Information Officer, Chief Technology Officer); the
+current method holds 4 (Chief Technology Officer, VP of Engineering, Chief Architect,
+Chief Information Officer).
