@@ -38,6 +38,10 @@ def test_every_recorded_answer_is_a_distribution(recorded):
     store, _, _ = recorded
     assert store.data
     for row in store.data.values():
+        assert "@" not in row["campaign"]                       # no contact ever reached a prompt
+        if row.get("kind") == "brief":                          # a role description: text, no options
+            assert row["reasoning"] and not row["options"]
+            continue
         p = row["probs"]
         assert set(p) == set(row["options"])
         assert math.isclose(sum(p.values()), 1.0, abs_tol=1e-3)

@@ -44,19 +44,29 @@ def dist(table, a: Ask):
 def seed_store(path: Path, campaigns: list[str]) -> AnswerStore:
     """Fill a store with every answer the assembly asks for, as the models would."""
     store = AnswerStore(path)
-    for use_checker in (True, False):
+
+    def name(a):
+        return (JUDGE if a.model == "judge" else CHECKER).name
+
+    configs = [dict(use_checker=False, candidates_per_question=n) for n in (3, 4, 5)] + \
+        [dict(use_checker=True, check=chk, candidates_per_question=n)
+         for chk in ("same_question", "yes_no") for n in (3, 4, 5)]
+    for cfg in configs:
         for text in campaigns:
             while True:
-                c = assemble(text, lambda a: store.get(answer_key(
-                    (JUDGE if a.model == "judge" else CHECKER).name, a.campaign, a.role, a.options)),
-                    use_checker=use_checker)
+                c = assemble(text, lambda a: store.get(a.store_key(name(a))), **cfg)
                 if c.complete:
                     break
                 for a in c.missing:
-                    name = (JUDGE if a.model == "judge" else CHECKER).name
-                    probs = dist(JUDGE_TABLE if a.model == "judge" else CHECKER_TABLE, a)
-                    store.put(answer_key(name, a.campaign, a.role, a.options), name, a.campaign,
-                              a.role, a.options, probs)
+                    table = JUDGE_TABLE if a.model == "judge" else CHECKER_TABLE
+                    if a.kind == "brief":
+                        probs, why = {}, f"{a.model}'s brief of {a.role}"
+                    elif a.kind == "yesno":
+                        yes = table.get(a.role, {}).get(a.function, 0) > 0
+                        probs, why = {"Yes": float(yes), "No": float(not yes)}, ""
+                    else:
+                        probs, why = dist(table, a), ""
+                    store.put(a.store_key(name(a)), name(a), a.campaign, a.role, a.options, probs, why)
     store.save()
     return store
 
@@ -76,8 +86,11 @@ def test_decide_from_campaign_file_offline(store_path):
     assert roles["Chief Technology Officer"] == "Champion"
     assert roles["Chief Architect"] == "Technical Evaluator"
     assert "Chief Information Officer" not in roles or roles["Chief Information Officer"] != "Champion"
-    # IT was never needed as Champion; offered as an extra member, the checker turned it down
-    assert any(r["function"] == "IT" and r.get("extra") for r in c.rejected)
+    # IT, Qwen's second Champion answer, was turned down by the checker, then offered to the
+    # other roles (yes/no) and turned down there too
+    assert any(r["function"] == "IT" and r["role"] == "Champion" and r["round"] == 1 for r in c.rejected)
+    assert {r["role"] for r in c.rejected if r["function"] == "IT" and r.get("offered_from") == "Champion"} == \
+        {"Economic Buyer", "Technical Evaluator", "Influencer"}
     assert all(m["function"] != "IT" for m in c.members)
     assert sum(1 for m in c.members if m["role"] == "Influencer") >= 3
     assert not c.unfilled
@@ -191,12 +204,17 @@ def test_benchmark_end_to_end_offline(tmp_path, monkeypatch, capsys):
     rb.main()
     res = json.loads(out.read_text())
     assert len(res["campaigns"]) == 10
-    for split in ("dev", "test", "all"):
-        for m in ("judge_and_checker", "judge_only", "generic"):
-            assert 0.0 <= res[f"{split}_mean"][m]["f1"] <= 1.0
-    lm = res["campaigns"]["legacy_modernization"]["judge_and_checker"]
+    assert set(res["methods"]) == {f"{c}/{n}" for c in ("judge_only", "same_question", "yes_no") for n in (3, 4, 5)}
+    for m in res["methods"].values():
+        for split in ("dev", "test", "all"):
+            assert 0.0 <= m[split]["f1"] <= 1.0
+    for chk in ("judge_only", "same_question", "yes_no"):
+        assert set(res["leave_one_out"][chk]["chosen_per_held_out_campaign"].values()) <= {3, 4, 5}
+    lm = res["campaigns"]["legacy_modernization"]["same_question/5"]
     assert lm["team_picks_held"].endswith("of 8")
-    assert "Simplifi team picks held" in capsys.readouterr().out
+    assert res["before"]["all"]["f1"] == 0.77                 # the recorded method before the fixes
+    out = capsys.readouterr().out
+    assert "before (6 seats)" in out and "leave-one-out" in out
 
 
 def test_saved_answers_need_no_ollama(store_path, monkeypatch):

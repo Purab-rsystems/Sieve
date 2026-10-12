@@ -24,18 +24,27 @@ WORKBOOK = ROOT / "sample-input" / "Modernization_Campaign_-_Simplifi_-_List__31
 
 PICKS = {"Economic Buyer": "Finance", "Champion": "Technology", "Technical Evaluator": "Architecture",
          "Influencer": "Product", "User": "Platform", "Ratifier": "Procurement"}
+SECOND = {"Champion": "IT"}
 
 
 def fake_decide_many(campaigns, store, use_checker=True, run_models=True, log=print, runner=None, progress=None,
-                     minimums=None, rules=None):
+                     minimums=None, rules=None, **settings):
     def answers(a):
         want = PICKS.get(a.role, "Security")
-        want = want if want in a.options else a.options[0]
+        if a.kind == "brief":
+            return f"{a.model}'s brief of the {a.role} for this campaign."
+        if a.kind == "yesno":
+            yes = a.function == want
+            return {"probs": {"Yes": float(yes), "No": float(not yes)}, "reasoning": f"{a.model}: {yes}"}
+        if want not in a.options:            # Qwen's next answer, asked again without its first one
+            want = SECOND.get(a.role, "None")
+            want = want if want in a.options else ("None" if "None" in a.options else a.options[0])
         return {"probs": {f: (1.0 if f == want else 0.0) for f in a.options},
                 "reasoning": f"{a.model} reasoning for {a.role}: {want} fits this campaign."}
     if progress:
         progress(0, "Qwen (judge): Economic Buyer")
-    return {k: decide_mod.assemble(t, answers, rules=rules, judge_name="qwen", checker_name="llama", minimums=minimums)
+    return {k: decide_mod.assemble(t, answers, rules=rules, judge_name="qwen", checker_name="llama", minimums=minimums,
+                                    **settings)
             for k, t in campaigns.items()}
 
 
@@ -356,3 +365,20 @@ def test_list_upload_later_and_bad_lists(client):
     assert c["committee"]["rules"] == {"Economic Buyer": 1, "Champion": 1}
     t = client.get("/api/list-template.csv")
     assert t.status_code == 200 and t.text.startswith("Role,Count,Description")
+
+
+def test_metrics_page_data(client):
+    rid = upload(client).json()["id"]
+    wait_committee(client, rid)
+    r = client.get(f"/api/runs/{rid}/metrics").json()
+    assert r["status"] == "done" and r["total_seconds"] is not None
+    assert [s["stage"] for s in r["stages"]] == ["committee", "targets"]
+    assert all(s["seconds"] is not None for s in r["stages"])
+    c = r["committee"]
+    assert c["members"] >= 6 and c["qualified"] and c["qwen_candidates"] >= 6
+    assert c["settings"] == {"check": "same_question", "candidates_per_question": 5, "max_members": 10}
+    assert r["targets"]["companies"] >= 1
+    b = client.get("/api/metrics/benchmark").json()
+    assert b["available"] and b["before"]["f1"] == 0.77
+    page = client.get("/").text
+    assert "tabMetrics" in page and "Accuracy metrics" in page and "ndcg" not in page.lower()
