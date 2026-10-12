@@ -103,7 +103,7 @@ def score_command(
     out: Path = typer.Option(..., "--out", help="Where to write the result."),
     rubric: Path | None = typer.Option(None, "--rubric", help="Rubric YAML."),
 ) -> None:
-    """Gate 1: deterministic ICP scoring (module M3)."""
+    """Gate 1: deterministic TAL scoring (module M3)."""
     from .scoring.icp import load_rubric
 
     frame = _read_frame(inp)
