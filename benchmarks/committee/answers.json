@@ -5803,6 +5803,39 @@
 "reasoning": "The User role in the buying group consists of individuals or groups whose daily activities are affected by the purchase. For an AdTech Platform Modernization & Strangler Fig Migration, the end-users would be the teams directly interacting with the AdTech systems, such as those involved in media planning, ad verification, and connected TV operations.",
 "role": "User"
 },
+"qwen2.5-7b-instruct|2976410125dc|brief|Champion|8772750703": {
+"answer_token": "",
+"campaign": "Offering being sold: AdTech Platform Modernization & Strangler Fig Migration lookalike\nTarget companies: Core AdTech, agency management software, DSP/SSP, ad exchange; Media planning, ad verification, connected TV\nTechnology the offering works on: Explicit ASP.NET, .NET Framework, VB.NET or Java monolith; Desktop-era client, on-prem deployment, 10+ year codebase",
+"kind": "brief",
+"model": "qwen2.5-7b-instruct",
+"options": [],
+"probs": {},
+"reasoning": "In the context of modernizing an AdTech platform and migrating to a more scalable architecture, the Champion plays a crucial role as the key advocate for the change. This individual, often a Vice President of Technology or a Chief Technology Officer, has the technical expertise and organizational influence to persuade other stakeholders to support the modernization effort. Their responsibility to oversee the technology strategy and drive innovation within the company makes them an ideal Champion for this offering.",
+"role": "Champion",
+"seconds": 57.1
+},
+"qwen2.5-7b-instruct|2976410125dc|brief|Economic Buyer|aa3c072423": {
+"answer_token": "",
+"campaign": "Offering being sold: AdTech Platform Modernization & Strangler Fig Migration lookalike\nTarget companies: Core AdTech, agency management software, DSP/SSP, ad exchange; Media planning, ad verification, connected TV\nTechnology the offering works on: Explicit ASP.NET, .NET Framework, VB.NET or Java monolith; Desktop-era client, on-prem deployment, 10+ year codebase",
+"kind": "brief",
+"model": "qwen2.5-7b-instruct",
+"options": [],
+"probs": {},
+"reasoning": "In the context of modernizing an AdTech platform and migrating to a more scalable architecture, the Economic Buyer is the high-level executive or leader with budget responsibilities who ensures that the purchase aligns with the company's strategic goals. Typically, this role is held by the Chief Financial Officer (CFO), Chief Executive Officer (CEO), or President, who must evaluate the long-term financial impact and ROI of the modernization project to ensure it supports the overall business objectives.",
+"role": "Economic Buyer",
+"seconds": 303.0
+},
+"qwen2.5-7b-instruct|2976410125dc|brief|Technical Evaluator|bf909b0127": {
+"answer_token": "",
+"campaign": "Offering being sold: AdTech Platform Modernization & Strangler Fig Migration lookalike\nTarget companies: Core AdTech, agency management software, DSP/SSP, ad exchange; Media planning, ad verification, connected TV\nTechnology the offering works on: Explicit ASP.NET, .NET Framework, VB.NET or Java monolith; Desktop-era client, on-prem deployment, 10+ year codebase",
+"kind": "brief",
+"model": "qwen2.5-7b-instruct",
+"options": [],
+"probs": {},
+"reasoning": "In the context of modernizing an AdTech platform and migrating to a more contemporary architecture, the Technical Evaluator's role is crucial. They must assess whether the proposed AdTech Platform Modernization & Strangler Fig Migration lookalike solution aligns with the company's existing systems, security standards, and workflows, ensuring a smooth transition. Typically, this responsibility falls on the Chief Information Officer (CIO) or the Director of IT, who have the technical expertise and oversight needed to evaluate such complex and critical systems changes.",
+"role": "Technical Evaluator",
+"seconds": 63.8
+},
 "qwen2.5-7b-instruct|6db9f8919fe7|Champion|Architecture,Compliance,Corporate Development,Customer,Data,Digital,Executive,Finance,IT,Legal,Marketing,Operations,People,Platform,Procurement,Product,Quality,Revenue,Security,Strategy,Supply Chain,Technology": {
 "answer_token": "IT",
 "campaign": "Offering being sold: Enterprise data and analytics platform\nTarget companies: Financial Services, Retail",
