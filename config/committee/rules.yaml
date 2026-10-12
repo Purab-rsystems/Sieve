@@ -22,7 +22,23 @@ minimums:
 
 seat_order: [Economic Buyer, Champion, Technical Evaluator, Influencer]
 
-follow_up_rounds: 4      # judge follow-ups per unfilled seat after checker rejections
+follow_up_rounds: 4      # contact picking: judge follow-ups per seat after checker rejections
+
+# Committee size and checking.
+# candidates_per_question  Qwen is asked each role question up to this many
+#                          times, its earlier answers removed each time; it can
+#                          always answer "None" (no other function fits).
+# max_members              hard cap on the committee. Minimums are floors.
+# check                    how Llama checks a candidate:
+#                          same_question: answers the same question, passes a
+#                            function it also rates above chance;
+#                          yes_no: "should the leader of <function> be a
+#                            <role>?", passes when Yes is above 0.5.
+#                          Rejected functions are always offered to the other
+#                          roles with the yes_no question.
+candidates_per_question: 5
+max_members: 10
+check: same_question
 
 intro:
   text: >-

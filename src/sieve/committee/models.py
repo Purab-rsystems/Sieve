@@ -144,7 +144,7 @@ class OllamaModel:
             out = _post("/api/generate", body)
         except OllamaError as e:
             # Not enough memory for both models at once: free the other one and retry.
-            if self.other is None or not re.search(r"terminated|killed|memory|resources|timed out", str(e), re.I):
+            if self.other is None or not re.search(r"terminated|killed|memory|resource|timed out|no longer running|unexpectedly stopped", str(e), re.I):
                 raise
             self.other.unload()
             out = _post("/api/generate", body)
